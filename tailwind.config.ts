@@ -1,5 +1,3 @@
-import containerQueries from "@tailwindcss/container-queries";
-import typography from "@tailwindcss/typography";
 import { fontFamily } from "tailwindcss/defaultTheme";
 import type { Config } from "tailwindcss";
 
@@ -63,7 +61,7 @@ const config: Config = {
 		}
 	},
 
-    plugins: [typography, containerQueries]
+    plugins: []
 };
 
 export default config;

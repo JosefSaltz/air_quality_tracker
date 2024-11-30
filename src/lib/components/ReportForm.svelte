@@ -26,7 +26,7 @@ possibly show loading indicator as the data comes in
     <input id="gas_type" name="odor_type" type="radio" />
     <label for="smoke_type">Smoke</label>
     <input id="smoke_type" name="odor_type" type="radio" />
-    <Separator class="mb-4" />
+    <Separator class="my-4" />
 
     <legend>How strong is the smell</legend>
     <label for="faint_input">Faint</label>
@@ -35,7 +35,8 @@ possibly show loading indicator as the data comes in
     <input id="strong_input" name="odor_strength" type="radio" />
     <label for="overwhelming_input">Overwhelming</label>
     <input id="overwhelming_input" name="odor_strength" type="radio" />
-    <Separator class="mb-4" />
+    <Separator class="my-4" />
+    
     <legend>Additional Comments</legend>
     <input id="comments_input" class="border" name="comments" type="text" />
     <br />
