@@ -1,6 +1,7 @@
 <script lang="ts" module>
   import type { Actions } from '@sveltejs/kit';
   import { createClient } from '@supabase/supabase-js';
+  import Button from './ui/button/button.svelte';
   // const supabase = createClient(process.env.SUPABASE_PROJECT_URL);
   export const actions = {
     default: async (event) => {
@@ -34,5 +35,5 @@ possibly show loading indicator as the data comes in
   <legend>Additional Comments</legend>
   <input id="comments_input" name="comments" type="text" />
 
-  <button type="submit">Submit</button>
+  <Button type="submit">Submit</Button>
 </form>
