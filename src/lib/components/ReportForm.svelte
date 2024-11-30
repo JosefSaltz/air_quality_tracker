@@ -3,6 +3,7 @@
   import { createClient } from '@supabase/supabase-js';
   import Button from './ui/button/button.svelte';
   import Separator from './ui/separator/separator.svelte';
+  import supabase from "$lib/supabase/client";
   // const supabase = createClient(process.env.SUPABASE_PROJECT_URL);
   export const actions = {
     default: async (event) => {
