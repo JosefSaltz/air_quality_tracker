@@ -33,4 +33,6 @@ possibly show loading indicator as the data comes in
 
   <legend>Additional Comments</legend>
   <input id="comments_input" name="comments" type="text" />
+
+  <button type="submit">Submit</button>
 </form>
