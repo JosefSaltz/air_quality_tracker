@@ -1,10 +1,12 @@
+<!-- Credit to Github user anzhi0708 for the original implementation -->
 <script lang="ts">
-  import Card from './ui/card/card.svelte';
   import Skeleton from './ui/skeleton/skeleton.svelte';
   import { onMount } from 'svelte';
 	import 'leaflet/dist/leaflet.css';
 	import fetchGeolocation from '../utils/fetchGeolocation';
+
 	type GeoCoords = { latitude: number, longitude: number } | null;
+	
 	let lMap;
 	let leaflet;
 	let mapLoaded = $state(false);
@@ -39,9 +41,16 @@
   });
 </script>
 
-{#if !mapLoaded}
-	<Skeleton class="w-full h-full skellyboi" />
-{/if}
-<!-- Leafly attachment node -->
-<div id="map" class="h-full w-full max-w-[720px]"></div>
+<!-- <Card class="w-[100%]"> -->
+	{#if !mapLoaded}
+		<Skeleton class="w-full h-full skellyboi" />
+	{/if}
+	<!-- Leafly attachment node -->
+	<div id="map" class="flex-grow-2 w-full border"></div>
+<!-- </Card> -->
 
+<style>
+	#map {
+		border-right: none;
+	}
+</style>
