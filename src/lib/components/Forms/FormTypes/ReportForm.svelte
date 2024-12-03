@@ -1,15 +1,12 @@
 <script lang="ts" module>
-  import supabase from "@/lib/utils/client";
-  import type { Actions } from "@sveltejs/kit";
-  import Button from "../ui/button/button.svelte";
-  import Card from "../ui/card/card.svelte";
-  import Separator from "../ui/separator/separator.svelte";
-  import { Title } from "../ui/card";
-  import OdorToggles from "./OdorToggles.svelte"
+  import Button from "$components/ui/button/button.svelte";
+  import Separator from "$components/ui/separator/separator.svelte";
+  import { Title } from "$components/ui/card";
+  import OdorToggles from "$components/ReportForm/OdorToggles.svelte"
   import GasIcon from "@/lib/svg/gas.svelte";
   import SewageIcon from "@/lib/svg/sewage.svelte";
-  import SmokeIcon from "@/lib/svg/smoke.svelte";
-
+  import FormContainer from '@/lib/components/Forms/Layouts/FormContainer.svelte';
+  // import SmokeIcon from "@/lib/svg/smoke.svelte";
   let selectedOdor: null | 'Gas' | "Sewage" | "Smoke" = $state(null);
   let selectedStrength: null | 'Faint' | "Strong" | 'Overwhelming' = $state(null);
 
@@ -22,20 +19,14 @@
   const odorTypes = [
     { name: "Gas", icon: GasIcon },
     { name: "Sewage", icon: SewageIcon },
-    { name: "Smoke", icon: SmokeIcon },
+    // { name: "Smoke", icon: SmokeIcon },
   ];
-  // const supabase = createClient(process.env.SUPABASE_PROJECT_URL);
-  export const actions = {
-    default: async (event) => {
-      const payload = { odor_type: selectedOdor, odor_strength: selectedStrength }
-      // Add validation before insert
-      // Add the insert action
-      // supabase.from().insert()
-    },
-  } satisfies Actions;
+  
+  const styles = `border-top-left-radius: 0; border-bottom-left-radius: 0`;
 </script>
 
-<Card class="p-10 min-w-max">
+
+<FormContainer>
   <Title class="mb-4 text-2xl">Report an Odor</Title>
   <form method="POST">
 
@@ -54,13 +45,20 @@
       name="comments"
       type="text"
     />
-    <Button class="block mt-4" type="submit">Submit</Button>
+    <Button class="block mt-4" type="submit" onClick={handleSubmit}>Submit</Button>
   </form>
-</Card>
+</FormContainer>
 
 <style>
   legend {
     font-weight: 700;
     margin-bottom: 1rem;
+  }
+  input[type="text"] {
+    resize: "vertical";
+  }
+
+  #report-form-container {
+    border-left: none;
   }
 </style>
