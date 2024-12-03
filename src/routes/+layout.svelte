@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex justify-center h-full">
-  <div class="flex flex-col justify-center w-2/3">
+  <div class="flex flex-col justify-center w-full h-full items-center">
       {@render children()}
   </div>
 </div>
