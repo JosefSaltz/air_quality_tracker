@@ -1,6 +1,6 @@
 <script>
   import FormContainer from "@/lib/components/Forms/Layouts/FormContainer.svelte";
-
+  let { handleClick } = $props();
 </script>
 <FormContainer>
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
@@ -82,7 +82,7 @@
 
     <p class="mt-10 text-center text-sm/6 text-gray-500">
       Need an account?
-      <a href="#" class="font-semibold text--600 hover:text--500" onClick={() => {}}>Click here</a>
+      <a href="#" class="font-semibold text--600 hover:text--500" onclick={handleClick}>Click here</a>
     </p>
   </div>
 </FormContainer>

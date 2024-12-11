@@ -1,18 +1,14 @@
 <script>
   import { onMount } from "svelte";
-  import LoginForm from "./LoginForm.svelte";
-  import ReportMap from "./ReportMap.svelte";
-  import ReportForm from "./ReportForm/ReportForm.svelte";
-  import supabase from "@/lib/utils/client";
+  import LoginForm from "$components/Forms/FormTypes/LoginForm.svelte";
+  import ReportMap from "$components/ReportMap.svelte";
+  import ReportForm from "$components/Forms/FormTypes/ReportForm.svelte";
 
   const getDeviceType = () => false;
   // True: Mobile, False: Desktop
+  let { data: userLoggedIn } = $props()
   let onMobile = $state(getDeviceType());
-  let userLoggedIn = $state();
-
-  onMount(async () => {
-    userLoggedIn = supabase.auth.getUser();
-  }) 
+  const handleClick = () => { console.log('Submit Form Data') }
 </script>
 
 <div 
@@ -24,9 +20,9 @@
   id='dash-layout
 '>
   <ReportMap />
-  <!-- {#if userLoggedIn} -->
-  <ReportForm />
-  <!-- {:else}
-    <LoginForm />
-  {/if} -->
+  {#if userLoggedIn}
+    <ReportForm handleClick={handleClick} />
+  {:else}
+    <LoginForm handleClick={handleClick} />
+  {/if}
 </div>

@@ -1,4 +1,5 @@
-<script lang="ts" module>
+<script lang="ts">
+  
   import Button from "$components/ui/button/button.svelte";
   import Separator from "$components/ui/separator/separator.svelte";
   import { Title } from "$components/ui/card";
@@ -7,6 +8,7 @@
   import SewageIcon from "@/lib/svg/sewage.svelte";
   import FormContainer from '@/lib/components/Forms/Layouts/FormContainer.svelte';
   // import SmokeIcon from "@/lib/svg/smoke.svelte";
+  let { handleClick }: { handleClick: () => void; } = $props();
   let selectedOdor: null | 'Gas' | "Sewage" | "Smoke" = $state(null);
   let selectedStrength: null | 'Faint' | "Strong" | 'Overwhelming' = $state(null);
 
@@ -21,7 +23,6 @@
     { name: "Sewage", icon: SewageIcon },
     // { name: "Smoke", icon: SmokeIcon },
   ];
-  
   const styles = `border-top-left-radius: 0; border-bottom-left-radius: 0`;
 </script>
 
@@ -45,7 +46,7 @@
       name="comments"
       type="text"
     />
-    <Button class="block mt-4" type="submit" onClick={handleSubmit}>Submit</Button>
+    <Button class="block mt-4" type="submit" onclick={handleClick}>Submit</Button>
   </form>
 </FormContainer>
 

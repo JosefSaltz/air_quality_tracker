@@ -20,6 +20,6 @@
 </script>
 
 {#if userLoggedIn}
-  <ReportForm />
+  <!-- <ReportForm /> -->
 {:else}
 {/if}
