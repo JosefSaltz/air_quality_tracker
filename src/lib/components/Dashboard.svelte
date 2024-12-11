@@ -13,16 +13,23 @@
 
 <div 
   class={`
-    flex ${ onMobile ? 'flex-col' : 'flex-row'} 
-    justify-center 
-    max-w-2/3`
-    } 
+    flex 
+    flex-col
+    flex-
+    xl:flex-row-reverse
+    justify-center
+    items-center
+    w-full
+    h-full
+    xl:h-auto
+    xl:w-2/3  
+  `} 
   id='dash-layout
 '>
-  <ReportMap />
   {#if userLoggedIn}
     <ReportForm handleClick={handleClick} />
   {:else}
     <LoginForm handleClick={handleClick} />
   {/if}
+  <ReportMap />
 </div>

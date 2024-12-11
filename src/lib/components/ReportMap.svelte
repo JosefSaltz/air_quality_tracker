@@ -46,7 +46,7 @@
 		<Skeleton class="w-full h-full skellyboi" />
 	{/if}
 	<!-- Leafly attachment node -->
-	<div id="map" class="flex-grow-2 w-full border"></div>
+	<div id="map" class="w-full h-full border"></div>
 <!-- </Card> -->
 
 <style>

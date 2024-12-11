@@ -1,4 +1,6 @@
 <script>
+	import "@/app.css";
+	import "@/app.css";
   import { invalidate } from '$app/navigation'
   import { onMount } from 'svelte'
 
@@ -16,4 +18,8 @@
   })
 </script>
 
-{@render children()}
+<div class="flex justify-center h-full">
+  <div class="flex flex-col justify-center w-full h-full items-center">
+      {@render children()}
+  </div>
+</div>
