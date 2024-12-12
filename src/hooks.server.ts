@@ -2,6 +2,7 @@ import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/publi
 import { createServerClient } from '@supabase/ssr'
 import type { Handle } from '@sveltejs/kit'
 
+// Request middleware
 export const handle: Handle = async ({ event, resolve }) => {
   event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
     cookies: {
@@ -21,30 +22,22 @@ export const handle: Handle = async ({ event, resolve }) => {
       },
     },
   })
-
   /**
    * Unlike `supabase.auth.getSession()`, which returns the session _without_
    * validating the JWT, this function also calls `getUser()` to validate the
    * JWT before returning the session.
    */
   event.locals.safeGetSession = async () => {
-    const {
-      data: { session },
-    } = await event.locals.supabase.auth.getSession()
-    if (!session) {
-      return { session: null, user: null }
-    }
-
-    const {
-      data: { user },
-      error,
-    } = await event.locals.supabase.auth.getUser()
-    if (error) {
-      // JWT validation has failed
-      return { session: null, user: null }
-    }
-
-    return { session, user }
+    // Retrieve the session for this request
+    const { data: { session } } = await event.locals.supabase.auth.getSession();
+    // If no valid session return nothing
+    if (!session) return { session: null, user: null };
+    // Destructure user and error
+    const { data: { user }, error } = await event.locals.supabase.auth.getUser();
+    // If JWT validation has failed
+    if (error) return { session: null, user: null };
+    // Return our supabase session and user objects
+    return { session, user };
   }
 
   return resolve(event, {
