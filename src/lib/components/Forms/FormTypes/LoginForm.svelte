@@ -3,7 +3,7 @@
   let { handleClick } = $props();
 </script>
 <FormContainer>
-  <div class="sm:mx-auto sm:w-full sm:max-w-md">
+  <div class="sm:mx-auto w-full xl:w-auto sm:max-w-md">
     <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=&shade=600" alt="Your Company">
     <h2 class="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
   </div>
@@ -82,7 +82,7 @@
 
     <p class="mt-10 text-center text-sm/6 text-gray-500">
       Need an account?
-      <a href="#" class="font-semibold text--600 hover:text--500" onclick={handleClick}>Click here</a>
+      <a href="/?auth=signup" class="font-semibold text--600 hover:text--500" onclick={handleClick}>Click here</a>
     </p>
   </div>
 </FormContainer>

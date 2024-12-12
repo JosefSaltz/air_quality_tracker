@@ -3,6 +3,6 @@
   let { children, style } = props; 
 </script>
 
-<div id="form-layout" class="flex flex-col w-full justify-center">
+<div id="form-layout" class="flex flex-col min-w-fit justify-center">
   {@render children()}
 </div>
