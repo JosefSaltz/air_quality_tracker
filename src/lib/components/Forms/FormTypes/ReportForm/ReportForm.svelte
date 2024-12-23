@@ -1,12 +1,12 @@
 <script lang="ts">
-  
   import Button from "$components/ui/button/button.svelte";
   import Separator from "$components/ui/separator/separator.svelte";
   import { Title } from "$components/ui/card";
-  import OdorToggles from "$components/ReportForm/OdorToggles.svelte"
+  import OdorToggles from "@/lib/components/Forms/FormTypes/ReportForm/OdorToggles.svelte"
   import GasIcon from "@/lib/svg/gas.svelte";
   import SewageIcon from "@/lib/svg/sewage.svelte";
   import FormContainer from '@/lib/components/Forms/Layouts/FormContainer.svelte';
+  import Card from "../../../ui/card/card.svelte";
   // import SmokeIcon from "@/lib/svg/smoke.svelte";
   let { handleClick }: { handleClick: () => void; } = $props();
   let selectedOdor: null | 'Gas' | "Sewage" | "Smoke" = $state(null);
@@ -28,26 +28,28 @@
 
 
 <FormContainer>
-  <Title class="mb-4 text-2xl">Report an Odor</Title>
-  <form method="POST">
+  <Card class="p-10 justify-center w-xl">
+    <Title class="mb-4 text-2xl">Log an Odor</Title>
+    <form method="POST">
 
-    <legend>Odor Type</legend>
-    <OdorToggles selected={selectedOdor} toggles={odorTypes} />
-    <Separator class="my-4" />
+      <legend>Odor Type</legend>
+      <OdorToggles selected={selectedOdor} toggles={odorTypes} />
+      <Separator class="my-4" />
 
-    <legend>How Strong is the Smell?</legend>
-    <OdorToggles selected={selectedStrength} toggles={odorStrengths} />    
-    <Separator class="my-4" />
+      <legend>How Strong is the Smell?</legend>
+      <OdorToggles selected={selectedStrength} toggles={odorStrengths} />    
+      <Separator class="my-4" />
 
-    <legend>Additional Comments</legend>
-    <input
-      id="comments_input"
-      class="border w-full"
-      name="comments"
-      type="text"
-    />
-    <Button class="block mt-4" type="submit" onclick={handleClick}>Submit</Button>
-  </form>
+      <legend>Additional Comments</legend>
+      <input
+        id="comments_input"
+        class="border w-full"
+        name="comments"
+        type="text"
+      />
+      <Button class="block my-4" type="submit" formaction="?/log_report">Submit</Button>
+    </form>
+  </Card>
 </FormContainer>
 
 <style>
@@ -55,11 +57,8 @@
     font-weight: 700;
     margin-bottom: 1rem;
   }
+  
   input[type="text"] {
     resize: "vertical";
-  }
-
-  #report-form-container {
-    border-left: none;
   }
 </style>

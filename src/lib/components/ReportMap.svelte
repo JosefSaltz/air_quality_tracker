@@ -66,7 +66,7 @@
 
 <!-- <Card class="w-[100%]"> -->
 {#if !lMap}
-  <Skeleton class="w-full h-full skellyboi" />
+  <Skeleton class="w-full h-full m-h-[30%] skellyboi" />
 {/if}
 <!-- Leafly attachment node -->
 <div id="map" bind:this={container} class="w-full h-full border"></div>

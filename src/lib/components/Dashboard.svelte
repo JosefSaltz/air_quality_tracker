@@ -3,9 +3,9 @@
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import ReportMap from "$components/ReportMap.svelte";
-  import { LoginForm, ReportForm, SignUpForm } from "$components/Forms/FormTypes/index";
+  import { LoginForm, ReportForm, SignUpForm, LoginRequired } from "$components/Forms/FormTypes/index";
 
-  let { data }: { data: PageData } = $props();
+  let { data }: { data?: PageData } = $props();
   let authParams = $state(new URLSearchParams());
   const handleClick = () => { console.log('Submit Form Data') };
   const updateAuthParams = () => { authParams = new URLSearchParams(window.location.search) };
@@ -16,10 +16,10 @@
 </script>
 
 <div 
-  id='dash-layout'
+  id='dashboard'
   class={`
     flex 
-    flex-col
+    flex-col-reverse
     w-full
     h-full
     xl:flex-row-reverse
@@ -30,10 +30,8 @@
   `}>
   {#if data?.user}
     <ReportForm handleClick={handleClick} />
-  {:else if authParams.get("auth") === "signup"}
-    <SignUpForm />  
   {:else}
-    <LoginForm handleClick={handleClick} />
+    <LoginRequired />
   {/if}
   <ReportMap />
 </div>

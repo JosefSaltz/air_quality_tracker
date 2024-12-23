@@ -3,7 +3,7 @@
   let { selected, toggles } = $props();
 </script>
 
-<div class="flex flex-row justify-evenly">
+<div class="flex flex-row justify-center xl:justify-evenly">
   {#each toggles as toggle}
     <div class="flex flex-col w-[100px] h-[100px] items-center">
       <Toggle
