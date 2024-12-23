@@ -16,20 +16,5 @@ export const getOrCreateUserProfile = async (locals: App.Locals) => {
     return curProfile;
   }
 
-  await db.insert(profileTable).values({
-    id: user.id,
-    firstName: "",
-    lastName: "",
-    email: user.email ?? "",
-  });
-
-  const newProfile = await db.query.profileTable.findFirst({
-    where: eq(profileTable.id, user.id),
-  });
-
-  if (!newProfile) {
-    error(500, "Could not create profile");
-  }
-
-  return newProfile;
+  return null;
 };
