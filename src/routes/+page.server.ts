@@ -1,9 +1,9 @@
 import { getOrCreateUserProfile } from "$lib/auth";
-import { db } from "$lib/db/index.js";
-import { profileTable } from "$lib/db/schema.js";
 import { error, redirect, type Actions } from "@sveltejs/kit";
-import { eq } from "drizzle-orm";
-import { zfd } from "zod-form-data";
+import { OPENMETEO_URL } from "$app/environment"
+import { fetchWeatherApi } from "openmeteo";
+import { fetchWind } from "@/lib/api/openmeteo.js";
+import { destructureReport } from "@/lib/utils/destructureReport.js";
 
 export const load = async ({ locals }) => {
   const userProfile = await getOrCreateUserProfile(locals);
@@ -12,49 +12,7 @@ export const load = async ({ locals }) => {
 };
 
 export const actions = {
-  default: async ({ request, locals }) => {
-    const userProfile = await getOrCreateUserProfile(locals);
-
-    if (!userProfile) error(401, "You need to be logged in!");
-    
-    const schema = zfd.formData({
-      firstName: zfd.text(),
-      lastName: zfd.text(),
-      email: zfd.text(),
-    });
-
-    const { data } = schema.safeParse(await request.formData());
-
-    if (!data) error(400, "Invalid form data");
-
-    const { firstName, lastName, email } = data;
-    
-    await db
-      .update(profileTable)
-      .set({
-        firstName,
-        lastName,
-        email,
-      })
-      .where(eq(profileTable.id, userProfile.id));
-
-    return { success: true };
-  },
-  // These two are from the Supabase docs template
-  signup: async ({ request, locals: { supabase } }) => {
-    const formData = await request.formData()
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-
-    const { error } = await supabase.auth.signUp({ email, password })
-    if (error) {
-      console.error(error)
-      redirect(303, '/auth/error')
-    } else {
-      redirect(303, '/')
-    }
-  },
-
+  // Supabase Doc Template Action
   login: async ({ request, locals: { supabase } }) => {
     const formData = await request.formData()
     const email = formData.get('email') as string
@@ -63,9 +21,46 @@ export const actions = {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) {
       console.error(error)
-      redirect(303, '/auth/error')
-    } else {
-      redirect(303, '/private')
-    }
+      return redirect(303, '/auth/error')
+    } 
+    redirect(303, '/')
   },
+  // Supabase Doc Template Action
+  signup: async ({ request, locals: { supabase } }) => {
+    const formData = await request.formData()
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    const { error } = await supabase.auth.signUp({ email, password }); // Autoconfirm?
+
+    if (error) {
+      console.error(error)
+      return redirect(303, '/auth/error')
+    }
+    redirect(303, '/auth/confirm')
+  },
+  // Action for uploading air quality reports
+  report: async ({request, locals: { supabase }}) => {
+    // Retrieve formData
+    const formData = await request.formData();
+    // Assign all the key-values we need via the form data getters
+    const { latitude, longitude, description, odor_type, strength } = destructureReport(formData);
+    // Get the optional but very recommended windspeeds via open-meteo
+    const { windSpeed, windDirection } = await fetchWind(latitude!, longitude!);
+    // Compile report data
+    const reportData = {
+      latitude,
+      longitude,
+      windSpeed,
+      windDirection,
+      description,
+      strength,
+      odor_type
+    }
+    // Insert to reports table
+    const { error } = await supabase
+       .from("reports")
+       .insert(reportData);
+    // Log any errors
+    if(error) console.error(`Something has gone wrong while trying to file a report`, error);
+  }
 } satisfies Actions;
