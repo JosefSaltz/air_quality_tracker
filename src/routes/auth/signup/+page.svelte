@@ -1,5 +1,5 @@
-<script>
-  import SignUpForm from "@/lib/components/Forms/FormTypes/SignUpForm.svelte";
+<script lang="ts">
+  import { SignUpForm } from "$components/Forms/FormTypes";
 </script>
 
 <SignUpForm />
