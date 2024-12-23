@@ -1,11 +1,12 @@
-<script>
+<script lang="ts">
   import FormContainer from "@/lib/components/Forms/Layouts/FormContainer.svelte";
+  import { redirect } from "@sveltejs/kit";
   let { handleClick } = $props();
 </script>
 <FormContainer>
   <div class="sm:mx-auto w-full xl:w-auto sm:max-w-md">
     <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=&shade=600" alt="Your Company">
-    <h2 class="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Sign in to your account</h2>
+    <h2 class="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Login to Report an Odor</h2>
   </div>
 
   <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
@@ -40,12 +41,12 @@
           </div>
 
           <div class="text-sm/6">
-            <a href="#" class="font-semibold text--600 hover:text--500">Forgot password?</a>
+            <a href="/auth/forgot_password" class="font-semibold text--600 hover:text--500">Forgot password?</a>
           </div>
         </div>
 
         <div>
-          <button type="submit" class="flex w-full justify-center rounded-md bg--600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg--500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600">Sign in</button>
+          <button type="submit" class="flex w-full justify-center rounded-md bg-stone-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg--500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600">Login</button>
         </div>
       </form>
 
