@@ -7,7 +7,7 @@
 
   let { data, children } = $props()
   let { session, supabase } = $derived(data)
-
+  $inspect(data.user)
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
       if (newSession?.expires_at !== session?.expires_at) {
@@ -18,6 +18,7 @@
     return () => data.subscription.unsubscribe()
   })
 </script>
+
 <Navbar/>
 <div class="flex justify-center h-full">
   <div class="flex flex-col justify-center w-full h-full items-center">
