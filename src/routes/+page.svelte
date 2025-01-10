@@ -1,7 +1,6 @@
 <script lang="ts">
   import { dev } from '$app/environment';
-  import Dashboard from "@/lib/components/Dashboard.svelte";
-  import UpdateProfile from '$lib/components/UpdateProfile.svelte';
+  import Dashboard from "@/lib/components/Dashboard/Dashboard.svelte";
   
   let data = $props();
   dev && console.log(`🛠️ In Dev Mode`);
@@ -9,4 +8,4 @@
 	let userProfile = $state(data?.userProfile || '');
 </script>
 
-<Dashboard />
+<Dashboard markers={data.markers} />
