@@ -20,3 +20,4 @@ if(!SUPABASE_PROJECT_URL || !SUPABASE_ANON_KEY) console.error("No ENV variables"
 const supabase = createClient(SUPABASE_PROJECT_URL!, SUPABASE_ANON_KEY!);
 
 export default supabase;
+export { SUPABASE_PROJECT_URL, SUPABASE_ANON_KEY}
