@@ -1,18 +1,11 @@
 <script lang="ts">
-  import type { PageData } from "../../routes/$types.js";
+  import type { PageData } from "../../../routes/$types.js";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
-  import ReportMap from "$components/ReportMap.svelte";
+  import ReportMap from "@/lib/components/Dashboard/ReportMap.svelte";
   import { LoginForm, ReportForm, SignUpForm, LoginRequired } from "$components/Forms/FormTypes/index";
-
-  let { data }: { data?: PageData } = $props();
-  let authParams = $state(new URLSearchParams());
+  let { data, markers }: { data?: PageData, markers: any[] } = $props();
   const handleClick = () => { console.log('Submit Form Data') };
-  const updateAuthParams = () => { authParams = new URLSearchParams(window.location.search) };
-  // Initialize the state client-side
-  onMount(updateAuthParams);
-  // Update it after navigation
-  afterNavigate(updateAuthParams) 
 </script>
 
 <div 
@@ -33,5 +26,5 @@
   {:else}
     <LoginRequired />
   {/if}
-  <ReportMap />
+  <ReportMap markers={data?.markers} />
 </div>
