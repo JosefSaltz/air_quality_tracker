@@ -7,4 +7,4 @@
   dev && console.log(`🛠️ In Dev Mode`);	
 </script>
 
-<Dashboard markers={data.markers} />
+<Dashboard user={data.user} profile={data.profile} markers={data.markers} />

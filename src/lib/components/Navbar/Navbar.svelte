@@ -4,14 +4,25 @@
   Open: "fixed inset-0 z-40 overflow-y-auto", Closed: ""
 -->
 <script lang="ts">
-  import type { PageData } from "../../../routes/$types";
-  let { data }: { data?: PageData } = $props();
-  let mobileMenuOpen = $state(false);
-  let profileMenuOpen = $state(false);
-  let toggleMobileMenu = () => { mobileMenuOpen = !mobileMenuOpen };
-  let toggleProfileMenu = () => { profileMenuOpen = !profileMenuOpen };
+  import type { Tables } from "$root/database.types";
+  import type { SupabaseClient, User } from "@supabase/supabase-js";
   import HomeLogo from "$lib/svg/logo_svg.svelte";
-  //$inspect([ mobileMenuOpen, profileMenuOpen])
+  import type supabase from "@/lib/utils/client";
+
+  type NavbarProps = { 
+    profile: ReturnType<typeof supabase.from>, 
+    user: User | null, 
+    supabase: SupabaseClient<any, 'public', any>
+  };
+  
+  let { user, profile, supabase }: NavbarProps = $props();
+  const { email = null, first_name = null, last_name = null } = profile?.data || {};
+  let menuOpen = $state(false);
+  let toggleMenu = () => { menuOpen = !menuOpen };
+  const handleSignOut = async () => { 
+    const { error } = await supabase.auth.signOut();
+    error && console.error(error); 
+  }
 </script>
 
 <header class="bg-white shadow-sm lg:static lg:overflow-y-visible">
@@ -25,6 +36,7 @@
           </a>
         </div>
       </div>
+      <!-- Search Bar -->
       <div class="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
         <div class="flex items-center px-6 py-4 md:mx-auto md:max-w-3xl lg:mx-0 lg:max-w-none xl:px-0">
           <div class="grid w-full grid-cols-1">
@@ -35,10 +47,10 @@
           </div>
         </div>
       </div>
+      <!-- Mobile menu button -->
       <div class="flex items-center md:absolute md:inset-y-0 md:right-0 lg:hidden">
-        <!-- Mobile menu button -->
-        <span >{data?.user!.first_name ?? 'Login'}</span>
-        <button type="button" onmouseup={toggleMobileMenu} class="relative -mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-stone-500" aria-expanded="false">
+        <span >{first_name ?? 'Login'}</span>
+        <button type="button" onmouseup={toggleMenu} class="relative -mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-stone-500" aria-expanded="false">
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only">Open menu</span>
           <!--
@@ -59,16 +71,14 @@
           </svg>
         </button>
       </div>
-      
-      <div class="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-        <!-- Profile dropdown -->
-        <div class="relative ml-5 shrink-0">
+      <!-- Profile dropdown -->
+      <div class={`${menuOpen ? '' : 'hidden'} lg:flex lg:items-center lg:justify-end xl:col-span-4`}>
+        
+        <div id="profile-dropdown" class="relative ml-5 shrink-0">
           <div class="flex row justify-evenly">
-            {#if data?.user}
-              <span >{data?.user.first_name}</span>
-              <button onmouseup={toggleProfileMenu} type="button" class="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                <span class="absolute -inset-1.5"></span>
-                <span class="sr-only">Open user menu</span>
+            {#if user}
+              <span >{first_name ?? ""}</span>
+              <button onmouseup={toggleMenu} type="button" class="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                 <img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
               </button>
             {:else}
@@ -87,11 +97,11 @@
               To: "transform opacity-0 scale-95"
           -->
               
-          <div class={`${mobileMenuOpen ? 'bg-gray-100 outline-none' : 'hidden' } absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none `} role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
+          <div class={`${menuOpen ? 'bg-gray-100 outline-none' : 'hidden' } absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 focus:outline-none `} role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
             <!-- Active: "bg-gray-100 outline-none", Not Active: "" -->
             <a href="profile" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
             <a href="profile/settings" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Settings</a>
-            <a href="?/signout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a> 
+            <a href="/" onclick={handleSignOut} class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a> 
             
           </div>
         </div>
@@ -100,9 +110,8 @@
       </div>
     </div>
   </div>
-
   <!-- Mobile menu, show/hide based on menu state. -->
-  <nav class={`${mobileMenuOpen ? '' : 'hidden'} lg:hidden`} aria-label="Global">
+  <nav class={`${menuOpen ? '' : 'hidden'} lg:hidden`} aria-label="Global">
     <div class="mx-auto max-w-3xl space-y-1 px-2 pb-3 pt-2 sm:px-4">
       <!-- Current: "bg-gray-100 text-gray-900", Default: "hover:bg-gray-50" -->
       <a href="/" aria-current="page" class="block rounded-md bg-gray-100 px-3 py-2 text-base font-medium text-gray-900">Dashboard</a>
@@ -116,8 +125,8 @@
           <img class="size-10 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
         </div>
         <div class="ml-3">
-          <div class="text-base font-medium text-gray-800">Chelsea Hagon</div>
-          <div class="text-sm font-medium text-gray-500">chelsea.hagon@example.com</div>
+          <div class="text-base font-medium text-gray-800">{first_name}</div>
+          <div class="text-sm font-medium text-gray-500">{email}</div>
         </div>
         <button type="button" class="relative ml-auto shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2">
           <span class="absolute -inset-1.5"></span>
@@ -130,7 +139,7 @@
       <div class="mx-auto mt-3 max-w-3xl space-y-1 px-2 sm:px-4">
         <a href="profile" class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">Your Profile</a>
         <a href="profile/settings" class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">Settings</a>
-        <a href="?/signout" class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">Sign out</a>
+        <a href="/" onmouseup={handleSignOut} class="block rounded-md px-3 py-2 text-base font-medium text-gray-500 hover:bg-gray-50 hover:text-gray-900">Sign out</a>
       </div>
     </div>
   </nav>
