@@ -4,7 +4,8 @@
   import { afterNavigate } from "$app/navigation";
   import ReportMap from "@/lib/components/Dashboard/ReportMap.svelte";
   import { LoginForm, ReportForm, SignUpForm, LoginRequired } from "$components/Forms/FormTypes/index";
-  let { data, markers }: { data?: PageData, markers: any[] } = $props();
+  import type { User } from "@supabase/supabase-js";
+  let { data, markers, user }: { data?: PageData, markers: any[], user?: User | null } = $props();
   const handleClick = () => { console.log('Submit Form Data') };
 </script>
 
@@ -21,7 +22,7 @@
     justify-center
     items-center
   `}>
-  {#if data?.user}
+  {#if user}
     <ReportForm handleClick={handleClick} />
   {:else}
     <LoginRequired />
