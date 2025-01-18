@@ -13,14 +13,22 @@
   let lMap:  undefined | Map = $state();
   let mapLoaded = $state(false);
   let geolocation: GeoCoords = $state(null);
+  let deviceGeolocation: GeoCoords = $state(null);
   const setGeolocation = (state: GeoCoords) => {
     geolocation = state;
   };
+  // Change this to null to query the user's device
+  // Binds coordinates to Vallejo, CA absolutely
+  const defaultGeolocation = {
+    latitude: 38.10105120505375,
+    longitude: -122.25144198851173
+  }
 
   onMount(async () => {
     try {
+      deviceGeolocation = await fetchGeolocation();
       // If we don't already have the geolocation cached update it now
-      if (!geolocation) geolocation = await fetchGeolocation();
+      if (!geolocation) geolocation = defaultGeolocation ?? deviceGeolocation;
 
       if (geolocation) {
         console.log(`Loading map...`);
