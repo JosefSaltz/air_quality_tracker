@@ -8,8 +8,6 @@
   import "leaflet/dist/leaflet.css";
   import fetchGeolocation from "$lib/utils/fetchGeolocation";
   import type { Map } from "leaflet";
-  import ReportPermissions from "./ReportPermissions.svelte";
-  import { readGeoPermission } from "@/lib/utils/readGeoPermission";
   import MapSkeleton from "$components/ReportMap/MapSkeleton.svelte";
   import { dev } from "$app/environment";
 

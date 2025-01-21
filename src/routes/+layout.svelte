@@ -4,7 +4,6 @@
   import { invalidate } from '$app/navigation'
   import { onMount, type Snippet } from 'svelte'
   import type { LayoutData } from "./$types";
-
   let { data, children }: { data: LayoutData, children: Snippet } = $props()
   let { session, supabase, user, profile } = $derived(data);
 

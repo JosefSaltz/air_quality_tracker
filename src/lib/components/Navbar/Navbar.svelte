@@ -5,12 +5,11 @@
 -->
 <script lang="ts">
   import type { Tables } from "$root/database.types";
-  import type { SupabaseClient, User } from "@supabase/supabase-js";
+  import type { PostgrestResponse, PostgrestSingleResponse, SupabaseClient, User } from "@supabase/supabase-js";
   import HomeLogo from "$lib/svg/logo_svg.svelte";
-  import type supabase from "@/lib/utils/client";
 
   type NavbarProps = { 
-    profile: ReturnType<typeof supabase.from>, 
+    profile: PostgrestResponse<Tables<'profiles'>>,
     user: User | null, 
     supabase: SupabaseClient<any, 'public', any>
   };

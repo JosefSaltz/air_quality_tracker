@@ -8,9 +8,10 @@ export default async function fetchGeolocation(): Promise<{ latitude: number, lo
     console.error('Not in a browser environment')
     throw new Error('Geolocation not executed in a server environ')
   }
-  const cachedGeo = localStorage.getItem('geolocation');
   // Intialize time
   const now = Temporal.Now.zonedDateTimeISO();
+  // Retrive cached coords from local
+  const cachedGeo = localStorage.getItem('geolocation');
   // If we have a cached geo and a bad connection
   if (cachedGeo) {
     console.log(`Found existing cached location`)

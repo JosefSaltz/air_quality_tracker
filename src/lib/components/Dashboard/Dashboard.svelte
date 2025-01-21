@@ -2,7 +2,7 @@
   import type { PageData } from "../../../routes/$types.js";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
-  import ReportMap from "@/lib/components/Dashboard/ReportMap.svelte";
+  import ReportMap from "$components/ReportMap/ReportMap.svelte";
   import { LoginForm, ReportForm, SignUpForm, LoginRequired } from "$components/Forms/FormTypes/index";
   import type { User } from "@supabase/supabase-js";
   let { data, markers, user }: { data?: PageData, markers: any[], user?: User | null } = $props();
