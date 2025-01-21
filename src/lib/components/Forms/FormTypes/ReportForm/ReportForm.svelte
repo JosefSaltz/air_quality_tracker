@@ -11,7 +11,7 @@
   import { enhance } from "$app/forms";
   
   // import SmokeIcon from "@/lib/svg/smoke.svelte";
-  let { form }: { form: ActionData} = $props();
+  let { form, currentGeolocation = $bindable() }: { form: ActionData} = $props();
   let selectedOdor: null | 'Gas' | "Sewage" | "Smoke" = $state(null);
   let selectedStrength: null | 'Faint' | "Strong" | 'Overwhelming' = $state(null);
 
@@ -26,14 +26,19 @@
     { name: "Sewage", icon: SewageIcon },
     // { name: "Smoke", icon: SmokeIcon },
   ];
+
+  const handleSubmission = ({ formData }: { formData: FormData}) => {
+    const {longitude, latitude } = currentGeolocation;
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
+  }
   const styles = `border-top-left-radius: 0; border-bottom-left-radius: 0`;
 </script>
-
 
 <FormContainer>
   <Card class="p-10 justify-center w-xl">
     <Title class="mb-4 text-2xl">Log an Odor</Title>
-    <form method="POST" use:enhance>
+    <form method="POST" use:enhance={handleSubmission}>
 
       <legend>Odor Type</legend>
       <OdorToggles selected={selectedOdor} toggles={odorTypes} />

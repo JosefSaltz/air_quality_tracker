@@ -1,12 +1,18 @@
 <script lang="ts">
   import type { ActionData, PageData } from "../../../routes/$types.js";
+  import type { Tables } from "$root/database.types.js";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import ReportMap from "$components/ReportMap/ReportMap.svelte";
   import { LoginForm, ReportForm, SignUpForm, LoginRequired } from "$components/Forms/FormTypes/index";
   import type { User } from "@supabase/supabase-js";
-  let { data, form, markers, user }: { data?: PageData, markers: any[], user?: User | null, form: ActionData } = $props();
   
+  let { data, form, markers, user }: { data?: PageData, markers: Tables<'reports'>[], user?: User | null, form: ActionData } = $props();
+  const initialView = {
+    latitude: 38.10105120505375,
+    longitude: -122.25144198851173
+  }
+  let currentGeolocation = $state(initialView);
 </script>
 
 <div 
@@ -23,9 +29,9 @@
     items-center
   `}>
   {#if user}
-    <ReportForm form={form} />
+    <ReportForm bind:currentGeolocation form={form} />
   {:else}
     <LoginRequired />
   {/if}
-  <ReportMap markers={data?.markers} />
+  <ReportMap bind:currentGeolocation markers={markers} />
 </div>
