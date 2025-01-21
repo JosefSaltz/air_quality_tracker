@@ -33,5 +33,5 @@
   {:else}
     <LoginRequired />
   {/if}
-  <ReportMap bind:currentGeolocation markers={markers} />
+  <ReportMap bind:currentGeolocation markers={markers} initialView={initialView} />
 </div>
