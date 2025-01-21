@@ -1,5 +1,6 @@
 {
-	"name": "odor-tracker",
+	"name": "air_quality_tracker",
+	"author": "Josef P. Saltz",
 	"version": "0.0.1",
 	"type": "module",
 	"scripts": {
@@ -37,6 +38,7 @@
 		"eslint-plugin-svelte": "^2.46.1",
 		"postcss": "^8.4.49",
 		"svelte": "^5.10.1",
+		"svelte-adapter-deno": "^0.9.1",
 		"svelte-check": "^4.1.1",
 		"tailwind-merge": "^2.5.5",
 		"tailwind-variants": "^0.3.0",

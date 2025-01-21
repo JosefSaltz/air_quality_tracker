@@ -1,26 +1,34 @@
 <!-- Credit to Github user anzhi0708 for the original implementation -->
 <script lang="ts">
-  import Skeleton from "./ui/skeleton/skeleton.svelte";
+  import Skeleton from "../ui/skeleton/skeleton.svelte";
   import { onMount } from "svelte";
   import "leaflet/dist/leaflet.css";
-  import fetchGeolocation from "../utils/fetchGeolocation";
+  import fetchGeolocation from "../../utils/fetchGeolocation";
   import type { Map } from "leaflet";
 
   type GeoCoords = { latitude: number; longitude: number } | null;
-
+  let { markers } = $props(); 
   let container: undefined | Element;
   let leaflet;
-  let lMap: undefined | Map = $state();
+  let lMap:  undefined | Map = $state();
   let mapLoaded = $state(false);
   let geolocation: GeoCoords = $state(null);
+  let deviceGeolocation: GeoCoords = $state(null);
   const setGeolocation = (state: GeoCoords) => {
     geolocation = state;
   };
+  // Change this to null to query the user's device
+  // Binds coordinates to Vallejo, CA absolutely
+  const defaultGeolocation = {
+    latitude: 38.10105120505375,
+    longitude: -122.25144198851173
+  }
 
   onMount(async () => {
     try {
+      deviceGeolocation = await fetchGeolocation();
       // If we don't already have the geolocation cached update it now
-      if (!geolocation) geolocation = await fetchGeolocation();
+      if (!geolocation) geolocation = defaultGeolocation ?? deviceGeolocation;
 
       if (geolocation) {
         console.log(`Loading map...`);
@@ -45,8 +53,9 @@
     } finally {
       mapLoaded = true;
     }
-
-		$effect(() => {
+  });
+  
+  $effect(() => {
 			// Null Guard
 			if(!container) return;
 			// Invalidate leaflet size on resizes
@@ -61,7 +70,6 @@
 				lMap?.remove();
 			}
 		})
-  });
 </script>
 
 <!-- <Card class="w-[100%]"> -->

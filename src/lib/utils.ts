@@ -2,7 +2,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { cubicOut } from "svelte/easing";
-import * as ToggleGroup from "$lib/components/ui/toggle-group";
+import * as ToggleGroup from "@/lib/components/ui/toggle-group";
 import type { TransitionConfig } from "svelte/transition";
 
 export function cn(...inputs: ClassValue[]) {
