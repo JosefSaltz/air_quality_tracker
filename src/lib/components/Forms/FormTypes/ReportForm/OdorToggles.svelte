@@ -1,6 +1,6 @@
 <script>
   import Toggle from "$components/ui/toggle/toggle.svelte";
-  let { selected, toggles } = $props();
+  let { selected = $bindable(), toggles } = $props();
 </script>
 
 <div class="flex flex-row justify-center xl:justify-evenly">
@@ -8,9 +8,9 @@
     <div class="flex flex-col w-[100px] h-[100px] items-center">
       <Toggle
         variant="outline"
-        pressed={selected === toggle.name.toLowerCase()}
+        pressed={selected === toggle.name}
         onPressedChange={() => {
-          selected = toggle.name.toLowerCase();
+          selected = toggle.name;
         }}
         id={`${toggle.name.toLowerCase()}_type`}
         class="w-[75px] h-[75px]"

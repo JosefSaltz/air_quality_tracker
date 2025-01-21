@@ -7,11 +7,16 @@
   import GasIcon from "@/lib/svg/gas.svelte";
   import SewageIcon from "@/lib/svg/sewage.svelte";
   import FormContainer from '@/lib/components/Forms/Layouts/FormContainer.svelte';
-  import type { ActionData } from "../../../../../routes/$types";
+  import type { ActionData, PageServerLoad } from "../../../../../routes/$types";
   import { enhance } from "$app/forms";
+  import type { GeoCoords } from "@/lib/components/ReportMap/ReportMap.svelte";
   
+  type Props = {
+    form: ActionData,
+    currentGeolocation: GeoCoords,
+  }
   // import SmokeIcon from "@/lib/svg/smoke.svelte";
-  let { form, currentGeolocation = $bindable() }: { form: ActionData} = $props();
+  let { form, currentGeolocation = $bindable() }: Props = $props();
   let selectedOdor: null | 'Gas' | "Sewage" | "Smoke" = $state(null);
   let selectedStrength: null | 'Faint' | "Strong" | 'Overwhelming' = $state(null);
 
@@ -28,10 +33,19 @@
   ];
 
   const handleSubmission = ({ formData }: { formData: FormData}) => {
-    const {longitude, latitude } = currentGeolocation;
-    formData.append('latitude', latitude);
-    formData.append('longitude', longitude);
+    if(!selectedStrength) return console.error('No strength chosen!');
+    const { longitude, latitude } = currentGeolocation;
+    const appended = {
+      latitude: latitude.toString(),
+      longitude: longitude.toString(),
+      location: `POINT(${longitude} ${latitude})`,
+      strength: selectedStrength,
+    }
+    for (const [key, value] of Object.entries(appended)) {
+      formData.append(key, value)
+    }
   }
+  
   const styles = `border-top-left-radius: 0; border-bottom-left-radius: 0`;
 </script>
 
@@ -45,7 +59,7 @@
       <Separator class="my-4" />
 
       <legend>How Strong is the Smell?</legend>
-      <OdorToggles selected={selectedStrength} toggles={odorStrengths} />    
+      <OdorToggles bind:selected={selectedStrength} toggles={odorStrengths} />    
       <Separator class="my-4" />
 
       <legend>Additional Comments</legend>
