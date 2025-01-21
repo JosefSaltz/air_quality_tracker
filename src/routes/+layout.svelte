@@ -6,8 +6,8 @@
   import type { LayoutData } from "./$types";
   let { data, children }: { data: LayoutData, children: Snippet } = $props()
   let { session, supabase, user, profile } = $derived(data);
-
-  $inspect(data)
+  
+  // $inspect(data)
   // Auth Event Listener
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((_, newSession) => {

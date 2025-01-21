@@ -2,13 +2,16 @@
   import Button from "$components/ui/button/button.svelte";
   import Separator from "$components/ui/separator/separator.svelte";
   import { Title } from "$components/ui/card";
+  import Card from "$components/ui/card/card.svelte";
   import OdorToggles from "@/lib/components/Forms/FormTypes/ReportForm/OdorToggles.svelte"
   import GasIcon from "@/lib/svg/gas.svelte";
   import SewageIcon from "@/lib/svg/sewage.svelte";
   import FormContainer from '@/lib/components/Forms/Layouts/FormContainer.svelte';
-  import Card from "../../../ui/card/card.svelte";
+  import type { ActionData } from "../../../../../routes/$types";
+  import { enhance } from "$app/forms";
+  
   // import SmokeIcon from "@/lib/svg/smoke.svelte";
-  let { handleClick }: { handleClick: () => void; } = $props();
+  let { form }: { form: ActionData} = $props();
   let selectedOdor: null | 'Gas' | "Sewage" | "Smoke" = $state(null);
   let selectedStrength: null | 'Faint' | "Strong" | 'Overwhelming' = $state(null);
 
@@ -16,7 +19,7 @@
     { name: "Faint", icon: "😒" },
     { name: "Strong", icon: "😖" },
     { name: "Overwhelming", icon: "🤢" },
-  ];
+  ]; 
 
   const odorTypes = [
     { name: "Gas", icon: GasIcon },
@@ -30,7 +33,7 @@
 <FormContainer>
   <Card class="p-10 justify-center w-xl">
     <Title class="mb-4 text-2xl">Log an Odor</Title>
-    <form method="POST">
+    <form method="POST" use:enhance>
 
       <legend>Odor Type</legend>
       <OdorToggles selected={selectedOdor} toggles={odorTypes} />
@@ -42,13 +45,14 @@
 
       <legend>Additional Comments</legend>
       <input
-        id="comments_input"
+        id="description"
         class="border w-full"
-        name="comments"
+        name="description"
         type="text"
       />
-      <Button class="block my-4" type="submit" formaction="?/log_report">Submit</Button>
+      <Button class="block my-4" type="submit" formaction="?/report">Submit</Button>
     </form>
+    {#if form?.error}<p class="error text-red-500">Something went wrong</p>{/if}
   </Card>
 </FormContainer>
 

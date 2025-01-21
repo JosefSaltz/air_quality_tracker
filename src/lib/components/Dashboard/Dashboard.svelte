@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { PageData } from "../../../routes/$types.js";
+  import type { ActionData, PageData } from "../../../routes/$types.js";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import ReportMap from "$components/ReportMap/ReportMap.svelte";
   import { LoginForm, ReportForm, SignUpForm, LoginRequired } from "$components/Forms/FormTypes/index";
   import type { User } from "@supabase/supabase-js";
-  let { data, markers, user }: { data?: PageData, markers: any[], user?: User | null } = $props();
-  const handleClick = () => { console.log('Submit Form Data') };
+  let { data, form, markers, user }: { data?: PageData, markers: any[], user?: User | null, form: ActionData } = $props();
+  
 </script>
 
 <div 
@@ -23,7 +23,7 @@
     items-center
   `}>
   {#if user}
-    <ReportForm handleClick={handleClick} />
+    <ReportForm form={form} />
   {:else}
     <LoginRequired />
   {/if}

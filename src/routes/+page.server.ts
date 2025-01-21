@@ -1,22 +1,36 @@
-import { getOrCreateUserProfile } from "$lib/auth";
-import { db } from "$lib/db/index.js";
 import { getMarkers } from "@/lib/utils/getMarkers";
-import { profileTable } from "$lib/db/schema.js";
-import { error, redirect, type Actions, type ServerLoad } from "@sveltejs/kit";
-import { eq } from "drizzle-orm";
-import { zfd } from "zod-form-data";
-import type { PageServerLoad } from "./$types";
+import { fail, redirect } from "@sveltejs/kit";
+import type { PageServerLoad, Actions } from "./$types";
 
 export const load: PageServerLoad = async ({ locals }) => {
+  // Fetch minimum required data
   const markers = await getMarkers();
   if(!markers) return console.warn('No marker data retrieved');
-  return { markers }
+  return { markers: markers.data }
 };
 
 export const actions = {
-  signout: async ({ locals: { supabase } }) => {
-    const { error } = await supabase.auth.signOut();
-    if(error) console.error(error);
-    redirect(303, "/")
+  report: async({ request, locals: { supabase, user, session }}) => {
+    // Action Level Auth Guard
+    if(!user || !session) return console.error('User is not authenticated for submission');
+    // Assign necessary form data
+    const formData = await request.formData();
+    const latitude = formData.get("latitude");
+    const longitude = formData.get("longitude");
+    const description = formData.get("description");
+    const strength = formData.get("strength");
+    const created_by = user.id;
+    // Attempt to insert to DB
+    const response = await supabase
+      .from("reports")
+      .insert({
+        created_by,
+        description,
+        latitude,
+        longitude,
+        strength
+      });
+    if(response.error) fail(400, {})
+    return response;
   }
-} satisfies Actions;
+} satisfies Actions

@@ -24,5 +24,7 @@ async function getProfile(user: User | null, session: Session | null) {
     return null;
   }
   // Return the first row
-  return response;
+  return response.data[0];
 }
+
+export type ProfileResponse = Awaited<ReturnType<typeof getProfile>>;
