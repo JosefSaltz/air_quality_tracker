@@ -64,6 +64,7 @@ export type Database = {
           latitude: number
           location: unknown
           longitude: number
+          strength: Database["public"]["Enums"]["air_quality"]
         }
         Insert: {
           created_at?: string
@@ -73,6 +74,7 @@ export type Database = {
           latitude: number
           location: unknown
           longitude: number
+          strength?: Database["public"]["Enums"]["air_quality"]
         }
         Update: {
           created_at?: string
@@ -82,6 +84,7 @@ export type Database = {
           latitude?: number
           location?: unknown
           longitude?: number
+          strength?: Database["public"]["Enums"]["air_quality"]
         }
         Relationships: [
           {
