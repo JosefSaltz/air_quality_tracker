@@ -17,6 +17,7 @@ export const actions = {
     const formData = await request.formData();
     const latitude = formData.get("latitude");
     const longitude = formData.get("longitude");
+    const location = formData.get("location");
     const description = formData.get("description");
     const strength = formData.get("strength");
     const created_by = user.id;
@@ -28,6 +29,7 @@ export const actions = {
         description,
         latitude,
         longitude,
+        location,
         strength
       });
     if(response.error) fail(400, {})
