@@ -13,15 +13,17 @@
   import type {} from "leaflet"
   import type { Tables } from "$root/database.types";
 
-  let { markers, currentGeolocation = $bindable() } = $props(); 
-  let container: undefined | Element;
-  let leaflet: typeof import('leaflet') | undefined;
+  type Props = {
+    markers: Tables<'reports'>[],
+    currentGeolocation: GeoCoords,
+    initialView: GeoCoords
+  }
+
+  let { markers, currentGeolocation = $bindable(), initialView }: Props = $props(); 
   let lMap:  undefined | Map = $state();
-  
-  // Change this to null to query the user's device
-  // Binds coordinates to Vallejo, CA absolutely
-  // Unsure about how to handle geolocation outside of Vallejo, CA as extraneous data
-  
+  let leaflet: typeof import('leaflet') | undefined;
+  let container: undefined | Element;
+
   // Semantic alias
   const devDefault = initialView;
   // Dynamically figure out which location to use in dev mode
@@ -46,9 +48,9 @@
       leaflet = await import("leaflet");
       // Define marker generation
       const generateMarkers = (lMap: Map) => {
-        markers.forEach((marker: Tables<'reports'>) => {
+        markers.map((marker: Tables<'reports'>) => {
           const markerCoords = [ marker.latitude, marker.longitude ] satisfies LatLngTuple;
-          if(!leaflet) return console.error('Leaflet is now initialized!')
+          if(!leaflet) return console.error('Leaflet is not initialized!')
           leaflet.marker(markerCoords).addTo(lMap);
         })
       }
