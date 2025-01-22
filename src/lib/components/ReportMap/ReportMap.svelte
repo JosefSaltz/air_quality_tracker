@@ -7,18 +7,15 @@
   import { onMount } from "svelte";
   import "leaflet/dist/leaflet.css";
   import fetchGeolocation from "$lib/utils/fetchGeolocation";
-  import type { LatLngTuple, Map } from "leaflet";
   import MapSkeleton from "$components/ReportMap/MapSkeleton.svelte";
   import { dev } from "$app/environment";
-  import type {} from "leaflet"
-  import type { Tables } from "$root/database.types";
-
+  import type { PageProps } from "../../../routes/$types";
+  import type { LatLngTuple, Map } from "leaflet";
   type Props = {
-    markers: Tables<'reports'>[],
+    markers: PageProps["data"]["markers"],
     currentGeolocation: GeoCoords,
     initialView: GeoCoords
   }
-
   let { markers, currentGeolocation = $bindable(), initialView }: Props = $props(); 
   let lMap:  undefined | Map = $state();
   let leaflet: typeof import('leaflet') | undefined;
@@ -48,7 +45,9 @@
       leaflet = await import("leaflet");
       // Define marker generation
       const generateMarkers = (lMap: Map) => {
-        markers.map((marker: Tables<'reports'>) => {
+        if (!markers) return null;
+
+        return markers.map((marker) => {
           const markerCoords = [ marker.latitude, marker.longitude ] satisfies LatLngTuple;
           if(!leaflet) return console.error('Leaflet is not initialized!')
           leaflet.marker(markerCoords).addTo(lMap);

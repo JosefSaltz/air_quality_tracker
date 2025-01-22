@@ -1,10 +1,10 @@
+
 <script lang="ts">
   import { dev } from '$app/environment';
   import Dashboard from "@/lib/components/Dashboard/Dashboard.svelte";
-  import type { PageData } from './$types';
-  
-  let { data }: { data: PageData } = $props();
+  import type { PageProps } from './$types';
+  let { data, form }: PageProps = $props();
   dev && console.log(`🛠️ In Dev Mode`);	
 </script>
 
-<Dashboard user={data.user} profile={data.profile} markers={data.markers} />
+<Dashboard form={form} user={data.user} markers={data.markers} />

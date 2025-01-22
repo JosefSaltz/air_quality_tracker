@@ -4,7 +4,7 @@
   Open: "fixed inset-0 z-40 overflow-y-auto", Closed: ""
 -->
 <script lang="ts">
-  import type { Tables } from "$root/database.types";
+  
   import type { SupabaseClient, User } from "@supabase/supabase-js";
   import type { ProfileResponse } from "@/routes/+layout.server";
   import HomeLogo from "$lib/svg/logo_svg.svelte";

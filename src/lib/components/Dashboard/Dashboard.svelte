@@ -1,13 +1,12 @@
 <script lang="ts">
-  import type { ActionData, PageData } from "../../../routes/$types.js";
+  import type { PageProps } from "../../../routes/$types";
   import type { Tables } from "$root/database.types.js";
-  import { onMount } from "svelte";
-  import { afterNavigate } from "$app/navigation";
+
   import ReportMap from "$components/ReportMap/ReportMap.svelte";
-  import { LoginForm, ReportForm, SignUpForm, LoginRequired } from "$components/Forms/FormTypes/index";
+  import { ReportForm, LoginRequired } from "$components/Forms/FormTypes/index";
   import type { User } from "@supabase/supabase-js";
-  
-  let { data, form, markers, user }: { data?: PageData, markers: Tables<'reports'>[], user?: User | null, form: ActionData } = $props();
+
+  let { form, markers, user }: { form: PageProps["form"], markers?: PageProps["data"]["markers"], user: User | null } = $props();
   const initialView = {
     latitude: 38.10105120505375,
     longitude: -122.25144198851173
