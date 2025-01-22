@@ -13,7 +13,8 @@ const config = {
 		alias: {
 			"@": "./src",
 			"$root": "./",
-			"$components": "./src/lib/components"
+			"$components": "./src/lib/components",
+			"$routes": "./src/routes"
 		}
 	}
 };
