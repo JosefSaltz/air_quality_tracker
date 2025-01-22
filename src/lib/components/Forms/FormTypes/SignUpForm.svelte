@@ -1,18 +1,35 @@
 <script lang="ts">
-  import FormContainer from "@/lib/components/Forms/Layouts/FormContainer.svelte";
+  import FormContainer from "$components/Forms/Layouts/FormContainer.svelte";
+  import { browser } from "$app/environment";
+  import supabase from "$lib/utils/client";
   import { z } from 'zod';
+  import GoogleOneTap from "./LoginForm/GoogleOneTap.svelte";
+  
   const emailSchema = z.string().email();
+  let { googleNonce } = $props();
   let confirm_pw = $state();
   let email = $state();
   let password = $state();
+  let first_name = $state(null);
+  let last_name = $state(null);
   let valid_email = $derived(emailSchema.safeParse(email).success);
   let verified_pw = $derived(password && confirm_pw && password === confirm_pw);
   let disable_submit = $derived(!(verified_pw && valid_email));
-  let first_name = $state(null);
-  let last_name = $state(null);
+
+  async function handleSignInWithGoogle(response: { credential: string }) {
+    const { data, error } = await supabase.auth.signInWithIdToken({
+      provider: 'google',
+      token: response.credential,
+      nonce: googleNonce
+    })
+  }
 </script>
 
 <FormContainer>
+  {#if browser}
+    <script src="https://accounts.google.com/gsi/client" data-nonce={googleNonce} async></script>
+  {/if}
+  <GoogleOneTap />
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
     <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=&shade=600" alt="Your Company">
     <h2 class="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">New User Sign Up</h2>
