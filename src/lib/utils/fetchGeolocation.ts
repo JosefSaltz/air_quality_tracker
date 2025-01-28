@@ -1,6 +1,6 @@
 import { browser } from "$app/environment";
-import { Temporal, Intl, toTemporalInstant } from '@js-temporal/polyfill';
-import type { GeoCoords } from "../components/ReportMap/ReportMap.svelte";
+import { Temporal } from '@js-temporal/polyfill';
+
 // src/utils/geolocation.js
 export default async function fetchGeolocation(): Promise<{ latitude: number, longitude: number }> {
   // Catch executions that aren't in the browser
