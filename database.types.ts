@@ -60,10 +60,12 @@ export type Database = {
           created_at: string
           created_by: string
           description: string | null
+          humidity: number | null
           id: number
           latitude: number
           location: unknown
           longitude: number
+          precipitation: number | null
           strength: Database["public"]["Enums"]["air_quality"]
           temperature: number | null
           wind_direction: number | null
@@ -73,10 +75,12 @@ export type Database = {
           created_at?: string
           created_by: string
           description?: string | null
+          humidity?: number | null
           id?: number
           latitude: number
           location: unknown
           longitude: number
+          precipitation?: number | null
           strength?: Database["public"]["Enums"]["air_quality"]
           temperature?: number | null
           wind_direction?: number | null
@@ -86,10 +90,12 @@ export type Database = {
           created_at?: string
           created_by?: string
           description?: string | null
+          humidity?: number | null
           id?: number
           latitude?: number
           location?: unknown
           longitude?: number
+          precipitation?: number | null
           strength?: Database["public"]["Enums"]["air_quality"]
           temperature?: number | null
           wind_direction?: number | null
