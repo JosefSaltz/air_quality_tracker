@@ -30,7 +30,7 @@
 </script>
 
 <header class="bg-white shadow-sm lg:static lg:overflow-y-visible">
-  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+  <div class="hidden lg:block mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
       <div class="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
         <div class="flex shrink-0 items-center">
@@ -87,9 +87,11 @@
       </div>
     </div>
   </div>
-  <!-- Mobile Menu Button -->
-  <div class="flex items-center md:absolute md:inset-y-0 md:right-0 lg:hidden">
-    <span >{profile?.first_name ?? 'Login'}</span>
+  <!-- Mobile Navbar -->
+  <div class="flex items-center md:absolute justify-end p-2 md:inset-y-0 md:right-0 lg:hidden">
+    {#if user}
+      <span >{profile?.first_name ?? 'Login'}</span>
+    {/if}
     <button type="button" onfocus={toggleMenu} onfocusout={toggleMenu} class="relative -mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-stone-500" aria-expanded="false">
       <span class="absolute -inset-0.5"></span>
       <span class="sr-only">Open menu</span>
