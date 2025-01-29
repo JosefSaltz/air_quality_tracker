@@ -3,8 +3,8 @@
   import { browser } from "$app/environment";
   import supabase from "$lib/utils/client";
   import { z } from 'zod';
-  import GoogleOneTap from "./LoginForm/GoogleOneTap.svelte";
-  
+  import SignInWithGoogle from "./LoginForm/SignInWithGoogle.svelte";
+
   const emailSchema = z.string().email();
   let { googleNonce } = $props();
   let confirm_pw = $state();
@@ -29,7 +29,7 @@
   {#if browser}
     <script src="https://accounts.google.com/gsi/client" data-nonce={googleNonce} async></script>
   {/if}
-  <GoogleOneTap />
+  
   <div class="sm:mx-auto sm:w-full sm:max-w-md">
     <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/plus/img/logos/mark.svg?color=&shade=600" alt="Your Company">
     <h2 class="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">New User Sign Up</h2>
@@ -84,10 +84,9 @@
           <button type="submit" class={`flex w-full justify-center rounded-md ${disable_submit ? 'bg-stone-300' : 'bg-stone-600'} px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg--500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600`} disabled={disable_submit}>Sign up</button>
         </div>
       </form>
-
     <p class="mt-10 text-center text-sm/6 text-gray-500">
       Already have an account?
-      <a href="/?auth=login" class="font-semibold text--600 hover:text--500">Login Here</a>
+      <a href="/auth/login" class="font-semibold text--600 hover:text--500">Login Here</a>
     </p>
   </div>
 </FormContainer>
