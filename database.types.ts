@@ -67,9 +67,9 @@ export type Database = {
           longitude: number
           precipitation: number | null
           strength: Database["public"]["Enums"]["air_quality"]
-          temperature: number | null
+          temperature_f: number | null
           wind_direction: number | null
-          wind_speed: number | null
+          wind_speed_kn: number | null
         }
         Insert: {
           created_at?: string
@@ -82,9 +82,9 @@ export type Database = {
           longitude: number
           precipitation?: number | null
           strength?: Database["public"]["Enums"]["air_quality"]
-          temperature?: number | null
+          temperature_f?: number | null
           wind_direction?: number | null
-          wind_speed?: number | null
+          wind_speed_kn?: number | null
         }
         Update: {
           created_at?: string
@@ -97,9 +97,9 @@ export type Database = {
           longitude?: number
           precipitation?: number | null
           strength?: Database["public"]["Enums"]["air_quality"]
-          temperature?: number | null
+          temperature_f?: number | null
           wind_direction?: number | null
-          wind_speed?: number | null
+          wind_speed_kn?: number | null
         }
         Relationships: [
           {
