@@ -11,6 +11,9 @@
   import { dev } from "$app/environment";
   import type { PageProps } from "../../../routes/$types";
   import type { LatLngTuple, Map } from "leaflet";
+  import Button from "../ui/button/button.svelte";
+  import addCenterMarker from "../Leaflet/leaflet.centermarker";
+  
   type Props = {
     markers: PageProps["data"]["markers"],
     currentGeolocation: GeoCoords,
@@ -18,7 +21,7 @@
   }
   let { markers, currentGeolocation = $bindable(), initialView }: Props = $props(); 
   let lMap:  undefined | Map = $state();
-  let leaflet: typeof import('leaflet') | undefined;
+  let L: typeof import('leaflet') | undefined;
   let container: undefined | Element;
 
   // Semantic alias
@@ -36,29 +39,35 @@
   // CSR logic
   onMount(async () => {
     try {
-      console.log(`Loading map...`);
-      // Async fetch up to date geo coordinates and update the state
-      fetchGeoAndUpdate();
-      // Destructure current geo values
-      const { latitude: x, longitude: y } = currentGeolocation;
-      // Dynamically import the leaflet library to resolve CSR requirements (window global)
-      leaflet = await import("leaflet");
       // Define marker generation
       const generateMarkers = (lMap: Map) => {
         if (!markers) return null;
 
         return markers.map((marker) => {
           const markerCoords = [ marker.latitude, marker.longitude ] satisfies LatLngTuple;
-          if(!leaflet) return console.error('Leaflet is not initialized!')
-          leaflet.marker(markerCoords).addTo(lMap);
+          if(!L) return console.error('Leaflet is not initialized!')
+          L.marker(markerCoords).addTo(lMap);
         })
       }
+      // Loading Start
+      console.log(`Loading map...`);
+      // Async fetch up to date geo coordinates and update the state
+      fetchGeoAndUpdate();
+      // Destructure current geo values
+      const { latitude: x, longitude: y } = currentGeolocation;
+      // Dynamically import the leaflet library to resolve CSR requirements (window global)
+      L = await import("leaflet");
       // Initialize the Leaflet map object bound to the element with #map
-      lMap = leaflet.map("map").setView([x, y], 13);
+      lMap = L.map("map").setView([x, y], 13);
       // Set OpenStreetMap as the tile layer and add to map object
-      leaflet
+      L
         .tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {})
         .addTo(lMap);
+      const centerMarkerFactory = addCenterMarker(window);
+      const selectMarker = L.centerMarker(lMap);
+      selectMark
+      console.log(typeof selectMarker);
+      selectMarker.on("newposition", () => { const latLang = selectMarker.getLatLng(); console.log(latLang); currentGeolocation = latLang})
       // Add all the markers to the map iteratively
       generateMarkers(lMap);
       // Set the watermark attribution
@@ -90,11 +99,14 @@
 		})
 </script>
 <!-- Leafly attachment node -->
+<Button class="absolute my-4">Report</Button>
 <div id="map" bind:this={container} class={`w-full h-full border`}>
   {#if !lMap}
     <MapSkeleton />
   {/if}
+  
 </div>
+
 <!-- </Card> -->
 <style>
   #map {
