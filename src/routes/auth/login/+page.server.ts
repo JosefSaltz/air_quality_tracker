@@ -1,5 +1,7 @@
 import type { AuthError } from "@supabase/supabase-js";
 import { redirect, type Actions, fail } from "@sveltejs/kit";
+import { dev } from "$app/environment";
+
 
 export const actions = {
   login: async ({ request, locals: { supabase }, params }) => {
@@ -16,7 +18,17 @@ export const actions = {
     let hadError = null;
     // Social OAuth
     if(params?.sso && params?.provider === "google") {
-      const { error } = await supabase.auth.signInWithOAuth({ provider: 'google'})
+      const { provider } = params;
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: dev ? 'http://localhost:3000' : 'https://piita.org/auth/callback',
+        },
+      });
+      
+      if (data.url) {
+        redirect(301, data.url) // use the redirect API for your server framework
+      }
       hadError = error;
     }
     // Default Email Password
