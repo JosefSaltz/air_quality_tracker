@@ -51,7 +51,7 @@
 
 <FormContainer>
   <Card class="p-10 justify-center w-xl">
-    <Title class="mb-4 text-2xl">Log an Odor</Title>
+    <Title class="mb-4 text-2xl">Report an Odor</Title>
     <form method="POST" use:enhance={handleSubmission}>
 
       <legend>Odor Type</legend>

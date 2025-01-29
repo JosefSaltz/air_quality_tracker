@@ -4,11 +4,14 @@
   Open: "fixed inset-0 z-40 overflow-y-auto", Closed: ""
 -->
 <script lang="ts">
-  
+
   import type { SupabaseClient, User } from "@supabase/supabase-js";
   import type { ProfileResponse } from "@/routes/+layout.server";
+  import { buttonVariants } from "$lib/components/ui/button";
   import HomeLogo from "$lib/svg/logo_svg.svelte";
-
+  import Button from "../ui/button/button.svelte";
+  import { SvelteURL } from "svelte/reactivity";
+  
   type NavbarProps = { 
     profile: ProfileResponse
     user: User | null, 
@@ -34,7 +37,7 @@
     <div class="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
       <div class="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
         <div class="flex shrink-0 items-center">
-          <a href="/">
+          <a href="/" class={`${buttonVariants({ variant: "link"})}`}>
             <!-- <span>{ HomeLogo }</span> -->
             Home
           </a>
@@ -62,7 +65,7 @@
                 <img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
               </button>
             {:else}
-              <span><a href="/auth/login">Login</a></span>
+              <a href="/auth/login" class={`${buttonVariants({ size: "lg", variant: "link"})}`}>Login</a>
             {/if}
           </div>
 
@@ -88,30 +91,31 @@
     </div>
   </div>
   <!-- Mobile Navbar -->
-  <div class="flex items-center md:absolute justify-end p-2 md:inset-y-0 md:right-0 lg:hidden">
+  <div class="flex items-center md:absolute py-3 md:inset-y-0 md:right-0 lg:hidden">
+    <a href="/" class={`text-lg ${buttonVariants({ variant: "outline"})} ml-3 py-2 hover:bg-red-500`}>Home</a>
     {#if user}
-      <span >{profile?.first_name ?? 'Login'}</span>
+      
+      <button type="button" onfocus={toggleMenu} onfocusout={toggleMenu} class="relative -mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-stone-500" aria-expanded="false">
+        <span class="absolute -inset-0.5"></span>
+        <span class="sr-only">Open menu</span>
+        <!--
+          Icon when menu is closed.
+
+          Menu open: "hidden", Menu closed: "block"
+        -->
+        <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+        <!--
+          Icon when menu is open.
+
+          Menu open: "block", Menu closed: "hidden"
+        -->
+        <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
     {/if}
-    <button type="button" onfocus={toggleMenu} onfocusout={toggleMenu} class="relative -mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-stone-500" aria-expanded="false">
-      <span class="absolute -inset-0.5"></span>
-      <span class="sr-only">Open menu</span>
-      <!--
-        Icon when menu is closed.
-
-        Menu open: "hidden", Menu closed: "block"
-      -->
-      <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-      </svg>
-      <!--
-        Icon when menu is open.
-
-        Menu open: "block", Menu closed: "hidden"
-      -->
-      <svg class="hidden size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-      </svg>
-    </button>
   </div>
   <!-- Mobile menu, show/hide based on menu state. -->
   <nav class={`${menuOpen ? '' : 'hidden'} lg:hidden`} aria-label="Global">
