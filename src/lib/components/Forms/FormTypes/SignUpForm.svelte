@@ -1,5 +1,5 @@
 <script lang="ts">
-  import FormContainer from "$components/Forms/Layouts/FormContainer.svelte";
+  import FormContainer from "@/lib/components/Forms/Layouts/FormDrawer.svelte";
   import { browser } from "$app/environment";
   import supabase from "$lib/utils/client";
   import { z } from 'zod';

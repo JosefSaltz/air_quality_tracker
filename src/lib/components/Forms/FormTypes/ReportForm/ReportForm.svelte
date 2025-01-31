@@ -6,10 +6,12 @@
   import OdorToggles from "@/lib/components/Forms/FormTypes/ReportForm/OdorToggles.svelte"
   import GasIcon from "@/lib/svg/gas.svelte";
   import SewageIcon from "@/lib/svg/sewage.svelte";
-  import FormContainer from '@/lib/components/Forms/Layouts/FormContainer.svelte';
-  import type { ActionData, PageServerLoad } from "../../../../../routes/$types";
   import { enhance } from "$app/forms";
+  import FormContainer from '@/lib/components/Forms/Layouts/FormDrawer.svelte';
+  import TimePickerInput from "@/lib/components/TimePicker/TimePickerInput.svelte";
+  import type { ActionData } from "../../../../../routes/$types";
   import type { GeoCoords } from "@/lib/components/ReportMap/ReportMap.svelte";
+  import type { Period } from "@/lib/components/TimePicker/TimePickerUtils";
   
   type Props = {
     form: ActionData,
@@ -19,7 +21,6 @@
   let { form, currentGeolocation = $bindable() }: Props = $props();
   let selectedOdor: null | 'Gas' | "Sewage" | "Smoke" = $state(null);
   let selectedStrength: null | 'Faint' | "Strong" | 'Overwhelming' = $state(null);
-
   const odorStrengths = [
     { name: "Faint", icon: "😒" },
     { name: "Strong", icon: "😖" },
@@ -31,10 +32,13 @@
     { name: "Sewage", icon: SewageIcon },
     // { name: "Smoke", icon: SmokeIcon },
   ];
+  // Time Picker State
+  // let period: Period = $state(null);
+  // let selectedDate: Date | null = $state(null);
 
   const handleSubmission = ({ formData }: { formData: FormData}) => {
     if(!selectedStrength) return console.error('No strength chosen!');
-    const { longitude, latitude } = currentGeolocation;
+    const { latitude, longitude } = currentGeolocation;
     const appended = {
       latitude: latitude.toString(),
       longitude: longitude.toString(),
@@ -45,12 +49,12 @@
       formData.append(key, value)
     }
   }
-  
+  $inspect(currentGeolocation)
   const styles = `border-top-left-radius: 0; border-bottom-left-radius: 0`;
 </script>
 
-<FormContainer>
-  <Card class="p-10 justify-center w-xl">
+<div id="form-layout" class="flex flex-col justify-center items-center w-full">
+  <div class="p-10 w-full max-w-xl">
     <Title class="mb-4 text-2xl">Report an Odor</Title>
     <form method="POST" use:enhance={handleSubmission}>
 
@@ -60,20 +64,28 @@
 
       <legend>How Strong is the Smell?</legend>
       <OdorToggles bind:selected={selectedStrength} toggles={odorStrengths} />    
-      <Separator class="my-4" />
+      
 
-      <legend>Additional Comments</legend>
-      <input
-        id="description"
-        class="border w-full"
-        name="description"
-        type="text"
+      <!-- <legend>Duration</legend>
+      <TimePickerInput picker="12hours"
+        period={period}
+        date={date}
+        setDate={(val) => { selectedDate(val) }}
+        ref={hourRef}
+        onRightFocus={() => minuteRef.current?.focus()} 
       />
+      <Separator class="my-4" /> -->
+
+      <legend class="mt-4">Additional Comments</legend>
+      <textarea
+        id="description"
+        class="border w-full max-h-12"
+        name="description"
+      ></textarea>
       <Button class="block my-4" type="submit" formaction="?/report">Submit</Button>
     </form>
-    {#if form?.error}<p class="error text-red-500">Something went wrong</p>{/if}
-  </Card>
-</FormContainer>
+  </div>
+</div>
 
 <style>
   legend {
