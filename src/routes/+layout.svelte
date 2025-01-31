@@ -4,6 +4,7 @@
   import { invalidate } from '$app/navigation'
   import { onMount, type Snippet } from 'svelte'
   import type { LayoutData } from "./$types";
+  import DisclaimerBanner from "@/lib/components/Banner/DisclaimerBanner.svelte";
   let { data, children }: { data: LayoutData, children: Snippet } = $props()
   let { session, supabase, user, profile } = $derived(data);
   
@@ -20,6 +21,7 @@
   })
 </script>
 
+<DisclaimerBanner />
 <Navbar profile={ profile } user={user} supabase={supabase} />
 <div class="flex justify-center h-full">
   <div class="flex flex-col justify-center w-full h-full items-center">
