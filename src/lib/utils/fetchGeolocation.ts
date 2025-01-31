@@ -37,7 +37,6 @@ export default async function fetchGeolocation(): Promise<{ latitude: number, lo
         localStorage.setItem('geolocation', JSON.stringify({ latitude, longitude, expiry }));
         // Return the latitude and longitude
         resolve({ latitude, longitude });
-        console.log('test')
       },
       (err) => {
         console.error(`Something went wrong while requesting geolocation`, err)

@@ -11,6 +11,7 @@
   import HomeLogo from "$lib/svg/logo_svg.svelte";
   import Button from "../ui/button/button.svelte";
   import { SvelteURL } from "svelte/reactivity";
+  import { redirect } from "@sveltejs/kit";
   
   type NavbarProps = { 
     profile: ProfileResponse
@@ -25,6 +26,7 @@
   const handleSignOut = async () => { 
     const { error } = await supabase.auth.signOut();
     error && console.error(error); 
+    location.reload();
   }
 
   const handleMenuClick = (cb?: () => any) => {
@@ -32,19 +34,20 @@
   }
 </script>
 
-<header class="bg-white shadow-sm lg:static lg:overflow-y-visible">
+<header class="bg-white shadow-sm lg:static lg:overflow-y-visible hidden xl:block">
   <div class="hidden lg:block mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
       <div class="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
         <div class="flex shrink-0 items-center">
-          <a href="/" class={`${buttonVariants({ variant: "link"})}`}>
+          <a href="/" class={`${buttonVariants({ variant: "link", class: `text-lg`})}`}>
             <!-- <span>{ HomeLogo }</span> -->
             Home
           </a>
         </div>
       </div>
+
       <!-- Search Bar -->
-      <div class="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6">
+      <div class="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-6 invisible">
         <div class="flex items-center px-6 py-4 md:mx-auto md:max-w-3xl lg:mx-0 lg:max-w-none xl:px-0">
           <div class="grid w-full grid-cols-1">
             <input type="search" name="search" class="col-start-1 row-start-1 block w-full rounded-md bg-white py-1.5 pl-10 pr-3 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-stone-600 sm:text-sm/6" placeholder="Search">
