@@ -1,45 +1,60 @@
 import { getMarkers } from "@/lib/utils/getMarkers";
 import { fail } from "@sveltejs/kit";
-import type { PageServerLoad, Actions } from "./$types";
+import type { Actions, PageServerLoad } from "./$types";
 import crypto from "crypto";
 import { fetchMeteoData } from "@/lib/utils/fetchMeteoData";
-import type { TablesInsert } from "$root/database.types";
+import type { Tables, TablesInsert } from "$root/database.types";
 import z from "zod";
+
 
 export const load: PageServerLoad = async ({ locals }) => {
   // Fetch minimum required data
   const markers = await getMarkers();
   // Generate cryptographic nonce for use with Google SSO
   const googleNonce = crypto.randomUUID();
-  if(!markers) return console.warn('No marker data retrieved');
-  return { googleNonce, markers: markers.data };
+  if (!markers) return console.warn("No marker data retrieved");
+  return { googleNonce, markers };
 };
 // Deepseek generated schema
 const ReportSchema = z.object({
   created_by: z.string(), // Assuming user.id is a string (e.g., UUID)
   description: z.string(),
-  latitude: z.number().refine((val) => val >= -90 && val <= 90, "Invalid latitude"),
-  longitude: z.number().refine((val) => val >= -180 && val <= 180, "Invalid longitude"),
+  latitude: z.number().refine(
+    (val) => val >= -90 && val <= 90,
+    "Invalid latitude",
+  ),
+  longitude: z.number().refine(
+    (val) => val >= -180 && val <= 180,
+    "Invalid longitude",
+  ),
   location: z.string(),
-  strength: z.enum(['Faint', 'Strong', 'Overwhelming']),
+  strength: z.enum(["Faint", "Strong", "Overwhelming"]),
   humidity: z.number().nullable(), // Allow null if meteo data is unavailable
   precipitation: z.number().nullable(),
-  wind_speed: z.number().nullable(),
-  wind_direction: z.number().nullable(), 
-  temperature: z.number().nullable()
+  wind_speed_kn: z.number().nullable(),
+  wind_direction: z.number().nullable(),
+  temperature_f: z.number().nullable(),
 });
 
 export const actions = {
-  report: async({ request, locals: { supabase, user, session }}) => {
+  report: async ({ request, locals: { supabase, user, session } }) => {
     // Action Level Auth Guard
-    if(!user || !session) return console.error('User is not authenticated for submission');
+    if (!user || !session) {
+      return console.error("User is not authenticated for submission");
+    }
     // Assign necessary form data
     const formData = await request.formData();
-    const latitude = formData.get("latitude");
-    const longitude = formData.get("longitude");
+    const latitude = Number(formData.get("latitude"));
+    const longitude = Number(formData.get("longitude"));
     // Preliminary Type Checks
-    if(typeof latitude !== "number") return console.error(`Latitude is not a number!`);
-    if(typeof longitude !== "number") return console.error(`Longitude is not a number!`);
+    if (typeof latitude !== "number") {
+      console.error(`Latitude is ${typeof latitude}, not a number!`);
+      return fail(400, { error: "Latitude is not a number"});
+    }
+    if (typeof longitude !== "number") {
+      console.error(`Longitude is ${typeof longitude}, not a number!`);
+      return fail(400, { error: "Longitude is not a number" });
+    }
     // Grab remaining form values
     const location = formData.get("location");
     const description = formData.get("description");
@@ -49,10 +64,26 @@ export const actions = {
     const meteoResponse = await fetchMeteoData({ latitude, longitude });
     // Initialize conditional variable
     let meteoData;
-    // Assign payload to meteoData if it exists
-    if(meteoResponse) {
-      const { current: { windSpeed10m, windDirection10m, temperature2m, relativeHumidity2m, precipitation  } } = meteoResponse;
-      meteoData = { temperature2m, windDirection10m, windSpeed10m, precipitation, relativeHumidity2m };
+    // Encapsulate open meteo api data and assignment
+    if (meteoResponse) {
+      // Destructure requested Data
+      const {
+        current: {
+          windSpeed10m,
+          windDirection10m,
+          temperature2m,
+          relativeHumidity2m,
+          precipitation,
+        },
+      } = meteoResponse;
+      // Assign to higher scope variable
+      meteoData = {
+        temperature2m,
+        windDirection10m,
+        windSpeed10m,
+        precipitation,
+        relativeHumidity2m,
+      };
     }
     // Assign payload
     const insertPayload = {
@@ -64,17 +95,24 @@ export const actions = {
       longitude,
       location,
       strength,
-      wind_speed: meteoData?.windSpeed10m,
+      wind_speed_kn: meteoData?.windSpeed10m,
       wind_direction: meteoData?.windDirection10m,
-      temperature: meteoData?.temperature2m
+      temperature_f: meteoData?.temperature2m,
     };
+    console.log(`🔎 Insert Payload:`, insertPayload)
     // Run full payload validation before inserting
-    const validatedInsert = ReportSchema.parse(insertPayload)
+    const validatedInsert = ReportSchema.parse(insertPayload);
+
     // Attempt to insert to DB
     const response = await supabase
       .from("reports")
-      .insert(validatedInsert satisfies TablesInsert<"reports">);
-    if(response.error) fail(400, {})
-    return response;
-  }
-} satisfies Actions
+      .insert(validatedInsert satisfies TablesInsert<"reports">)
+      .select();
+    if (response.error) fail(400, {});
+    // Mutable payload
+    
+    // Assign 
+    let newMarker = response.data?.[0];
+    return { success: true, newMarker}
+  },
+} satisfies Actions;
