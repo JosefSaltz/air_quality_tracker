@@ -1,0 +1,11 @@
+
+
+services:
+  frontend:
+    from: "denoland/deno:alpine"
+    build: ./Dockerfile.front
+    ports: 80
+  backend:
+    from: "denoland/deno:alpine"
+    build: ./Dockerfile.back
+  report_cache:

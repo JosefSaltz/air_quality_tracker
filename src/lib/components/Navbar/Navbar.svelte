@@ -21,6 +21,7 @@
   
   let { user, profile, supabase }: NavbarProps = $props();
   let menuOpen = $state(false);
+  const buttonConfig = { class: `text-lg`};
   let toggleMenu = () => { menuOpen = !menuOpen };
 
   const handleSignOut = async () => { 
@@ -39,7 +40,7 @@
     <div class="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
       <div class="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
         <div class="flex shrink-0 items-center">
-          <a href="/" class={`${buttonVariants({ variant: "link", class: `text-lg`})}`}>
+          <a href="/" class={`${buttonVariants({ ...buttonConfig, variant: "link"})}`}>
             <!-- <span>{ HomeLogo }</span> -->
             Home
           </a>
@@ -68,7 +69,7 @@
                 <img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
               </button>
             {:else}
-              <a href="/auth/login" class={`${buttonVariants({ size: "lg", variant: "link"})}`}>Login</a>
+              <a href="/auth/login" class={`${buttonVariants({ ...buttonConfig, variant: "outline" })}`}>Login</a>
             {/if}
           </div>
 

@@ -1,0 +1,27 @@
+# Use an official Node.js runtime as a parent image
+FROM deno:alpine AS builder
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install any needed packages specified in package.json
+RUN deno install
+
+# Bundle app source inside Docker image
+COPY . .
+
+# Build the SvelteKit application for production
+RUN npm run build
+
+# Use Deno as a new stage to serve the application
+FROM denoland/deno:1.24.3-alpine
+
+# Copy the output from the builder stage
+COPY --from=builder /app/build /var/www/html
+
+# Expose port 3000
+EXPOSE 3000
+

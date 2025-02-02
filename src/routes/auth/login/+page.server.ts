@@ -1,6 +1,7 @@
 import type { AuthError } from "@supabase/supabase-js";
 import { type Actions, fail, redirect } from "@sveltejs/kit";
 import { dev } from "$app/environment";
+import { PUBLIC_DEV_AUTH_REDIRECT_URL, PUBLIC_AUTH_REDIRECT_URL } from "$env/static/public";
 
 export const actions = {
   login: async ({ request, locals: { supabase }, params }) => {
@@ -14,33 +15,32 @@ export const actions = {
     const formData = await request.formData();
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
-    const { provider, sso } = params;
-    let hadError = null;
-    // Social OAuth
-    if (sso && provider === "google") {
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: dev
-            ? "http://localhost:3000/auth/callback"
-            : "https://piita.org/auth/callback",
-        },
-      });
-
-      if (data.url) {
-        redirect(301, data.url); // use the redirect API for your server framework
-      }
-      hadError = error;
-    } // Default Email Password
-    else {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-      hadError = error;
-    }
+    // Default Email Password
+    const { error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     // Error handling
-    if (hadError) return handleError(hadError);
+    if (error) return handleError(error);
     redirect(303, "/")
   },
+  google_auth: async ({request, locals: { supabase }, params}) => {
+    const handleError = (error: AuthError | null) => {
+      if (error) {
+        console.error(error);
+        return fail(401, { error });
+      }
+    }
+    const redirectTo = dev ? 
+      PUBLIC_DEV_AUTH_REDIRECT_URL : 
+      PUBLIC_AUTH_REDIRECT_URL;
+    console.log('Redirect URL:', redirectTo);
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: { redirectTo }
+    });
+    if(error) handleError(error);
+    if (data.url) redirect(301, data.url); 
+    // use the redirect API for your server framework
+  }
 } satisfies Actions;
