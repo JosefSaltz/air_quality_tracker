@@ -8,10 +8,8 @@
   import type { SupabaseClient, User } from "@supabase/supabase-js";
   import type { ProfileResponse } from "@/routes/+layout.server";
   import { buttonVariants } from "$lib/components/ui/button";
-  import HomeLogo from "$lib/svg/logo_svg.svelte";
-  import Button from "../ui/button/button.svelte";
-  import { SvelteURL } from "svelte/reactivity";
-  import { redirect } from "@sveltejs/kit";
+  import defaultAvatar from "$lib/assets/defaultAvatar.png"
+
   
   type NavbarProps = { 
     profile: ProfileResponse
@@ -66,7 +64,7 @@
             {#if user}
               <span >{profile?.first_name ?? ""}</span>
               <button onclick={toggleMenu} type="button" class="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-stone-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
-                <img class="size-8 rounded-full" src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                <img class="size-8 rounded-full" src={ user.user_metadata.avatar_url ?? defaultAvatar } alt="">
               </button>
             {:else}
               <a href="/auth/login" class={`${buttonVariants({ ...buttonConfig, variant: "outline" })}`}>Login</a>
