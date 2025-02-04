@@ -25,7 +25,7 @@
     currentGeolocation: GeoCoords,
     initialView: GeoCoords,
     form: PageProps["form"]
-    user: User
+    user: User | null
   }
   type QueriedMarker = Omit<Tables<"reports">, "created_by" | "precipitation" | "location"> 
 
