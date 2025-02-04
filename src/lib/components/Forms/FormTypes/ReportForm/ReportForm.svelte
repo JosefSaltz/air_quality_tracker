@@ -12,6 +12,7 @@
   import type { ActionData } from "../../../../../routes/$types";
   import type { GeoCoords } from "@/lib/components/ReportMap/ReportMap.svelte";
   import type { Period } from "@/lib/components/TimePicker/TimePickerUtils";
+  import { fromPascal } from "postgres";
   
   type Props = {
     form: ActionData,
@@ -38,12 +39,17 @@
 
   const handleSubmission = ({ formData }: { formData: FormData}) => {
     if(!selectedStrength) return console.error('No strength chosen!');
+    const first_name = formData.get('first_name');
+    const last_name = formData.get('last_name');
+    // Only assign full_name if first_name and last_name are present
+    const full_name = first_name && last_name ? `${first_name} ${last_name}`: null;
     const { latitude, longitude } = currentGeolocation;
     const appended = {
       latitude: latitude.toString(),
       longitude: longitude.toString(),
       location: `POINT(${longitude} ${latitude})`,
       strength: selectedStrength,
+      full_name
     }
     for (const [key, value] of Object.entries(appended)) {
       formData.append(key, value)
