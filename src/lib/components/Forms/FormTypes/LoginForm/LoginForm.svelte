@@ -10,7 +10,7 @@
 
 <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
   <div class="sm:mx-auto w-full xl:w-auto sm:max-w-md flex flex-col items-center">
-    <enhanced:img src={logo} class="h-36 xl:h-64 w-auto rounded-xl" alt="PIITA Logo" />
+    <enhanced:img src="../../../../assets/logo.png" class="h-36 xl:h-64 w-auto rounded-xl" alt="PIITA Logo" />
     <h2 class="mt-6 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
       PIITA Login
     </h2>
