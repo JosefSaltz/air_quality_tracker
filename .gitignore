@@ -24,3 +24,8 @@ vite.config.ts.timestamp-*
 
 .vscode
 /.continue
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
