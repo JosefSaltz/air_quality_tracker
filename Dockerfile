@@ -12,6 +12,7 @@ RUN deno install --allow-scripts
 
 # Build the App
 ARG DOTENV_KEY
+
 RUN DOTENV_KEY=${DOTENV_KEY} deno task build
 
 # Use Deno as a new stage to serve the application
