@@ -10,14 +10,17 @@ COPY . .
 # Install any needed packages specified in package.json
 RUN deno install --allow-scripts
 
-# Build the SvelteKit application for production
+# Build the App
 RUN deno task build
 
-RUN deno task serve
-# # Use Deno as a new stage to serve the application
-# FROM denoland/deno:2.1.9
+# Use Deno as a new stage to serve the application
+FROM denoland/deno:alpine-2.1.9
 
-# # Copy the output from the builder stage
-# COPY --from=builder /app/build .
+# Set the working directory in the container
+WORKDIR /app
 
+COPY --from=builder /app/build ./build
 
+COPY --from=builder ["/app/deno*", "/app/.env.vault", "/app/package*", "./"]
+
+CMD deno task serve

@@ -1,17 +1,20 @@
 version: "3.8"
 
 services:
-  
   svelte_server:
-    env_file: ./.env.local
     image: "denoland/deno:alpine"
-    build: .
+    build: 
+      context: .
+      args:
+        - DOTENV_KEY=${DOTENV_KEY}
+    environment:
+      - DOTENV_KEY=${DOTENV_KEY}
+      - NODE_ENV=production
     ports: 
-      - 3000:3669
+      - 3000:3000
     networks:
       - piita_network
   redis:
-    env_file: "./.env.local"
     image: redis:7.2-alpine
     ports: 
       - 3888:6379
