@@ -18,7 +18,9 @@
   import type { User } from "@supabase/supabase-js";
   import * as Drawer from "../ui/drawer";
   import FormDrawer from "../Forms/Layouts/FormDrawer.svelte";
-
+  import markerIconUrl from "$root/node_modules/leaflet/dist/images/marker-icon.png";
+  import markerIconRetinaUrl from "$root/node_modules/leaflet/dist/images/marker-icon-2x.png";
+  import markerShadowUrl from "$root/node_modules/leaflet/dist/images/marker-shadow.png";
 
   type Props = {
     markers: PageProps["data"]["markers"],
@@ -118,6 +120,12 @@
     const { latitude: x, longitude: y } = currentGeolocation;
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
     const L = await import("leaflet");
+    // SSR work around bullshit
+    // Credit: https://cescobaz.com/2023/06/14/setup-leaflet-with-svelte-and-vite/
+    L.Icon.Default.prototype.options.iconUrl = markerIconUrl;
+    L.Icon.Default.prototype.options.iconRetinaUrl = markerIconRetinaUrl;
+    L.Icon.Default.prototype.options.shadowUrl = markerShadowUrl;
+    L.Icon.Default.imagePath = ""; // necessary to avoid Leaflet adds some prefix to image path.
     // Initialize the Leaflet map object bound to the element with #map id
     lMap = L.map("map").setView([x, y], 13);
     if(!lMap) return console.error(`Something went wrong initializing leafly!`);
