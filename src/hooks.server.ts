@@ -86,8 +86,14 @@ const helmetConfig = {
     directives: {
       scriptSrc: [
         "'self'",
+        "https://piita.org",
         "'unsafe-inline'", // Allow SvelteKit hot reload
       ],
+      imgSrc: [
+        "'self'",
+        "data:",
+        "https://tile.openstreetmap.org",
+      ]
     },
   },
 };
