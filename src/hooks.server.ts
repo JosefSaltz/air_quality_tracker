@@ -1,4 +1,5 @@
 import { dev } from "$app/environment";
+import helmet from "sveltekit-helmet";
 import {
   PUBLIC_LOCAL_SUPABASE_ANON_KEY,
   PUBLIC_LOCAL_SUPABASE_URL,
@@ -10,7 +11,7 @@ import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from '@sveltejs/kit/hooks'
 
 // Handle dynamic assignment
-const [SUPABASE_URL, SUPABASE_ANON_KEY] = dev ? 
+const [ SUPABASE_URL, SUPABASE_ANON_KEY ] = dev ? 
   [PUBLIC_LOCAL_SUPABASE_URL, PUBLIC_LOCAL_SUPABASE_ANON_KEY] : 
   [PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY];
 // Request middleware
@@ -79,4 +80,16 @@ const authGuard: Handle = async ({ event, resolve }) => {
   return resolve(event)
 }
 
-export const handle: Handle = sequence(supabase, authGuard)
+// With custom helmet options
+const helmetConfig = {
+  contentSecurityPolicy: {
+    directives: {
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'", // Allow SvelteKit hot reload
+      ],
+    },
+  },
+};
+
+export const handle: Handle = sequence(helmet(helmetConfig), supabase, authGuard)
