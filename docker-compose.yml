@@ -1,33 +1,28 @@
 version: "3.8"
 
 services:
-  frontend:
-    from: "denoland/deno:alpine"
-    build: ./Dockerfile.front
+  
+  svelte_server:
+    env_file: ./.env.local
+    image: "denoland/deno:alpine"
+    build: .
     ports: 
-      - 3669 3669
+      - 3000:3669
     networks:
-      - app_network
-  backend:
-    from: "denoland/deno:alpine"
-    build: ./Dockerfile.back
-    ports: 
-      - 3770:3770
-    networks:
-      - app_network
+      - piita_network
   redis:
-    from: redis:alpine
+    env_file: "./.env.local"
+    image: redis:7.2-alpine
     ports: 
-      - 3888:3888
+      - 3888:6379
     volumes:
       - redis_data:/redis_data
     networks:
-      - app_network
+      - piita_network
 
 volumes:
   redis_data:
 
-
 networks:
-  app_netowrk:
+  piita_network:
     driver: bridge
