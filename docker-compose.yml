@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   svelte_server:
     image: "denoland/deno:alpine"
