@@ -5,8 +5,6 @@ services:
     image: "denoland/deno:alpine"
     build: 
       context: .
-      args:
-        - DOTENV_KEY=${DOTENV_KEY}
     environment:
       - DOTENV_KEY=${DOTENV_KEY}
       - NODE_ENV=production

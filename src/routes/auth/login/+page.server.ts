@@ -5,6 +5,7 @@ import { PUBLIC_DEV_AUTH_REDIRECT_URL, PUBLIC_AUTH_REDIRECT_URL } from "$env/sta
 
 export const actions = {
   login: async ({ request, locals: { supabase }, params }) => {
+    return fail(401, { message: 'Email Login is temporarily disabled' });
     const handleError = (error: AuthError | null) => {
       if (error) {
         console.error(error);
@@ -24,6 +25,7 @@ export const actions = {
     if (error) return handleError(error);
     redirect(303, "/")
   },
+  
   google_auth: async ({request, locals: { supabase }, params}) => {
     const handleError = (error: AuthError | null) => {
       if (error) {
