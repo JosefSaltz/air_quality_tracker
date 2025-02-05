@@ -47,7 +47,7 @@
       full_name
     }
     for (const [key, value] of Object.entries(appended)) {
-      formData.append(key, value)
+      formData.append(key, value ?? 'null')
     }
   }
   $inspect(currentGeolocation)
@@ -92,9 +92,5 @@
   legend {
     font-weight: 700;
     margin-bottom: 1rem;
-  }
-  
-  input[type="text"] {
-    resize: "vertical";
   }
 </style>

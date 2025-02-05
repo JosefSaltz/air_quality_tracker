@@ -5,9 +5,9 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	plugins: [
-		deno(),
 		sveltekit() ,
-		enhancedImages()
+		enhancedImages(),
+		deno()
 	],
 	resolve: {
 		alias: {
