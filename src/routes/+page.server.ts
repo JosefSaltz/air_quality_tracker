@@ -1,8 +1,8 @@
-import { getMarkers } from "@/lib/utils/getMarkers";
+import { getMarkers } from "$lib/server/getMarkers";
 import { fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import crypto from "crypto";
-import { fetchMeteoData } from "@/lib/utils/fetchMeteoData";
+import crypto from "node:crypto";
+import { fetchMeteoData } from "$lib/server/fetchMeteoData";
 import type { Tables, TablesInsert } from "$root/database.types";
 import z from "zod";
 

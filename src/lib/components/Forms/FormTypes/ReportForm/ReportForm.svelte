@@ -3,8 +3,8 @@
   import Separator from "$components/ui/separator/separator.svelte";
   import { Title } from "$components/ui/card";
   import OdorToggles from "@/lib/components/Forms/FormTypes/ReportForm/OdorToggles.svelte"
-  import GasIcon from "@/lib/svg/gas.svelte";
-  import SewageIcon from "@/lib/svg/sewage.svelte";
+  import GasIcon from "@/lib/assets/svg/gas.svelte";
+  import SewageIcon from "@/lib/assets/svg/sewage.svelte";
   import { enhance } from "$app/forms";
   import type { ActionData } from "../../../../../routes/$types";
   import type { GeoCoords } from "@/lib/components/ReportMap/ReportMap.svelte";
