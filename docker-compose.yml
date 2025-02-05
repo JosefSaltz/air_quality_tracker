@@ -10,20 +10,12 @@ services:
       - NODE_ENV=production
     ports: 
       - 3000:3000
-    networks:
-      - piita_network
   redis:
     image: redis:7.2-alpine
     ports: 
       - 3888:6379
     volumes:
       - redis_data:/redis_data
-    networks:
-      - piita_network
 
 volumes:
   redis_data:
-
-networks:
-  piita_network:
-    driver: bridge
