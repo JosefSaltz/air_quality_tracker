@@ -1,4 +1,10 @@
-import { redirect, type Actions} from "@sveltejs/kit";
+import { redirect, type Actions, type Load} from "@sveltejs/kit";
+import getNonce from "$lib/server/getNonce";
+
+export const load: Load = () => {
+  const googleNonce = getNonce();
+  return { googleNonce }
+}
 
 export const actions = {
   signup: async ({ request, locals: { supabase } }) => {

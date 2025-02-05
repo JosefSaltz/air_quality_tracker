@@ -1,9 +1,9 @@
 import { getMarkers } from "$lib/server/getMarkers";
 import { fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import crypto from "node:crypto";
+import getNonce from "@/lib/server/getNonce";
 import { fetchMeteoData } from "$lib/server/fetchMeteoData";
-import type { Tables, TablesInsert } from "$root/database.types";
+import type { TablesInsert } from "$root/database.types";
 import z from "zod";
 
 
@@ -11,7 +11,7 @@ export const load: PageServerLoad = async ({ locals }) => {
   // Fetch minimum required data
   const markers = await getMarkers();
   // Generate cryptographic nonce for use with Google SSO
-  const googleNonce = crypto.randomUUID();
+  const googleNonce = getNonce();
   if (!markers) return console.warn("No marker data retrieved");
   return { googleNonce, markers };
 };
