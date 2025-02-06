@@ -6,20 +6,21 @@ const config = {
 	// Consult https://svelte.dev/docs/kit/integrations
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
-
 	kit: {
-		csp: {
-			"directives": {
-				
-			},
-			"mode": "nonce"
-		},
 		adapter: adapter(),
 		alias: {
 			"@": "./src",
 			"$root": "./",
 			"$components": "./src/lib/components",
 			"$routes": "./src/routes"
+		},
+		csp: {
+			mode: "auto",
+			directives: {
+				"script-src": ["'self'", "localhost", "https://google.com", "https://youtube.com"],
+				"img-src": ["'self'", "data:", "https://tile.openstreetmap.org", "https://images.unsplash.com", "https://*.googleusercontent.com"],
+				"style-src": ["'self'", "localhost", "https://images.unsplash.com", "https://unpkg.com", "unsafe-inline", "data:", "blob:"],
+			}
 		}
 	}
 };

@@ -1,7 +1,6 @@
 <script lang="ts">
   import FormContainer from "@/lib/components/Forms/Layouts/FormDrawer.svelte";
   import { browser } from "$app/environment";
-  import supabase from "$lib/utils/client";
   import { z } from 'zod';
   import SignInWithGoogle from "./LoginForm/SignInWithGoogle.svelte";
 
@@ -15,14 +14,6 @@
   let valid_email = $derived(emailSchema.safeParse(email).success);
   let verified_pw = $derived(password && confirm_pw && password === confirm_pw);
   let disable_submit = $derived(!(verified_pw && valid_email));
-
-  async function handleSignInWithGoogle(response: { credential: string }) {
-    const { data, error } = await supabase.auth.signInWithIdToken({
-      provider: 'google',
-      token: response.credential,
-      nonce: googleNonce
-    })
-  }
 </script>
 
 {#if browser}

@@ -94,7 +94,6 @@
       return markers.map((marker) => {
         // Destructure
         const { latitude, longitude } = marker;
-        console.log(latitude, longitude);
         // Generate pop up content
         const description = constructDescription(marker);
         // Assign formatted coordinates
@@ -151,7 +150,6 @@
       const { lat, lng } = selectorMarker.getLatLng(); 
       // Fit values to keys 
       currentGeolocation = { latitude: Number(lat), longitude: Number(lng)}
-      console.log(currentGeolocation)
     });
     // Add all the previously reported markers to the map
     generateMarkers(lMap);

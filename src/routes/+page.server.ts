@@ -8,8 +8,9 @@ import z from "zod";
 
 
 export const load: PageServerLoad = async ({ locals }) => {
+  const { supabase } = locals;
   // Fetch minimum required data
-  const markers = await getMarkers();
+  const markers = await getMarkers(supabase);
   // Generate cryptographic nonce for use with Google SSO
   const googleNonce = getNonce();
   if (!markers) return console.warn("No marker data retrieved");

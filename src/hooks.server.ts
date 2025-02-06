@@ -6,13 +6,12 @@ import {
   PUBLIC_SUPABASE_URL,
 } from "$env/static/public";
 import { createServerClient } from "@supabase/ssr";
-import { redirect, type Handle } from "@sveltejs/kit";
-import { sequence } from '@sveltejs/kit/hooks'
-import { createHook, type NoseconeOptions } from "@nosecone/sveltekit"
+import { type Handle, redirect } from "@sveltejs/kit";
+import { sequence } from "@sveltejs/kit/hooks";
 // Handle dynamic assignment
-const [ SUPABASE_URL, SUPABASE_ANON_KEY ] = dev ? 
-  [PUBLIC_LOCAL_SUPABASE_URL, PUBLIC_LOCAL_SUPABASE_ANON_KEY] : 
-  [PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY];
+const [SUPABASE_URL, SUPABASE_ANON_KEY] = dev
+  ? [PUBLIC_LOCAL_SUPABASE_URL, PUBLIC_LOCAL_SUPABASE_ANON_KEY]
+  : [PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY];
 // Request middleware
 export const supabase: Handle = async ({ event, resolve }) => {
   event.locals.supabase = createServerClient(
@@ -49,7 +48,8 @@ export const supabase: Handle = async ({ event, resolve }) => {
     // If no valid session return nothing
     if (!session) return { session: null, user: null };
     // Destructure user and error
-    const { data: { user }, error } = await event.locals.supabase.auth.getUser();
+    const { data: { user }, error } = await event.locals.supabase.auth
+      .getUser();
     // If JWT validation has failed
     if (error) return { session: null, user: null };
     // Return our supabase session and user objects
@@ -64,36 +64,22 @@ export const supabase: Handle = async ({ event, resolve }) => {
 };
 
 const authGuard: Handle = async ({ event, resolve }) => {
-  const { session, user } = await event.locals.safeGetSession()
-  event.locals.session = session
-  event.locals.user = user
+  const { session, user } = await event.locals.safeGetSession();
+  event.locals.session = session;
+  event.locals.user = user;
 
-  if (!event.locals.session && event.url.pathname.startsWith('/private')) {
-    redirect(303, '/auth')
+  if (!event.locals.session && event.url.pathname.startsWith("/private")) {
+    redirect(303, "/auth");
   }
 
-  if (event.locals.session && event.url.pathname === '/auth') {
-    redirect(303, '/private')
+  if (event.locals.session && event.url.pathname === "/auth") {
+    redirect(303, "/private");
   }
 
-  return resolve(event)
-}
+  return resolve(event);
+};
 
-const noseConeConfig = {
-  crossOriginResourcePolicy: {
-    policy: "cross-origin"
-  },
-  contentSecurityPolicy: {
-    directives: {
-      scriptSrc: ["localhost", "'unsafe-inline'"],
-      imgSrc: ["'self'", "tile.openstreetmap.org", "images.unsplash.com", "blob:", "data:"],
-      styleSrc: ["https:", "'unsafe-inline'"],
-      connectSrc: [
-        "'self'",
-        "http://localhost:5173",
-        "ws://localhost:5173"
-      ]
-    }
-  }
-} satisfies NoseconeOptions;
-export const handle: Handle = sequence(createHook(noseConeConfig), supabase, authGuard)
+export const handle: Handle = sequence(
+  supabase,
+  authGuard,
+);

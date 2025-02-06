@@ -50,7 +50,7 @@
       formData.append(key, value ?? 'null')
     }
   }
-  $inspect(currentGeolocation)
+
   const styles = `border-top-left-radius: 0; border-bottom-left-radius: 0`;
 </script>
 
