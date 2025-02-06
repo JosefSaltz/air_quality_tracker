@@ -2,6 +2,7 @@ import type { AuthError } from "@supabase/supabase-js";
 import { type Actions, fail, redirect } from "@sveltejs/kit";
 import { dev } from "$app/environment";
 import { PUBLIC_DEV_AUTH_REDIRECT_URL, PUBLIC_AUTH_REDIRECT_URL } from "$env/static/public";
+import { NODE_ENV } from "$env/static/private";
 
 export const actions = {
   login: async ({ request, locals: { supabase }, params }) => {
@@ -23,7 +24,7 @@ export const actions = {
     });
     // Error handling
     if (error) return handleError(error);
-    redirect(303, "/")
+    redirect(303, "/");
   },
   
   google_auth: async ({request, locals: { supabase }, params}) => {
@@ -33,7 +34,7 @@ export const actions = {
         return fail(401, { error });
       }
     }
-    const redirectTo = dev ? 
+    const redirectTo = NODE_ENV !== "production"  ? 
       PUBLIC_DEV_AUTH_REDIRECT_URL : 
       PUBLIC_AUTH_REDIRECT_URL;
     console.log('Redirect URL:', redirectTo);
