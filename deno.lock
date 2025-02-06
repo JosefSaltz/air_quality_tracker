@@ -48,6 +48,21 @@
     "npm:svelte-check@^4.2.2": "4.2.2_svelte@5.35.2__acorn@8.15.0_typescript@5.8.3",
     "npm:svelte-motion@~0.12.2": "0.12.2_svelte@5.35.2__acorn@8.15.0",
     "npm:svelte@^5.35.2": "5.35.2_acorn@8.15.0",
+    "npm:dotenv-vault@latest": "1.26.2_typescript@5.7.3",
+    "npm:dotenv@^16.4.7": "16.4.7",
+    "npm:drizzle-kit@~0.30.1": "0.30.4_esbuild@0.19.12",
+    "npm:drizzle-orm@~0.38.2": "0.38.4_@types+pg@8.11.11_postgres@3.4.5",
+    "npm:eslint-plugin-svelte@^2.46.1": "2.46.1_eslint@9.19.0_svelte@5.19.6__acorn@8.14.0_postcss@8.5.1",
+    "npm:eslint@^9.16.0": "9.19.0",
+    "npm:leaflet@^1.9.4": "1.9.4",
+    "npm:lucide-svelte@0.474": "0.474.0_svelte@5.19.6__acorn@8.14.0",
+    "npm:mode-watcher@0.5": "0.5.1_svelte@5.19.6__acorn@8.14.0",
+    "npm:openmeteo@^1.1.4": "1.1.4",
+    "npm:postcss@^8.4.49": "8.5.1",
+    "npm:postgres@^3.4.5": "3.4.5",
+    "npm:redis@^4.7.0": "4.7.0_@redis+client@1.6.0",
+    "npm:svelte-check@^4.1.1": "4.1.4_svelte@5.19.6__acorn@8.14.0_typescript@5.7.3",
+    "npm:svelte@^5.10.1": "5.19.6_acorn@8.14.0",
     "npm:tailwind-merge@^2.5.5": "2.6.0",
     "npm:tailwind-variants@~0.2.1": "0.2.1_tailwindcss@3.4.17__postcss@8.5.3",
     "npm:tailwindcss@^3.4.16": "3.4.17_postcss@8.5.3",
@@ -1178,9 +1193,6 @@
         "@swc/helpers"
       ]
     },
-    "@ioredis/commands@1.2.0": {
-      "integrity": "sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg=="
-    },
     "@isaacs/cliui@8.0.2": {
       "integrity": "sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==",
       "dependencies": [
@@ -1531,6 +1543,46 @@
     },
     "@prisma/instrumentation@6.10.1_@opentelemetry+api@1.9.0": {
       "integrity": "sha512-JC8qzgEDuFKjuBsqrZvXHINUb12psnE6Qy3q5p2MBhalC1KW1MBBUwuonx6iS5TCfCdtNslHft8uc2r+EdLWWg==",
+    "@redis/bloom@1.2.0_@redis+client@1.6.0": {
+      "integrity": "sha512-HG2DFjYKbpNmVXsa0keLHp/3leGJz1mjh09f2RLGGLQZzSHpkmZWuwJbAvo3QcRY8p80m5+ZdXZdYOSBLlp7Cg==",
+      "dependencies": [
+        "@redis/client"
+      ]
+    },
+    "@redis/client@1.6.0": {
+      "integrity": "sha512-aR0uffYI700OEEH4gYnitAnv3vzVGXCFvYfdpu/CJKvk4pHfLPEy/JSZyrpQ+15WhXe1yJRXLtfQ84s4mEXnPg==",
+      "dependencies": [
+        "cluster-key-slot",
+        "generic-pool",
+        "yallist"
+      ]
+    },
+    "@redis/graph@1.1.1_@redis+client@1.6.0": {
+      "integrity": "sha512-FEMTcTHZozZciLRl6GiiIB4zGm5z5F3F6a6FZCyrfxdKOhFlGkiAqlexWMBzCi4DcRoyiOsuLfW+cjlGWyExOw==",
+      "dependencies": [
+        "@redis/client"
+      ]
+    },
+    "@redis/json@1.0.7_@redis+client@1.6.0": {
+      "integrity": "sha512-6UyXfjVaTBTJtKNG4/9Z8PSpKE6XgSyEb8iwaqDcy+uKrd/DGYHTWkUdnQDyzm727V7p21WUMhsqz5oy65kPcQ==",
+      "dependencies": [
+        "@redis/client"
+      ]
+    },
+    "@redis/search@1.2.0_@redis+client@1.6.0": {
+      "integrity": "sha512-tYoDBbtqOVigEDMAcTGsRlMycIIjwMCgD8eR2t0NANeQmgK/lvxNAvYyb6bZDD4frHRhIHkJu2TBRvB0ERkOmw==",
+      "dependencies": [
+        "@redis/client"
+      ]
+    },
+    "@redis/time-series@1.1.0_@redis+client@1.6.0": {
+      "integrity": "sha512-c1Q99M5ljsIuc4YdaCwfUEXsofakb9c8+Zse2qxTadu8TalLXuAESzLvFAvNVbkmSlvlzIQOLpBCmWI9wTOt+g==",
+      "dependencies": [
+        "@redis/client"
+      ]
+    },
+    "@rollup/plugin-commonjs@28.0.2_rollup@4.32.1_picomatch@4.0.2": {
+      "integrity": "sha512-BEFI2EDqzl+vA1rl97IDRZ61AIwGH093d9nz8+dThxJNH8oSoB7MjWvPCX3dkaK1/RCJ/1v/R1XB15FuSs0fQw==",
       "dependencies": [
         "@opentelemetry/api",
         "@opentelemetry/instrumentation"
@@ -3004,6 +3056,17 @@
     },
     "detect-libc@2.0.4": {
       "integrity": "sha512-3UDv+G9CsCKO1WKMGw9fwq/SWJYbI0c5Y7LU1AXYoDdbhE2AHQ6N6Nb34sG8Fj7T5APy8qXDCKuuIHd1BR0tVA=="
+    "defaults@1.0.4": {
+      "integrity": "sha512-eFuaLoy/Rxalv2kr+lqMlUnrDWV+3j4pljOIJgLIhI058IQfWJ7vXhyEIHu+HtC738klGALYxOKDO0bQP3tg8A==",
+      "dependencies": [
+        "clone"
+      ]
+    },
+    "delayed-stream@1.0.0": {
+      "integrity": "sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ=="
+    },
+    "detect-libc@2.0.3": {
+      "integrity": "sha512-bwy0MGW55bG41VqxxypOsdSdGqLwXPI/focwgTYCFMbdUiBAxLg9CFzG08sz2aqzknwiX7Hkl0bQENjg8iLByw=="
     },
     "devalue@5.1.1": {
       "integrity": "sha512-maua5KUiapvEwiEAe+XnlZ3Rh0GD+qI1J/nb9vrJc3muPXvcF/8gXYTWF76+5DAqHyDUtOIImEuo0YKE9mshVw=="
@@ -3409,6 +3472,11 @@
     },
     "fuse.js@7.1.0": {
       "integrity": "sha512-trLf4SzuuUxfusZADLINj+dE8clK1frKdmqiJNb1Es75fmI5oY6X2mxLVUciLLjxqw/xr72Dhy+lER6dGd02FQ=="
+    "generic-pool@3.9.0": {
+      "integrity": "sha512-hymDOu5B53XvN4QT9dBmZxPX4CWhBPPLguTZ9MMFeFa/Kg0xWVfylOVNlJji/E7yTZWFd/q9GO5TxDLq156D7g=="
+    },
+    "get-package-type@0.1.0": {
+      "integrity": "sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q=="
     },
     "gensync@1.0.0-beta.2": {
       "integrity": "sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg=="
@@ -3568,6 +3636,29 @@
         "redis-parser",
         "standard-as-callback"
       ]
+    },
+    "inquirer@8.2.6": {
+      "integrity": "sha512-M1WuAmb7pn9zdFRtQYk26ZBoY043Sse0wVDdk4Bppr+JOXyQYybdtvK+l9wUibhtjdjvtoiNy8tk+EgsYIUqKg==",
+      "dependencies": [
+        "ansi-escapes",
+        "chalk",
+        "cli-cursor",
+        "cli-width",
+        "external-editor",
+        "figures",
+        "lodash",
+        "mute-stream",
+        "ora",
+        "run-async",
+        "rxjs",
+        "string-width@4.2.3",
+        "strip-ansi@6.0.1",
+        "through",
+        "wrap-ansi@6.2.0"
+      ]
+    },
+    "is-arrayish@0.2.1": {
+      "integrity": "sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg=="
     },
     "is-arrayish@0.3.2": {
       "integrity": "sha512-eVRqCvVlZbuw3GrM63ovNSNAeA1K16kaR/LRY/92w0zxQ5/1YzwblUX652i4Xs9RwAGjW9d9y6X88t8OaAJfWQ=="
@@ -4273,13 +4364,15 @@
         "tslib@2.8.1"
       ]
     },
-    "redis-errors@1.2.0": {
-      "integrity": "sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w=="
-    },
-    "redis-parser@3.0.0": {
-      "integrity": "sha512-DJnGAeenTdpMEH6uAJRK/uiyEIH9WVsUmoLwzudwGJUwZPp80PDBWPHXSAGNPwNvIXAbe7MSUB1zQFugFml66A==",
+    "redis@4.7.0_@redis+client@1.6.0": {
+      "integrity": "sha512-zvmkHEAdGMn+hMRXuMBtu4Vo5P6rHQjLoHftu+lBqq8ZTA3RCVC/WzD790bkKKiNFp7d5/9PcSD19fJyyRvOdQ==",
       "dependencies": [
-        "redis-errors"
+        "@redis/bloom",
+        "@redis/client",
+        "@redis/graph",
+        "@redis/json",
+        "@redis/search",
+        "@redis/time-series"
       ]
     },
     "require-in-the-middle@7.5.2": {
@@ -4509,9 +4602,6 @@
       "dependencies": [
         "frac"
       ]
-    },
-    "standard-as-callback@2.1.0": {
-      "integrity": "sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A=="
     },
     "string-width@4.2.3": {
       "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",
@@ -4978,6 +5068,9 @@
     "yallist@3.1.1": {
       "integrity": "sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g=="
     },
+    "yallist@4.0.0": {
+      "integrity": "sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A=="
+    },
     "yaml@1.10.2": {
       "integrity": "sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg=="
     },
@@ -5186,6 +5279,10 @@
         "npm:ioredis@^5.6.0",
         "npm:leaflet.locatecontrol@~0.84.2",
         "npm:leaflet.markercluster@^1.5.3",
+        "npm:drizzle-kit@~0.30.1",
+        "npm:drizzle-orm@~0.38.2",
+        "npm:eslint-plugin-svelte@^2.46.1",
+        "npm:eslint@^9.16.0",
         "npm:leaflet@^1.9.4",
         "npm:lucide-svelte@0.516",
         "npm:mode-watcher@0.5",
@@ -5197,6 +5294,12 @@
         "npm:svelte-check@^4.2.2",
         "npm:svelte-motion@~0.12.2",
         "npm:svelte@^5.35.2",
+        "npm:openmeteo@^1.1.4",
+        "npm:postcss@^8.4.49",
+        "npm:postgres@^3.4.5",
+        "npm:redis@^4.7.0",
+        "npm:svelte-check@^4.1.1",
+        "npm:svelte@^5.10.1",
         "npm:tailwind-merge@^2.5.5",
         "npm:tailwind-variants@~0.2.1",
         "npm:tailwindcss@^3.4.16",
