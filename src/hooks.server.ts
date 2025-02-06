@@ -14,6 +14,10 @@ const [SUPABASE_URL, SUPABASE_ANON_KEY] = dev
   : [PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY];
 // Request middleware
 export const supabase: Handle = async ({ event, resolve }) => {
+  event.setHeaders({
+    'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
+    //'Referrer-Policy': 'no-referrer'
+  })
   event.locals.supabase = createServerClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY,
