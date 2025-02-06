@@ -18,8 +18,9 @@ export const supabase: Handle = async ({ event, resolve }) => {
   event.setHeaders({
     'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload',
     'X-Frame-Options': 'Deny',
-    'X-Content-Type-Options': 'nosniff'
-    //'Referrer-Policy': 'no-referrer'
+    'X-Content-Type-Options': 'nosniff',
+    'Permissions-Policy': 'geolocation=(self), camera=(), microphone=()',
+    'Referrer-Policy': 'strict-origin-when-cross-origin'
   })
   event.locals.supabase = createServerClient(
     SUPABASE_URL,

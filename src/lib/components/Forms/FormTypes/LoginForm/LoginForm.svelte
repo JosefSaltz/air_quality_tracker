@@ -1,6 +1,5 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
-  import GoogleOneTap from "./GoogleOneTap.svelte";
   import logo from "$lib/assets/logo.png"
   // const handleSubmission = (e) =>{
   //   if(!FormData.get("email") || !FormData.get("password"))
@@ -78,7 +77,6 @@
             </svg>
             <span class="text-sm/6 font-semibold">Google</span>
           </button>
-          <GoogleOneTap />
 
           <!-- <a href="/auth/login?sso=true&provider=apple" class="flex w-full items-center justify-center gap-3 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus-visible:ring-transparent">
             <svg class="size-5 fill-[#24292F]" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
