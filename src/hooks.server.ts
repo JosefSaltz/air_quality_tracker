@@ -1,5 +1,4 @@
 import { dev } from "$app/environment";
-import helmet from "sveltekit-helmet";
 import {
   PUBLIC_LOCAL_SUPABASE_ANON_KEY,
   PUBLIC_LOCAL_SUPABASE_URL,
@@ -9,7 +8,6 @@ import {
 import { createServerClient } from "@supabase/ssr";
 import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from '@sveltejs/kit/hooks'
-
 // Handle dynamic assignment
 const [ SUPABASE_URL, SUPABASE_ANON_KEY ] = dev ? 
   [PUBLIC_LOCAL_SUPABASE_URL, PUBLIC_LOCAL_SUPABASE_ANON_KEY] : 
@@ -80,22 +78,4 @@ const authGuard: Handle = async ({ event, resolve }) => {
   return resolve(event)
 }
 
-// With custom helmet options
-const helmetConfig = {
-  contentSecurityPolicy: {
-    directives: {
-      scriptSrc: [
-        "'self'",
-        "https://piita.org",
-        "'unsafe-inline'", // Allow SvelteKit hot reload
-      ],
-      imgSrc: [
-        "'self'",
-        "data:",
-        "https://tile.openstreetmap.org",
-      ]
-    },
-  },
-};
-
-export const handle: Handle = sequence(helmet(helmetConfig), supabase, authGuard)
+export const handle: Handle = sequence( supabase, authGuard)

@@ -26,6 +26,7 @@
     "npm:drizzle-orm@~0.38.2": "0.38.4_@types+pg@8.11.11_postgres@3.4.5",
     "npm:eslint-plugin-svelte@^2.46.1": "2.46.1_eslint@9.19.0_svelte@5.19.6__acorn@8.14.0_postcss@8.5.1",
     "npm:eslint@^9.16.0": "9.19.0",
+    "npm:helmet@8": "8.0.0",
     "npm:ioredis@^5.4.2": "5.4.2",
     "npm:leaflet@^1.9.4": "1.9.4",
     "npm:lucide-svelte@0.474": "0.474.0_svelte@5.19.6__acorn@8.14.0",
@@ -35,7 +36,6 @@
     "npm:postgres@^3.4.5": "3.4.5",
     "npm:svelte-check@^4.1.1": "4.1.4_svelte@5.19.6__acorn@8.14.0_typescript@5.7.3",
     "npm:svelte@^5.10.1": "5.19.6_acorn@8.14.0",
-    "npm:sveltekit-helmet@^2.0.1": "2.0.1",
     "npm:tailwind-merge@^2.5.5": "2.6.0",
     "npm:tailwind-variants@0.3": "0.3.1_tailwindcss@3.4.17__postcss@8.5.1",
     "npm:tailwindcss@^3.4.16": "3.4.17_postcss@8.5.1",
@@ -2899,12 +2899,6 @@
         "zimmerframe"
       ]
     },
-    "sveltekit-helmet@2.0.1": {
-      "integrity": "sha512-oiaVvE4wPIrL54UbcYZiCYHMJxiIPVE8jxA7x9HUbaVAgx/IIehUUzdu7+q2dbIgndllB5PVMeNLJIhAM+qzTQ==",
-      "dependencies": [
-        "helmet"
-      ]
-    },
     "tailwind-merge@2.5.4": {
       "integrity": "sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q=="
     },
@@ -3430,6 +3424,7 @@
         "npm:drizzle-orm@~0.38.2",
         "npm:eslint-plugin-svelte@^2.46.1",
         "npm:eslint@^9.16.0",
+        "npm:helmet@8",
         "npm:ioredis@^5.4.2",
         "npm:leaflet@^1.9.4",
         "npm:lucide-svelte@0.474",
@@ -3439,7 +3434,6 @@
         "npm:postgres@^3.4.5",
         "npm:svelte-check@^4.1.1",
         "npm:svelte@^5.10.1",
-        "npm:sveltekit-helmet@^2.0.1",
         "npm:tailwind-merge@^2.5.5",
         "npm:tailwind-variants@0.3",
         "npm:tailwindcss@^3.4.16",
