@@ -8,6 +8,12 @@ const config = {
 	preprocess: vitePreprocess(),
 
 	kit: {
+		csp: {
+			"directives": {
+				
+			},
+			"mode": "nonce"
+		},
 		adapter: adapter(),
 		alias: {
 			"@": "./src",

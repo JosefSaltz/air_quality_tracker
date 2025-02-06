@@ -8,7 +8,7 @@ export default defineConfig({
 		assetsInlineLimit: 0
 	},
 	plugins: [
-		sveltekit() ,
+		sveltekit(),
 		enhancedImages(),
 		deno()
 	],

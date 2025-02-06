@@ -8,6 +8,7 @@ import {
 import { createServerClient } from "@supabase/ssr";
 import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from '@sveltejs/kit/hooks'
+import { createHook, type NoseconeOptions } from "@nosecone/sveltekit"
 // Handle dynamic assignment
 const [ SUPABASE_URL, SUPABASE_ANON_KEY ] = dev ? 
   [PUBLIC_LOCAL_SUPABASE_URL, PUBLIC_LOCAL_SUPABASE_ANON_KEY] : 
@@ -78,4 +79,21 @@ const authGuard: Handle = async ({ event, resolve }) => {
   return resolve(event)
 }
 
-export const handle: Handle = sequence( supabase, authGuard)
+const noseConeConfig = {
+  crossOriginResourcePolicy: {
+    policy: "cross-origin"
+  },
+  contentSecurityPolicy: {
+    directives: {
+      scriptSrc: ["localhost", "'unsafe-inline'"],
+      imgSrc: ["'self'", "tile.openstreetmap.org", "images.unsplash.com", "blob:", "data:"],
+      styleSrc: ["https:", "'unsafe-inline'"],
+      connectSrc: [
+        "'self'",
+        "http://localhost:5173",
+        "ws://localhost:5173"
+      ]
+    }
+  }
+} satisfies NoseconeOptions;
+export const handle: Handle = sequence(createHook(noseConeConfig), supabase, authGuard)

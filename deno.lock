@@ -5,6 +5,7 @@
     "npm:@iconify/svelte@^4.1.0": "4.2.0_svelte@5.19.6__acorn@8.14.0",
     "npm:@internationalized/date@^3.7.0": "3.7.0",
     "npm:@js-temporal/polyfill@~0.4.4": "0.4.4",
+    "npm:@nosecone/sveltekit@^1.0.0-beta.2": "1.0.0-beta.2_@sveltejs+kit@2.16.1__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.19.6____acorn@8.14.0___vite@6.0.11__svelte@5.19.6___acorn@8.14.0__vite@6.0.11_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.19.6___acorn@8.14.0__vite@6.0.11_svelte@5.19.6__acorn@8.14.0_vite@6.0.11",
     "npm:@supabase/ssr@~0.5.2": "0.5.2_@supabase+supabase-js@2.48.1",
     "npm:@supabase/supabase-js@^2.47.3": "2.48.1",
     "npm:@sveltejs/adapter-auto@4": "4.0.0_@sveltejs+kit@2.16.1__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.19.6____acorn@8.14.0___vite@6.0.11__svelte@5.19.6___acorn@8.14.0__vite@6.0.11_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.19.6___acorn@8.14.0__vite@6.0.11_svelte@5.19.6__acorn@8.14.0_vite@6.0.11",
@@ -26,7 +27,6 @@
     "npm:drizzle-orm@~0.38.2": "0.38.4_@types+pg@8.11.11_postgres@3.4.5",
     "npm:eslint-plugin-svelte@^2.46.1": "2.46.1_eslint@9.19.0_svelte@5.19.6__acorn@8.14.0_postcss@8.5.1",
     "npm:eslint@^9.16.0": "9.19.0",
-    "npm:helmet@8": "8.0.0",
     "npm:ioredis@^5.4.2": "5.4.2",
     "npm:leaflet@^1.9.4": "1.9.4",
     "npm:lucide-svelte@0.474": "0.474.0_svelte@5.19.6__acorn@8.14.0",
@@ -555,6 +555,13 @@
       "dependencies": [
         "@nodelib/fs.scandir",
         "fastq"
+      ]
+    },
+    "@nosecone/sveltekit@1.0.0-beta.2_@sveltejs+kit@2.16.1__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.19.6____acorn@8.14.0___vite@6.0.11__svelte@5.19.6___acorn@8.14.0__vite@6.0.11_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.19.6___acorn@8.14.0__vite@6.0.11_svelte@5.19.6__acorn@8.14.0_vite@6.0.11": {
+      "integrity": "sha512-F/t/jHfTs5WiOXHqMRvyOUx4G3IZFFbOwWOYklJ02Xbzd+bR9MxHn4Wxg2ofowV85zF+bA1KvMJ41FTvEKxrFw==",
+      "dependencies": [
+        "@sveltejs/kit",
+        "nosecone"
       ]
     },
     "@oclif/core@1.26.2": {
@@ -1869,9 +1876,6 @@
         "function-bind"
       ]
     },
-    "helmet@8.0.0": {
-      "integrity": "sha512-VyusHLEIIO5mjQPUI1wpOAEu+wl6Q0998jzTxqUYGE45xCIcAxy3MsbEK/yyJUJ3ADeMoB6MornPH6GMWAf+Pw=="
-    },
     "http-call@5.3.0": {
       "integrity": "sha512-ahwimsC23ICE4kPl9xTBjKB4inbRaeLyZeRunC/1Jy/Z6X8tv22MEAjK+KBOMSVLaqXPTTmd8638waVIKLGx2w==",
       "dependencies": [
@@ -2280,6 +2284,9 @@
     },
     "normalize-range@0.1.2": {
       "integrity": "sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA=="
+    },
+    "nosecone@1.0.0-beta.2": {
+      "integrity": "sha512-Qzy6jX7qmk/FtLXzAmQ0MG9RFxFDqK7vPplXAAOdbQxlidd3Y6/see8GaVMX53N3II6cRmzcYfTcaMKN4iOdww=="
     },
     "object-assign@4.1.1": {
       "integrity": "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg=="
@@ -3405,6 +3412,7 @@
         "npm:@iconify/svelte@^4.1.0",
         "npm:@internationalized/date@^3.7.0",
         "npm:@js-temporal/polyfill@~0.4.4",
+        "npm:@nosecone/sveltekit@^1.0.0-beta.2",
         "npm:@supabase/ssr@~0.5.2",
         "npm:@supabase/supabase-js@^2.47.3",
         "npm:@sveltejs/adapter-auto@4",
@@ -3424,7 +3432,6 @@
         "npm:drizzle-orm@~0.38.2",
         "npm:eslint-plugin-svelte@^2.46.1",
         "npm:eslint@^9.16.0",
-        "npm:helmet@8",
         "npm:ioredis@^5.4.2",
         "npm:leaflet@^1.9.4",
         "npm:lucide-svelte@0.474",
