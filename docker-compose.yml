@@ -13,7 +13,7 @@ services:
     volumes: 
       - /data/coolify/proxy:/app/tls:ro
   redis:
-    image: redis:7.2-alpine
+    image: redislabs/rejson:latest
     ports: 
       - 3888:6379
     volumes:
