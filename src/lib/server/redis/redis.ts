@@ -2,7 +2,7 @@ import supabase from "@/lib/utils/client";
 import { createClient } from "redis";
 import type { RedisClientOptions } from "redis";
 const redisConfig = {
-  url: 'redis://redis@localhost:3888'
+  url: 'redis://localhost:3888'
 } satisfies RedisClientOptions;
 
 const redisClient = createClient(redisConfig);
@@ -10,14 +10,13 @@ const redisClient = createClient(redisConfig);
 redisClient.on('error', err => console.error('❌ Redis Error: ', err));
 
 async function init() {
-  // Redis Actions
-  const hasReports = await getCachedReports();
-  if(!hasReports) await storeReports();
+  await storeReports();
 }
 
 export async function storeReports() {
+  console.log(`Storing reports from DB`)
   // Query DB for the reports table
-  const dbReports = await supabase.from("reports").select();
+  const dbReports = await supabase.from("reports").select("id, created_at, latitude, longitude, description, strength, wind_direction, humidity, precipitation, temperature_f, wind_speed_kn");
   const { data } = dbReports;
   if(!data) {
     const { error } = dbReports;
@@ -25,9 +24,7 @@ export async function storeReports() {
   }
   // Write the queried rows to redis
   try {
-    await Promise.all(data.map(async (report) => {
-      redisClient.set("reports", JSON.stringify(report))
-    }));
+    redisClient.json.set("reports", "$", data)
   }
   catch(err) {
     console.error(`Error `);
@@ -36,7 +33,7 @@ export async function storeReports() {
 }
 
 export async function getCachedReports() {
-  return redisClient.get("reports")
+  return redisClient.json.get("reports")
 }
 console.log(`❤️ Redis Connecting...`)
 const connection = await redisClient.connect();
