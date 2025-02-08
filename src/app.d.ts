@@ -1,4 +1,5 @@
-import type { Session, SupabaseClient, User } from '@supabase/supabase-js'
+import type { Session, SupabaseClient, User } from '@supabase/supabase-js';
+import "@hcaptcha/types";
 
 declare global {
   namespace App {
