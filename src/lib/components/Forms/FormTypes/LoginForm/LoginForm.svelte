@@ -13,7 +13,7 @@
     </h2>
   </div>
   <div class="bg-white px-6 py-6 md:py-12 sm:rounded-lg sm:px-12">
-    <enhance:form class="space-y-6" action="?/login" method="POST">
+    <form use:enhance class="space-y-6" action="?/login" method="POST">
       <div>
         <label for="email" class="block text-sm/6 font-medium text-gray-900">
           Email address
@@ -84,8 +84,9 @@
             <span class="text-sm/6 font-semibold">Apple</span>
           </a> -->
         </div>
+      
       </div>
-      <div class="cf-turnstile" data-sitekey={PUBLIC_TURNSTILE_KEY}></div>
+     
     </form>
   </div>
 
