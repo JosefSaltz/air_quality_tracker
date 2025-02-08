@@ -55,13 +55,6 @@
   }
   // CSR logic
   onMount(async () => {
-    // Grab and update Geo coords logic
-    try { 
-      navigator.permissions.query({ name: 'geolocation' }).then((permission) => { permission.state !== 'denied' && fetchGeoAndUpdate() })
-    }
-    catch (err) { 
-      console.error(`Something went wrong trying to get the geolocation data`, err); 
-    }
     // Loading Start
     console.log(`Loading map...`);
     // Destructure current geo state values
@@ -74,6 +67,13 @@
     lMap = L.map("map").setView([x, y], 13);
     // Error logging
     if(!lMap) return console.error(`Something went wrong initializing leafly!`);
+    // Grab and update Geo coords logic
+    try { 
+      navigator.permissions.query({ name: 'geolocation' }).then((permission) => { permission.state !== 'denied' && fetchGeoAndUpdate() })
+    }
+    catch (err) { 
+      console.error(`Something went wrong trying to get the geolocation data`, err); 
+    }
     // Set OpenStreetMap as the tile layer and add to map object
     L
       .tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {})
