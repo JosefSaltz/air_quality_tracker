@@ -17,7 +17,7 @@ const config = {
 		csp: {
 			mode: "auto",
 			directives: {
-				"script-src": ["'self'", "localhost", "https://accounts.google.com", "https://youtube.com"],
+				"script-src": ["'self'", "localhost", "https://accounts.google.com", "https://youtube.com", "sha256-y2WkUILyE4eycy7x+pC0z99aZjTZlWfVwgUAfNc1sY8="],
 				"img-src": ["'self'", "data:", "https://tile.openstreetmap.org", "https://images.unsplash.com", "https://lh3.googleusercontent.com"],
 				"style-src": ["'self'", "localhost", "https://images.unsplash.com", "https://unpkg.com", "unsafe-inline", "data:", "blob:"],
 			}

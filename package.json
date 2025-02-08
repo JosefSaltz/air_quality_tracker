@@ -15,6 +15,7 @@
 		"@deno/vite-plugin": "^1.0.3",
 		"@iconify/svelte": "^4.1.0",
 		"@js-temporal/polyfill": "^0.4.4",
+		"@sentry/sveltekit": "^8.54.0",
 		"@supabase/ssr": "^0.5.2",
 		"@supabase/supabase-js": "^2.47.3",
 		"@sveltejs/adapter-node": "^5.2.12",
