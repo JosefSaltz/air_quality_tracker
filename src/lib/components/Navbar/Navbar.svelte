@@ -33,7 +33,7 @@
   }
 </script>
 
-<header class="bg-white shadow-sm lg:static lg:overflow-y-visible hidden xl:block">
+<header class="bg-white shadow-sm md:static lg:overflow-y-visible hidden xl:block">
   <div class="hidden lg:block mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
       <div class="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
