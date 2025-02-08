@@ -44,7 +44,7 @@ const config = {
 				"connect-src": [
 					"'self'", 
 					"https://*.sentry.io", 
-					"https://ryyejiiqfbqodsqjexdj.supabase.co/auth/v1/token?grant_type=pkce"
+					"https://ryyejiiqfbqodsqjexdj.supabase.co"
 				]
 			}
 		}
