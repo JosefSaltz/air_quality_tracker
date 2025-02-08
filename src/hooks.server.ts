@@ -8,6 +8,7 @@ import {
 import { createServerClient } from "@supabase/ssr";
 import { type Handle, redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
+import * as Sentry from "@sentry/sveltekit";
 // Handle dynamic assignment
 const [SUPABASE_URL, SUPABASE_ANON_KEY] = dev
   ? [PUBLIC_LOCAL_SUPABASE_URL, PUBLIC_LOCAL_SUPABASE_ANON_KEY]
@@ -20,7 +21,10 @@ export const supabase: Handle = async ({ event, resolve }) => {
     'X-Frame-Options': 'Deny',
     'X-Content-Type-Options': 'nosniff',
     'Permissions-Policy': 'geolocation=(self), camera=(), microphone=()',
-    'Referrer-Policy': 'strict-origin-when-cross-origin'
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Access-Control-Allow-Headers': 'Content-Type, sentry-trace, baggage',
+    'Access-Control-Allow-Origin': dev ? '*' : 'https://piita.org',
+    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS'
   })
   event.locals.supabase = createServerClient(
     SUPABASE_URL,
@@ -56,8 +60,7 @@ export const supabase: Handle = async ({ event, resolve }) => {
     // If no valid session return nothing
     if (!session) return { session: null, user: null };
     // Destructure user and error
-    const { data: { user }, error } = await event.locals.supabase.auth
-      .getUser();
+    const { data: { user }, error } = await event.locals.supabase.auth.getUser();
     // If JWT validation has failed
     if (error) return { session: null, user: null };
     // Return our supabase session and user objects
@@ -91,3 +94,4 @@ export const handle: Handle = sequence(
   supabase,
   authGuard,
 );
+
