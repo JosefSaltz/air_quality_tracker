@@ -30,7 +30,6 @@
   }: Props = $props(); 
   let mapDragged = $state(false);
   let lMap: undefined | Map = $state();
-  
   const initialView = {
     latitude: 38.10105120505375,
     longitude: -122.25144198851173
@@ -74,7 +73,7 @@
     const selectionMarker = new L.Marker(lMap.getCenter()).addTo(lMap);
     // Map Event Listeners
     // Update the marker position to center on drag
-    lMap.on("drag", () => { 
+    lMap.on("move", () => { 
       // Latch the mapDragged state to true
       if(!mapDragged) mapDragged = true;
       // Undefined guard
@@ -83,9 +82,9 @@
       centerCoords && selectionMarker.setLatLng(centerCoords); 
     });
     // Update state on end of drag
-    lMap.on("dragend", () => { 
+    lMap.on("moveend", () => { 
       // Destructure
-      const { lat, lng } = selectionMarker.getLatLng(); 
+      const { lat, lng } = selectionMarker.getLatLng();
       // Fit values to keys 
       currentGeolocation = { latitude: Number(lat), longitude: Number(lng) }
     });
@@ -128,10 +127,3 @@
     {/if}
   </FormDrawer>
 </div>
-
-<style>
-  #map {
-    border-right: none;
-  }
-  .huechange { filter: hue-rotate(120deg); }
-</style>
