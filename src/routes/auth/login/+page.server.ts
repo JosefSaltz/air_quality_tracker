@@ -47,3 +47,4 @@ export const actions = {
     // use the redirect API for your server framework
   }
 } satisfies Actions;
+

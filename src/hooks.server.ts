@@ -24,7 +24,7 @@ export const supabase: Handle = async ({ event, resolve }) => {
     'Referrer-Policy': 'strict-origin-when-cross-origin',
     'Access-Control-Allow-Headers': 'Content-Type, sentry-trace, baggage',
     'Access-Control-Allow-Origin': dev ? '*' : 'https://piita.org',
-    'Access-Control-Allow-Methods': 'GET,POST,OPTIONS'
+    'Access-Control-Allow-Methods':'GET,POST,OPTIONS'
   })
   event.locals.supabase = createServerClient(
     SUPABASE_URL,

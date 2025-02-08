@@ -6,16 +6,6 @@ import { fetchMeteoData } from "$lib/server/fetchMeteoData";
 import type { TablesInsert } from "$root/database.types";
 import z from "zod";
 
-
-export const load: PageServerLoad = async ({ locals }) => {
-  const { supabase } = locals;
-  // Fetch minimum required data
-  const markers = await getMarkers(supabase);
-  // Generate cryptographic nonce for use with Google SSO
-  const googleNonce = getNonce();
-  if (!markers) return console.warn("No marker data retrieved");
-  return { googleNonce, markers };
-};
 // Deepseek generated schema
 const ReportSchema = z.object({
   created_by: z.string(), // Assuming user.id is a string (e.g., UUID)
@@ -36,6 +26,16 @@ const ReportSchema = z.object({
   wind_direction: z.number().nullable(),
   temperature_f: z.number().nullable(),
 });
+
+export const load: PageServerLoad = async ({ locals }) => {
+  const { supabase } = locals;
+  // Fetch minimum required data
+  const markers = getMarkers(supabase);
+  // Generate cryptographic nonce for use with Google SSO
+  const googleNonce = getNonce();
+  
+  return { googleNonce, markers };
+};
 
 export const actions = {
   report: async ({ request, locals: { supabase, user, session } }) => {
@@ -103,7 +103,6 @@ export const actions = {
     console.log(`🔎 Insert Payload:`, insertPayload)
     // Run full payload validation before inserting
     const validatedInsert = ReportSchema.parse(insertPayload);
-
     // Attempt to insert to DB
     const response = await supabase
       .from("reports")
