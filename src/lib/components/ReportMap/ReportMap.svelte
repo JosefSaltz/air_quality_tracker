@@ -111,7 +111,7 @@
       })
     }
     // Grab and update Geo coords
-    try { fetchGeoAndUpdate() }
+    try { navigator.permissions.query({ name: 'geolocation' }).then((permission) => { permission.state !== 'denied'  && fetchGeoAndUpdate() })}
     catch (err) { console.error(`Something went wrong trying to get the geolocation data`, err); }
     // Loading Start
     console.log(`Loading map...`);
