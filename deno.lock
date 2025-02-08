@@ -1,8 +1,10 @@
 {
   "version": "4",
   "specifiers": {
-    "npm:@deno/vite-plugin@^1.0.3": "1.0.3_vite@6.1.0",
-    "npm:@iconify/svelte@^4.1.0": "4.2.0_svelte@5.20.0__acorn@8.14.0",
+    "npm:@deno/vite-plugin@^1.0.3": "1.0.3_vite@6.0.11",
+    "npm:@hcaptcha/types@^1.0.4": "1.0.4",
+    "npm:@hcaptcha/vanilla-hcaptcha@^1.1.1": "1.1.1",
+    "npm:@iconify/svelte@^4.1.0": "4.2.0_svelte@5.19.6__acorn@8.14.0",
     "npm:@internationalized/date@^3.7.0": "3.7.0",
     "npm:@js-temporal/polyfill@~0.4.4": "0.4.4",
     "npm:@sentry/sveltekit@^8.54.0": "8.55.0_@sveltejs+kit@2.17.1__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.20.0____acorn@8.14.0___vite@6.1.0__svelte@5.20.0___acorn@8.14.0__vite@6.1.0_vite@6.1.0_svelte@5.20.0__acorn@8.14.0_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.20.0___acorn@8.14.0__vite@6.1.0",
@@ -23,10 +25,10 @@
     "npm:dotenv@^16.4.7": "16.4.7",
     "npm:drizzle-kit@~0.30.1": "0.30.4_esbuild@0.19.12",
     "npm:drizzle-orm@~0.38.2": "0.38.4_@types+pg@8.11.11_postgres@3.4.5",
-    "npm:eslint-plugin-svelte@^2.46.1": "2.46.1_eslint@9.20.1_svelte@5.20.0__acorn@8.14.0_postcss@8.5.2",
-    "npm:eslint@^9.16.0": "9.20.1",
-    "npm:ioredis@^5.4.2": "5.5.0",
-    "npm:leaflet.locatecontrol@~0.83.1": "0.83.1",
+    "npm:eslint-plugin-svelte@^2.46.1": "2.46.1_eslint@9.19.0_svelte@5.19.6__acorn@8.14.0_postcss@8.5.1",
+    "npm:eslint@^9.16.0": "9.19.0",
+    "npm:hcaptcha@0.2": "0.2.0",
+    "npm:ioredis@^5.4.2": "5.4.2",
     "npm:leaflet@^1.9.4": "1.9.4",
     "npm:lucide-svelte@0.474": "0.474.0_svelte@5.20.0__acorn@8.14.0",
     "npm:mode-watcher@0.5": "0.5.1_svelte@5.20.0__acorn@8.14.0",
@@ -485,6 +487,12 @@
     },
     "@floating-ui/utils@0.2.9": {
       "integrity": "sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg=="
+    },
+    "@hcaptcha/types@1.0.4": {
+      "integrity": "sha512-4CBrdr9DFC7sYZPRvLol82UVZVne8B2skBGfMDUqPC6q9vzHMwv/cNxXW44EIa6DaFDr+EWNSnKJpHxWr7Q42Q=="
+    },
+    "@hcaptcha/vanilla-hcaptcha@1.1.1": {
+      "integrity": "sha512-RRIbnvjOcTgjZptXEZwXHVz8qYow/9Rcj1m0GGjMJDC1U726aPJRkicsbYx8twHyak/eyJxoHqVvX9Jt1O+WZA=="
     },
     "@humanfs/core@0.19.1": {
       "integrity": "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="
@@ -2205,6 +2213,20 @@
         "function-bind"
       ]
     },
+    "hcaptcha@0.2.0": {
+      "integrity": "sha512-x25z3RoEa9oqfyuQsgk2olc+LCNVDAJaGKUP1qFhpAybB6qjqOf4qB2y1E3LJpXDvM229JWEywc6iWnzWvGjNw=="
+    },
+    "http-call@5.3.0": {
+      "integrity": "sha512-ahwimsC23ICE4kPl9xTBjKB4inbRaeLyZeRunC/1Jy/Z6X8tv22MEAjK+KBOMSVLaqXPTTmd8638waVIKLGx2w==",
+      "dependencies": [
+        "content-type",
+        "debug",
+        "is-retry-allowed",
+        "is-stream",
+        "parse-json",
+        "tunnel-agent"
+      ]
+    },
     "https-proxy-agent@5.0.1": {
       "integrity": "sha512-dFcAjpTQFgoLMzC2VwU+C/CbS7uRL0lWmxDITmqm7C+7F0Odmj6s9l6alZc6AELXhrnggM2CeWSXHGOdX2YtwA==",
       "dependencies": [
@@ -3473,6 +3495,8 @@
     "packageJson": {
       "dependencies": [
         "npm:@deno/vite-plugin@^1.0.3",
+        "npm:@hcaptcha/types@^1.0.4",
+        "npm:@hcaptcha/vanilla-hcaptcha@^1.1.1",
         "npm:@iconify/svelte@^4.1.0",
         "npm:@internationalized/date@^3.7.0",
         "npm:@js-temporal/polyfill@~0.4.4",
@@ -3496,6 +3520,7 @@
         "npm:drizzle-orm@~0.38.2",
         "npm:eslint-plugin-svelte@^2.46.1",
         "npm:eslint@^9.16.0",
+        "npm:hcaptcha@0.2",
         "npm:ioredis@^5.4.2",
         "npm:leaflet.locatecontrol@~0.83.1",
         "npm:leaflet@^1.9.4",
