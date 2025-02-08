@@ -12,6 +12,7 @@
     <h2 class="mt-3 md:mt-6 text-center text-lg md:text-2xl font-bold tracking-tight text-gray-900">
       PIITA Login
     </h2>
+    <h4>Vallejo Edition</h4>
   </div>
   <!-- Email Form Input Section -->
   <div class="bg-white px-6 py-6 md:py-12 sm:rounded-lg sm:px-12">
