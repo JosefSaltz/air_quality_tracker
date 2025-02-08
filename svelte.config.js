@@ -18,16 +18,34 @@ const config = {
 			mode: "auto",
 			directives: {
 				"script-src": [
-					"'self'", 
-					"localhost", 
-					"https://accounts.google.com", 
-					"https://youtube.com", 
-					"sha256-y2WkUILyE4eycy7x+pC0z99aZjTZlWfVwgUAfNc1sY8=", 
+					"'self'",
+					"localhost",
+					"https://accounts.google.com",
+					"https://youtube.com",
+					"sha256-y2WkUILyE4eycy7x+pC0z99aZjTZlWfVwgUAfNc1sY8=",
 					"blob:"
 				],
-				"img-src": ["'self'", "data:", "https://tile.openstreetmap.org", "https://images.unsplash.com", "https://lh3.googleusercontent.com"],
-				"style-src": ["'self'", "localhost", "https://images.unsplash.com", "https://unpkg.com", "unsafe-inline", "data:", "blob:"],
-				"connect-src": ["'self'", "https://*.sentry.io", "https://ryyejiiqfbqodsqjexdj.supabase.co/auth/v1/token?grant_type=pkce"]
+				"img-src": [
+					"'self'",
+					"data:",
+					"https://tile.openstreetmap.org",
+					"https://images.unsplash.com",
+					"https://lh3.googleusercontent.com"
+				],
+				"style-src": [
+					"'self'", 
+					"localhost", 
+					"https://images.unsplash.com", 
+					"https://unpkg.com", 
+					"unsafe-inline",
+					"data:",
+					"blob:"
+					],
+				"connect-src": [
+					"'self'", 
+					"https://*.sentry.io", 
+					"https://ryyejiiqfbqodsqjexdj.supabase.co/auth/v1/token?grant_type=pkce"
+				]
 			}
 		}
 	}
