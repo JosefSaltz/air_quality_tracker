@@ -64,7 +64,7 @@ def write_to_readme(README_PATH, env_names):
 def main():
   env_names = get_env_names(LOCAL_ENV)
   print(env_names)
-  write_to_readme(TEST_PATH, env_names)
+  write_to_readme(README, env_names)
 
 if __name__ == '__main__':
   main()
