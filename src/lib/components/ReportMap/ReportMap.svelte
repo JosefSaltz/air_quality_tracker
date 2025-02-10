@@ -11,9 +11,7 @@
   import LoginRequired from "../Dashboard/LoginRequired.svelte";
   import FormDrawer from "../Forms/Layouts/FormDrawer.svelte";
   import generateMarkers from "$lib/utils/generateMarkers"
-  import fetchGeolocation from "$lib/utils/fetchGeolocation";
   import MapSkeleton from "$components/ReportMap/MapSkeleton.svelte";
-  import { dev } from "$app/environment";
   import type { PageProps } from "../../../routes/$types";
   import type { Map } from "leaflet";
   import type { User } from "@supabase/supabase-js";
@@ -37,16 +35,6 @@
   let currentGeolocation = $state(initialView);
   // Reference assignment for resizing map with viewport
   let container: undefined | Element;
-  // Callback for async getting the current geo data
-  const fetchGeoAndUpdate = async () => {
-    const coords = await fetchGeolocation();
-    // Short circuit overwriting the position if the user started moving the map at default
-    if(mapDragged) return;
-    // current Geolocation will be initial if in dev mode
-    currentGeolocation = dev ? initialView : coords;
-    // Check that lMap exists and then set it's view to the new coords
-    lMap && lMap.setView([currentGeolocation.latitude, currentGeolocation.longitude])
-  }
   // CSR logic
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
@@ -57,14 +45,6 @@
     const { latitude: x, longitude: y } = currentGeolocation;
     // Initialize the Leaflet map object bound to the element with #map id
     lMap = L.map("map").setView([x, y], 13);
-    // Grab and update Geo coords logic
-    navigator.permissions.query({ name: 'geolocation' })
-      .then((permission) => { 
-        permission.state !== 'denied' && fetchGeoAndUpdate(); 
-      })
-      .catch(err => {
-        console.error(`Something went wrong while trying to get geolocation`, err)
-      });
     // Set OpenStreetMap as the tile layer and add to map object
     L
       .tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {})
