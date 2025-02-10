@@ -1,11 +1,15 @@
-# Air Quality Tracker
+# 👃💩 Air Quality Tracker
 
 ## About
 Air Quality Tracker is a open-source project commisioned by citizens of Vallejo, CA to help trace
 a recurring odor issue in the city dealing with local municipalities. The app aims to record and 
 visualize data to more actively identify the root cause and help the citizens communicate with their
 local authorities. The app is currently geared towards the local city area but can be adapted to any
-region with some minor value changes. The current tech stack is Svelte Kit (Svelte 5), Supabase(Auth/DB), Postgres, and Drizzle ORM at a later date.
+region with some minor value changes. The current tech stack is: 
+* Svelte Kit (Svelte 5) 
+* Supabase(Auth/DB)
+* Postgres 
+* Drizzle ORM (Soon)
 
 
 
@@ -48,7 +52,5 @@ PRIVATE_TURNSTILE_SECRET
 Deno is recommended and what is currently used for deployments. Run `deno install` to install dependencies
 followed by `deno task dev` to start the development server.
 
-# Deploy
+## Deploy
 Prod service containers are defined in the docker-compose file for deployment to your preferred provider.
-
-
