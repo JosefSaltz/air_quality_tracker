@@ -1,11 +1,8 @@
 # 👃💩 Air Quality Tracker
 
-## About
-Air Quality Tracker is a open-source project commisioned by citizens of Vallejo, CA to help trace
-a recurring odor issue in the city dealing with local municipalities. The app aims to record and 
-visualize data to more actively identify the root cause and help the citizens communicate with their
-local authorities. The app is currently geared towards the local city area but can be adapted to any
-region with some minor value changes. The current tech stack is: 
+Air Quality Tracker is an open-source application commissioned by the citizens of Vallejo, CA, to tackle recurring odor issues in the community. By systematically collecting, recording, and visualizing environmental data, the app empowers residents to identify potential sources of air quality disturbances and engage local authorities with concrete, actionable insights.
+
+Originally developed for Vallejo, the platform is designed with flexibility in mind—it can be easily adapted to serve any region with only minor modifications. Built upon a robust, modern tech stack that emphasizes performance, scalability, and reliability, Air Quality Tracker not only provides a user-friendly interface for data monitoring but also fosters community-driven environmental advocacy. The current tech stack is: 
 * Svelte Kit (Svelte 5) 
 * Supabase(Auth/DB)
 * Postgres 
