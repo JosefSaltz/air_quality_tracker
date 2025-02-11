@@ -42,7 +42,8 @@ const config = {
 					"blob:"
 					],
 				"connect-src": [
-					"'self'", 
+					"'self'",
+					"http://localhost:54321/", 
 					"https://*.sentry.io", 
 					"https://ryyejiiqfbqodsqjexdj.supabase.co"
 				]
