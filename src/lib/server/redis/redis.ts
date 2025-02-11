@@ -1,8 +1,9 @@
+import { PRIVATE_REDIS_URL } from '$env/static/private'
 import supabase from "@/lib/utils/client";
 import { createClient } from "redis";
 import type { RedisClientOptions } from "redis";
 const redisConfig = {
-  url: 'redis://localhost:3888'
+  url: PRIVATE_REDIS_URL
 } satisfies RedisClientOptions;
 
 const redisClient = createClient(redisConfig);
@@ -35,6 +36,7 @@ export async function storeReports() {
 export async function getCachedReports() {
   return redisClient.json.get("reports")
 }
+
 console.log(`❤️ Redis Connecting...`)
 const connection = await redisClient.connect();
 if(connection) init();
