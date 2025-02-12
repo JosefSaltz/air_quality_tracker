@@ -108,6 +108,7 @@ export const actions = {
       .from("reports")
       .insert(validatedInsert satisfies TablesInsert<"reports">)
       .select();
+    console.log(response);
     if (response.error) fail(400, {});
     // Mutable payload
     
