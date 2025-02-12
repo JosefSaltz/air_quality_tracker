@@ -6,9 +6,12 @@
   import GasIcon from "@/lib/assets/svg/gas.svelte";
   import SewageIcon from "@/lib/assets/svg/sewage.svelte";
   import { enhance } from "$app/forms";
-  import type { ActionData } from "../../../../../routes/$types";
+  import type { ActionData, PageProps, SubmitFunction } from "../../../../../routes/$types";
   import type { GeoCoords } from "@/lib/components/ReportMap/ReportMap.svelte";
-  
+  import { invalidate } from "$app/navigation";
+  import { resolveRoute } from "$app/paths";
+  import type { ActionResult } from "@sveltejs/kit";
+
   type Props = {
     form: ActionData,
     currentGeolocation: GeoCoords,
@@ -32,8 +35,7 @@
   // Time Picker State
   // let period: Period = $state(null);
   // let selectedDate: Date | null = $state(null);
-
-  const handleSubmission = ({ formData }: { formData: FormData}) => {
+  const handleSubmission: SubmitFunction = ({ formData }) => {
     if(!selectedStrength) return console.error('No strength chosen!');
     const first_name = formData.get('first_name');
     const last_name = formData.get('last_name');
@@ -51,6 +53,9 @@
       formData.append(key, value ?? 'null')
     }
     drawerIsOpen = false;
+    return async ({ result, update }) => {
+      await update()
+    }
   }
 
   const styles = `border-top-left-radius: 0; border-bottom-left-radius: 0`;

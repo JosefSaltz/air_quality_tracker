@@ -10,7 +10,7 @@
   import ReportForm from "../Forms/FormTypes/ReportForm/ReportForm.svelte";
   import LoginRequired from "../Dashboard/LoginRequired.svelte";
   import FormDrawer from "../Forms/Layouts/FormDrawer.svelte";
-  import generateMarkers from "$lib/utils/generateMarkers"
+  import { createMarker, generateMarkers, } from "$lib/utils/generateMarkers"
   import MapSkeleton from "$components/ReportMap/MapSkeleton.svelte";
   import type { PageProps } from "../../../routes/$types";
   import type { Map } from "leaflet";
@@ -21,6 +21,7 @@
     form: PageProps["form"]
     user: User | null
   }
+
   let { 
     markers, 
     user, 
@@ -28,19 +29,20 @@
   }: Props = $props(); 
   let mapDragged = $state(false);
   let drawerIsOpen = $state(false);
-  $inspect(drawerIsOpen)
+  let L: undefined | typeof import('leaflet');
   let lMap: undefined | Map = $state();
   const initialView = {
     latitude: 38.10105120505375,
     longitude: -122.25144198851173
-  }
+  };
   let currentGeolocation = $state(initialView);
+  // let markerList = $state(markers);
   // Reference assignment for resizing map with viewport
   let container: undefined | Element;
   // CSR logic
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
-    const L = await import("leaflet");
+    L = await import("leaflet");
     // Function to pin needed marker image assets for CSR compatibility
     bindMissingAssets(L);
     // Destructure current geo state values
@@ -70,30 +72,35 @@
       // Fit values to keys 
       currentGeolocation = { latitude: Number(lat), longitude: Number(lng) }
     });
-    // Add all the previously reported markers to the map
-    generateMarkers(L, lMap, markers);
-    // Set the watermark attribution
-    lMap.attributionControl.setPrefix("github.com/JosefSaltz");
-    // Clean up function
-    return () =>  { lMap && lMap.remove(); }
-  });
-  // Effect rune to handle resizing of map with viewport
-  $effect(() => {
     // Null Guard
     if(!container) return;
     // Invalidate leaflet size on resizes
     const resizeObserver = new ResizeObserver(() => {
       lMap?.invalidateSize();
-    })
+    });
     // Watch the binded element
     resizeObserver.observe(container);
+    // Marker generation 
+    generateMarkers(L, lMap, markers);
+    // Set the watermark attribution
+    lMap.attributionControl.setPrefix("github.com/JosefSaltz");
     // Clean up function
-    return () => {
+    return () =>  { 
       resizeObserver.disconnect();
-      // This might be extraneous
-      lMap && lMap.remove();
+      lMap && lMap.remove(); 
     }
-	})
+  });
+  // New marker effect
+  $effect(() => {
+    // New form generated marker logic
+    if(form?.newMarker) {
+      // Null guard for global deps
+      if(!L || !lMap) return;
+      console.log(`New Marker Detected`);
+      const createdMarker = createMarker(L, form.newMarker);
+      createdMarker && createdMarker.addTo(lMap);
+    }
+  })
 </script>
 <!-- Leafly attachment node -->
 <div id="map-container" class="w-full h-full border" >
@@ -103,7 +110,7 @@
   {/if}
   <FormDrawer user={user} form={form} bind:open={drawerIsOpen} >
     {#if user}
-      <ReportForm bind:currentGeolocation bind:drawerIsOpen form={form} />
+      <ReportForm bind:currentGeolocation bind:drawerIsOpen bind:markers form={form} />
     {:else}
       <LoginRequired />
     {/if}

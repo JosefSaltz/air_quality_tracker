@@ -3,26 +3,33 @@ import type { PageProps } from "../../routes/$types";
 import type { Tables } from "$root/database.types";
 import type { LatLngTuple } from "leaflet";
 
-export default async function generateMarkers(L: typeof import("leaflet"), lMap: Map, markers: PageProps["data"]["markers"]) {    
+
+type QueriedMarker = Omit<Tables<"reports">, "created_by" | "precipitation" | "location"> 
+
+export function createMarker(L: typeof import("leaflet"), marker: QueriedMarker) {
+  // Type appeasement
+  if(!L) return console.error('Leaflet is not initialized!')
+  // Destructure
+  const { latitude, longitude } = marker;
+  // Generate pop up content
+  const description = constructDescription(marker);
+  // Assign formatted coordinates
+  const markerCoords = [ latitude, longitude ] satisfies LatLngTuple;
+  // Return a new instantiated marker 
+  const createdMarker = new L.Marker(markerCoords, {});
+  // Add the record's description to the marker's pop-up
+  description && createdMarker.bindPopup(description);
+  // Return the completed marker with it's created pop-up
+  return createdMarker;
+}
+
+export async function generateMarkers(L: typeof import("leaflet"), lMap: Map, markers: PageProps["data"]["markers"]) {    
   const receivedData = await markers;
   if(!receivedData) return;
   // Iterate through marker data and create a new marker to be placed on the leaflet map
   return receivedData.map((marker) => {
-    // Destructure
-    const { latitude, longitude } = marker;
-    // Generate pop up content
-    const description = constructDescription(marker);
-    // Assign formatted coordinates
-    const markerCoords = [ latitude, longitude ] satisfies LatLngTuple;
-    // Type appeasement
-    if(!L) return console.error('Leaflet is not initialized!')
-    // 
-    const createdMarker = new L.Marker(markerCoords, {
-    });
-    const markerRef = createdMarker.getElement()
-    markerRef && L.DomUtil.addClass(markerRef, "huechange")
-    description && createdMarker.bindPopup(description);
-    //createdMarker.on("mouseover", (e: MouseEvent) => {})
+    const createdMarker = createMarker(L, marker);
+    if(!createdMarker) return console.error(`Failed to create marker`);
     createdMarker.addTo(lMap);
   })
 }
@@ -45,7 +52,6 @@ function getDirection( angle: number | null ) {
   return directions[ section % 16 ]
 }
 
-type QueriedMarker = Omit<Tables<"reports">, "created_by" | "precipitation" | "location"> 
 function constructDescription(marker: QueriedMarker) {
   const { created_at, humidity, description, strength, temperature_f, wind_direction, wind_speed_kn } = marker;
   const dateTime = new Date(created_at);
