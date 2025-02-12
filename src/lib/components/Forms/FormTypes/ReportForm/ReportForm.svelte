@@ -12,9 +12,10 @@
   type Props = {
     form: ActionData,
     currentGeolocation: GeoCoords,
+    drawerIsOpen: boolean
   }
   // import SmokeIcon from "@/lib/svg/smoke.svelte";
-  let { form, currentGeolocation = $bindable() }: Props = $props();
+  let { form, currentGeolocation = $bindable(), drawerIsOpen = $bindable() }: Props = $props();
   let selectedOdor: null | 'Gas' | "Sewage" | "Smoke" = $state(null);
   let selectedStrength: null | 'Faint' | "Strong" | 'Overwhelming' = $state(null);
   const odorStrengths = [
@@ -49,6 +50,7 @@
     for (const [key, value] of Object.entries(appended)) {
       formData.append(key, value ?? 'null')
     }
+    drawerIsOpen = false;
   }
 
   const styles = `border-top-left-radius: 0; border-bottom-left-radius: 0`;
@@ -66,7 +68,6 @@
       <legend>How Strong is the Smell?</legend>
       <OdorToggles bind:selected={selectedStrength} toggles={odorStrengths} />    
       
-
       <!-- <legend>Duration</legend>
       <TimePickerInput picker="12hours"
         period={period}

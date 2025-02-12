@@ -3,12 +3,12 @@
   import { Button, buttonVariants, type ButtonVariant } from "$components/ui/button";
   import * as Alert from "../../ui/alert";
   Button;
-  let { user, form, children } = $props();
+  let { user, form, children, open = $bindable() } = $props();
   // Dumbest type appeasement I've ever done
   const buttonConfig = { size: "lg" as "lg", class: "bg-purple-800 hover:bg-purple-600" };
 </script>
 
-<Drawer.Root>
+<Drawer.Root bind:open>
   <div class="relative w-full flex justify-center top-[60%]">
     <div class="flex flex-col justify-center">
       {#if user}

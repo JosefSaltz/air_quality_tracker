@@ -27,6 +27,8 @@
     form 
   }: Props = $props(); 
   let mapDragged = $state(false);
+  let drawerIsOpen = $state(false);
+  $inspect(drawerIsOpen)
   let lMap: undefined | Map = $state();
   const initialView = {
     latitude: 38.10105120505375,
@@ -99,9 +101,9 @@
   {#if !lMap}
     <MapSkeleton />
   {/if}
-  <FormDrawer user={user} form={form}>
+  <FormDrawer user={user} form={form} bind:open={drawerIsOpen} >
     {#if user}
-      <ReportForm bind:currentGeolocation form={form} />
+      <ReportForm bind:currentGeolocation bind:drawerIsOpen form={form} />
     {:else}
       <LoginRequired />
     {/if}
