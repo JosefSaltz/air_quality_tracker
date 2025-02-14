@@ -48,7 +48,7 @@
     // Destructure current geo state values
     const { latitude: x, longitude: y } = currentGeolocation;
     // Initialize the Leaflet map object bound to the element with #map id
-    lMap = L.map("map").setView([x, y], 13);
+    lMap = L.map("map").setView([x, y], 15);
     // Set OpenStreetMap as the tile layer and add to map object
     L
       .tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {})
@@ -110,7 +110,7 @@
   {/if}
   <FormDrawer user={user} form={form} bind:open={drawerIsOpen} >
     {#if user}
-      <ReportForm bind:currentGeolocation bind:drawerIsOpen bind:markers form={form} />
+      <ReportForm bind:currentGeolocation bind:drawerIsOpen form={form} />
     {:else}
       <LoginRequired />
     {/if}
