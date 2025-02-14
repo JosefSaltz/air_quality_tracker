@@ -32,8 +32,8 @@
   let L: undefined | typeof import('leaflet');
   let lMap: undefined | Map = $state();
   const initialView = {
-    latitude: 38.10105120505375,
-    longitude: -122.25144198851173
+    latitude: 38.097557,
+    longitude: -122.250036
   };
   let currentGeolocation = $state(initialView);
   // let markerList = $state(markers);
