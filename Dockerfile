@@ -8,7 +8,7 @@ ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 WORKDIR /app
 
 # Install jq
-RUN apt-get update && apt-get install -y jq
+RUN apt-get update && apt-get install -y jq ca-certificates
 
 # Extract certs
 RUN jq -r '.letsencrypt.Certificates[] | select(.domain.main=="piita.org") | .certificate' /app/tls/acme.json | base64 -d > tls_cert.pem
