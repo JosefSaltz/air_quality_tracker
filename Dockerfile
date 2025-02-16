@@ -27,6 +27,8 @@ FROM denoland/deno:alpine-2.1.10
 # Set the working directory in the container
 WORKDIR /app
 
+RUN apk add --no-cache ca-certificates
+
 COPY --from=builder /app/build ./build
 
 COPY --from=builder ["/app/deno*", "/app/.env.vault", "/app/package*", "./"]
