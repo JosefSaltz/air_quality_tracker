@@ -26,6 +26,7 @@
     "npm:eslint-plugin-svelte@^2.46.1": "2.46.1_eslint@9.20.1_svelte@5.20.0__acorn@8.14.0_postcss@8.5.2",
     "npm:eslint@^9.16.0": "9.20.1",
     "npm:ioredis@^5.4.2": "5.5.0",
+    "npm:leaflet.locatecontrol@~0.83.1": "0.83.1",
     "npm:leaflet@^1.9.4": "1.9.4",
     "npm:lucide-svelte@0.474": "0.474.0_svelte@5.20.0__acorn@8.14.0",
     "npm:mode-watcher@0.5": "0.5.1_svelte@5.20.0__acorn@8.14.0",
@@ -39,6 +40,7 @@
     "npm:tailwindcss@^3.4.16": "3.4.17_postcss@8.5.2",
     "npm:typescript@^5.7.3": "5.7.3",
     "npm:vaul-svelte@1.0.0-next.3": "1.0.0-next.3_svelte@5.20.0__acorn@8.14.0",
+    "npm:vite@6.1.0": "6.1.0",
     "npm:vite@^6.0.3": "6.1.0",
     "npm:zod-form-data@^2.0.2": "2.0.5_zod@3.24.2",
     "npm:zod@^3.24.1": "3.24.2"
@@ -2332,6 +2334,9 @@
     "known-css-properties@0.35.0": {
       "integrity": "sha512-a/RAk2BfKk+WFGhhOCAYqSiFLc34k8Mt/6NWRI4joER0EYUzXIcFivjjnoD3+XU1DggLn/tZc3DOAgke7l8a4A=="
     },
+    "leaflet.locatecontrol@0.83.1": {
+      "integrity": "sha512-oF5uey4GOpnw/ly379fV8JQJuUQes9eECaWo8voTIWLQERYPCudOgfUzFggUbq+kpCMNz7BxP/MsLbyf77QorA=="
+    },
     "leaflet@1.9.4": {
       "integrity": "sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA=="
     },
@@ -3432,6 +3437,7 @@
         "npm:eslint-plugin-svelte@^2.46.1",
         "npm:eslint@^9.16.0",
         "npm:ioredis@^5.4.2",
+        "npm:leaflet.locatecontrol@~0.83.1",
         "npm:leaflet@^1.9.4",
         "npm:lucide-svelte@0.474",
         "npm:mode-watcher@0.5",

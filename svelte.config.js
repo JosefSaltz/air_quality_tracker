@@ -34,7 +34,8 @@ const config = {
 				],
 				"style-src": [
 					"'self'", 
-					"localhost", 
+					"localhost",
+					"https://cdn.jsdelivr.net", 
 					"https://images.unsplash.com", 
 					"https://unpkg.com", 
 					"unsafe-inline",

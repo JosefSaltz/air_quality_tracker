@@ -4,7 +4,7 @@
 </script>
 
 <script lang="ts">
-  import "leaflet/dist/leaflet.css";
+
   import { onMount} from "svelte";
   import bindMissingAssets from "@/lib/utils/bindMissingAssets";
   import ReportForm from "../Forms/FormTypes/ReportForm/ReportForm.svelte";
@@ -43,6 +43,8 @@
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
     L = await import("leaflet");
+    const { LocateControl } = await import( "leaflet.locatecontrol")
+    const locateButton = new LocateControl();
     // Function to pin needed marker image assets for CSR compatibility
     bindMissingAssets(L);
     // Destructure current geo state values
@@ -53,6 +55,7 @@
     L
       .tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {})
       .addTo(lMap);
+    locateButton.addTo(lMap);
     // Create the centered selector marker
     const selectionMarker = new L.Marker(lMap.getCenter()).addTo(lMap);
     // Map Event Listeners
@@ -102,6 +105,10 @@
     }
   })
 </script>
+
+<svelte:head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.83.1/dist/L.Control.Locate.min.css" />
+</svelte:head>
 <!-- Leafly attachment node -->
 <div id="map-container" class="w-full h-full border" >
   <div id="map" bind:this={container} class={`w-full h-full absolute z-0`}></div>
