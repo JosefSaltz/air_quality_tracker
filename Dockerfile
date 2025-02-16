@@ -4,17 +4,14 @@ FROM denoland/deno:2.1.10 AS builder
 # Set the working directory in the container
 WORKDIR /app
 
-# Install ca-certificates for Sentry Source map upload
-RUN apt-get update && apt-get install -y ca-certificates
-
-# Set environment
-ENV DENO_CERT="/app/tls_cert.pem"
-
 # Bundle app source inside Docker image
 COPY . .
 
 # Install any needed packages specified in package.json
-RUN deno install --allow-scripts  --no-lock
+RUN deno install --allow-scripts
+
+# Install ca-certificates for Sentry Source map upload
+RUN apt-get update && apt-get install -y ca-certificates
 
 # Build the App
 ARG DOTENV_KEY
@@ -26,8 +23,6 @@ FROM denoland/deno:alpine-2.1.10
 
 # Set the working directory in the container
 WORKDIR /app
-
-RUN apk add --no-cache ca-certificates
 
 COPY --from=builder /app/build ./build
 
