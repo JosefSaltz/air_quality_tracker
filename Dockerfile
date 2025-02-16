@@ -10,7 +10,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y jq
 
 # Extract certs
-RUN jq -r '.letsencrypt.Certificates[] | select(.domain.main=="piita.org") | .certificate' /data/coolify/proxy/acme.json | base64 -d > tls_cert.pem
+RUN jq -r '.letsencrypt.Certificates[] | select(.domain.main=="piita.org") | .certificate' /app/tls/acme.json | base64 -d > tls_cert.pem
 
 # Set environment
 ENV DENO_CERT="./tls_cert.pem"
