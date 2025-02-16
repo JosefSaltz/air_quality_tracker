@@ -14,7 +14,7 @@ ENV DENO_CERT="/app/tls_cert.pem"
 COPY . .
 
 # Install any needed packages specified in package.json
-RUN deno install --allow-scripts
+RUN deno install --allow-scripts  --no-lock
 
 # Build the App
 ARG DOTENV_KEY
