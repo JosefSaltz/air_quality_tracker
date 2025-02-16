@@ -6,8 +6,9 @@ import { sentrySvelteKit } from "@sentry/sveltekit";
 
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
+	console.log(env);
 	if(!env.SENTRY_AUTH_TOKEN) throw new Error(`SENTRY AUTH TOKEN NOT SET!`);
-	
+
 	return ({
 		build: {
 		assetsInlineLimit: 0
