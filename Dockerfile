@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y jq
 # Extract certs
 RUN jq -r '.letsencrypt.Certificates[] | select(.domain.main=="piita.org") | .certificate' /app/tls/acme.json | base64 -d > tls_cert.pem
 
-CMD ['ls']
+RUN ls
 # Set environment
 ENV DENO_CERT="/app/tls_cert.pem"
 
