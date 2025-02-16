@@ -1,6 +1,9 @@
 
 FROM denoland/deno:2.1.9 AS builder
 
+ARG SENTRY_AUTH_TOKEN
+ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
+
 # Set the working directory in the container
 WORKDIR /app
 
@@ -10,8 +13,9 @@ RUN apt-get update && apt-get install -y jq
 # Extract certs
 RUN jq -r '.letsencrypt.Certificates[] | select(.domain.main=="piita.org") | .certificate' /app/tls/acme.json | base64 -d > tls_cert.pem
 
+CMD ['ls']
 # Set environment
-ENV DENO_CERT="./tls_cert.pem"
+ENV DENO_CERT="/app/tls_cert.pem"
 
 # Bundle app source inside Docker image
 COPY . .
