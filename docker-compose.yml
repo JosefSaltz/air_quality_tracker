@@ -1,13 +1,13 @@
 services:
   svelte_server:
-    image: "denoland/deno:alpine"
     build: 
       context: .
+      tags: 
+        - "svelte_server:latest"
     environment:
       - DOTENV_KEY=${DOTENV_KEY}
       - NODE_ENV=production
-    tags: 
-      - "svelte_server:latest"
+    
     ports: 
       - 3000:3000
     volumes: 
