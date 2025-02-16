@@ -1,8 +1,6 @@
 
 FROM denoland/deno:2.1.9 AS builder
 
-ARG SENTRY_AUTH_TOKEN
-ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
 # Set the working directory in the container
 WORKDIR /app
 
