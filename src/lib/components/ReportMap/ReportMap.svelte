@@ -4,7 +4,6 @@
 </script>
 
 <script lang="ts">
-
   import { onMount} from "svelte";
   import bindMissingAssets from "@/lib/utils/bindMissingAssets";
   import ReportForm from "../Forms/FormTypes/ReportForm/ReportForm.svelte";
@@ -105,7 +104,7 @@
     }
   })
 </script>
-
+<!-- CDN Tag for Location Button -->
 <svelte:head>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.83.1/dist/L.Control.Locate.min.css" />
 </svelte:head>
