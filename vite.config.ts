@@ -6,10 +6,12 @@ import { sentrySvelteKit } from "@sentry/sveltekit";
 
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
-	console.log(env)
+	console.log(env);
+	if(!env.SENTRY_AUTH_TOKEN) throw new Error(`SENTRY AUTH TOKEN NOT SET!`);
+
 	return ({
 		build: {
-			assetsInlineLimit: 0
+		assetsInlineLimit: 0
 		},
 		plugins: [
 			deno(),
@@ -17,7 +19,7 @@ export default defineConfig(({ mode }) => {
 				sourceMapsUploadOptions: {
 					org: "piita",
 					project: "javascript-sveltekit",
-					authToken: process.env.SENTRY_AUTH_TOKEN,
+					authToken: env.SENTRY_AUTH_TOKEN,
 					sourcemaps: {
 						assets: ["./build/*/**/*"],
 						ignore: ["**/build/client/**/*"],
