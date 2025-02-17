@@ -2,7 +2,7 @@
   import { enhance } from "$app/forms";
   import logo from "$lib/assets/logo.png";
   import { PUBLIC_TURNSTILE_KEY } from "$env/static/public";
-  const disabled = true;
+  const disabled = false;
 </script>
 
 <div id="login-form-container" class="h-full flex flex-col justify-center sm:mx-auto sm:w-full sm:max-w-[480px]">
