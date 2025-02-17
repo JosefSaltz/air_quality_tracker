@@ -1,8 +1,6 @@
 <script lang="ts">
-  import FormContainer from "@/lib/components/Forms/Layouts/FormDrawer.svelte";
   import { browser } from "$app/environment";
   import { z } from 'zod';
-  import SignInWithGoogle from "./LoginForm/SignInWithGoogle.svelte";
 
   const emailSchema = z.string().email();
   let { googleNonce } = $props();
