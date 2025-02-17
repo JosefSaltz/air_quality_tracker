@@ -9,18 +9,14 @@
 </script>
 
 <Drawer.Root bind:open>
-  <div class="relative w-full flex justify-center top-[60%]">
+  <div id="report-placement-container" class="flex justify-center w-full absolute z-20 top-[60%]">
     <div class="flex flex-col justify-center">
       {#if user}
-        <Drawer.Trigger
-          class={`
-            ${buttonVariants(buttonConfig)}
-          `}
-        >
+        <Drawer.Trigger class={`${buttonVariants(buttonConfig)}`}>
           Report
         </Drawer.Trigger>
-      {:else}
-        <Button href="/auth/login" class={` ${buttonVariants(buttonConfig)}`}>Login</Button>
+      {:else} <!-- Show Login Button-->
+        <Button href="/auth/login" class={`${buttonVariants(buttonConfig)}`}>Login</Button>
       {/if}
       {#if form?.success}<Alert.Root><Alert.Description class="success text-green-500">Report Successfully Submitted!</Alert.Description></Alert.Root>{/if}
     {#if form?.error}<Alert.Root><Alert.Description class="error text-red-500">form.error</Alert.Description></Alert.Root>{/if}

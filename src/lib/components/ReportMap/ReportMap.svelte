@@ -35,14 +35,13 @@
     longitude: -122.250036
   };
   let currentGeolocation = $state(initialView);
-  // let markerList = $state(markers);
   // Reference assignment for resizing map with viewport
   let container: undefined | Element;
   // CSR logic
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
     L = await import("leaflet");
-    const { LocateControl } = await import( "leaflet.locatecontrol")
+    const { LocateControl } = await import("leaflet.locatecontrol");
     const locateButton = new LocateControl();
     // Function to pin needed marker image assets for CSR compatibility
     bindMissingAssets(L);
@@ -71,7 +70,7 @@
     lMap.on("moveend", () => { 
       // Destructure
       const { lat, lng } = selectionMarker.getLatLng();
-      // Fit values to keys 
+      // Update state
       currentGeolocation = { latitude: Number(lat), longitude: Number(lng) }
     });
     // Null Guard
@@ -109,8 +108,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.83.1/dist/L.Control.Locate.min.css" />
 </svelte:head>
 <!-- Leafly attachment node -->
-<div id="map-container" class="w-full h-full border" >
-  <div id="map" bind:this={container} class={`w-full h-full absolute z-0`}></div>
+<div id="map-container" class="w-full h-full" >
+  <div id="map" bind:this={container} class="w-full h-full z-[1]"></div>
   {#if !lMap}
     <MapSkeleton />
   {/if}

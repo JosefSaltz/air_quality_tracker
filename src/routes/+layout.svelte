@@ -21,10 +21,8 @@
   })
 </script>
 
-<DisclaimerBanner />
-<Navbar profile={ profile } user={user} supabase={supabase} />
-<div class="flex justify-center h-full">
-  <div class="flex flex-col justify-center w-full h-full items-center">
-      {@render children()}
-  </div>
+<div class="flex flex-col w-full h-screen">
+  <DisclaimerBanner />
+  <Navbar profile={ profile } user={user} supabase={supabase} />
+  {@render children()}
 </div>
