@@ -13,7 +13,7 @@
     </h2>
   </div>
   <div class="bg-white px-6 py-6 md:py-12 sm:rounded-lg sm:px-12">
-    <form use:enhance class="space-y-6" action="?/login" method="POST">
+    <form use:enhance class="space-y-2 md:space-y-6" action="?/login" method="POST">
       <div>
         <label for="email" class="block text-sm/6 font-medium text-gray-900">
           Email address
@@ -55,7 +55,7 @@
     
 
       <div>
-        <div class="relative mt-10">
+        <div class="relative mt-10 hidden md:block">
           <div class="absolute inset-0 flex items-center" aria-hidden="true">
             <div class="w-full border-t border-gray-200"></div>
           </div>
