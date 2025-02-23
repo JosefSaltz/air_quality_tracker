@@ -34,11 +34,13 @@
       </svg>
     </Popover.Trigger>
     <Popover.Content>
-    {#if user}
-      <span class="hover:bg-gray-100">Sign Out</span>
-    {:else}
-      <a href="/auth/login">Login</a>
-    {/if}
+      <div class="text-lg">
+        {#if user}
+        <span class="hover:bg-gray-100">Sign Out</span>
+        {:else}
+          <a href="/auth/login">Login</a>
+        {/if}
+      </div>
     </Popover.Content>
   </Popover.Root>
 </div>
