@@ -41,7 +41,6 @@
     latitude: 38.097557,
     longitude: -122.250036
   };
-
   let currentGeolocation = $state(initialView);
   // Reference assignment for resizing map with viewport
   let container: undefined | Element;

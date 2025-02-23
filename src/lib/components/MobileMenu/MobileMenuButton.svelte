@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { PageProps } from "../../../routes/$types";
   import * as Popover from "$components/ui/popover";
-  import type { ComponentProps } from "svelte";
   import type { ClassValue } from "svelte/elements";
   let menuOpen = $state(false);
   
@@ -18,7 +17,7 @@
 
   let { user, profile, supabase, class: style }: Props = $props();
 
-  let toggleMenu = () => { menuOpen = !menuOpen };
+  //let toggleMenu = () => { menuOpen = !menuOpen };
   const handleSignOut = async () => { 
     const { error } = await supabase.auth.signOut();
     error && console.error(error); 
@@ -34,13 +33,15 @@
       </svg>
     </Popover.Trigger>
     <Popover.Content>
-      <div class="text-lg">
-        {#if user}
-        <span class="hover:bg-gray-100">Sign Out</span>
-        {:else}
-          <a href="/auth/login">Login</a>
-        {/if}
-      </div>
+      <nav>
+        <div class="text-lg">
+          {#if user}
+            <button class="w-full hover:bg-gray-100 rounded px-2" onclick={handleSignOut}>Logout</button>
+          {:else}
+            <a href="/auth/login">Login</a>
+          {/if}
+        </div>
+      </nav>
     </Popover.Content>
   </Popover.Root>
 </div>
