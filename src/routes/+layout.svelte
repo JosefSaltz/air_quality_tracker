@@ -7,7 +7,6 @@
   import DisclaimerBanner from "@/lib/components/Banner/DisclaimerBanner.svelte";
   let { data, children }: { data: LayoutData, children: Snippet } = $props()
   let { session, supabase, user, profile } = $derived(data);
-  
   // $inspect(data)
   // Auth Event Listener
   onMount(() => {
@@ -23,6 +22,6 @@
 
 <div class="flex flex-col w-full h-screen">
   <DisclaimerBanner />
-  <Navbar profile={ profile } user={user} supabase={supabase} />
+  <Navbar profile={profile} user={user} supabase={supabase} />
   {@render children()}
 </div>

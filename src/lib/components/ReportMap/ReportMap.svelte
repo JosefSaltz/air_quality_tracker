@@ -14,26 +14,34 @@
   import type { PageProps } from "../../../routes/$types";
   import type { Map } from "leaflet";
   import type { User } from "@supabase/supabase-js";
+  import MobileMenuButton from "../MobileMenu/MobileMenuButton.svelte";
 
   type Props = {
     markers: PageProps["data"]["markers"],
     form: PageProps["form"]
-    user: User | null
+    user: User | null,
+    profile: PageProps["data"]["profile"],
+    supabase: PageProps["data"]["supabase"]
   }
 
   let { 
     markers, 
     user, 
-    form 
-  }: Props = $props(); 
+    form,
+    profile,
+    supabase 
+  }: Props = $props();
+
   let mapDragged = $state(false);
   let drawerIsOpen = $state(false);
   let L: undefined | typeof import('leaflet');
   let lMap: undefined | Map = $state();
+
   const initialView = {
     latitude: 38.097557,
     longitude: -122.250036
   };
+
   let currentGeolocation = $state(initialView);
   // Reference assignment for resizing map with viewport
   let container: undefined | Element;
@@ -109,7 +117,9 @@
 </svelte:head>
 <!-- Leafly attachment node -->
 <div id="map-container" class="w-full h-full" >
-  <div id="map" bind:this={container} class="w-full h-full z-[1]"></div>
+  <div id="map" bind:this={container} class="w-full h-full z-[1]">
+    <MobileMenuButton class={`lg:hidden flex justify-end relative z-[999]`} user={user} profile={profile} supabase={supabase} />
+  </div>
   {#if !lMap}
     <MapSkeleton />
   {/if}
