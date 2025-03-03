@@ -1,22 +1,35 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import logo from "$lib/assets/logo.png";
-  import { PUBLIC_TURNSTILE_KEY } from "$env/static/public";
+  import { PUBLIC_CITY_NAME, PUBLIC_TURNSTILE_KEY } from "$env/static/public";
+  import Turnstile from "./Turnstile.svelte";
+  import type { SubmitFunction } from "@sveltejs/kit";
+  let cf_token: string | null = $state(null)
   const disabled = false;
+  const handleTurnstileToken = (response: Response) => {
+    console.log(response);
+  }
+
+  const handleSubmit: SubmitFunction = ({ formData }: { formData: FormData}) => {
+    // Check that we have a token
+    if(!cf_token) return console.error(`No Turnstile Token set!`);
+    // Add the token to the form data before sending server_side
+    formData.append("cf_token", cf_token);
+  }
 </script>
 
 <div id="login-form-container" class="h-full flex flex-col justify-center sm:mx-auto sm:w-full sm:max-w-[480px]">
   <!-- Logo and Header -->
   <div class="sm:mx-auto w-full xl:w-auto sm:max-w-md flex flex-col items-center">
-    <enhanced:img src="../../../../assets/logo.png" class=" h-28 md:h-36 xl:h-64 w-auto rounded-xl" alt="PIITA Logo" />
+    <enhanced:img src="../../../../assets/logo.png" class="h-28 md:h-36 xl:h-64 w-auto rounded-xl" alt="PIITA Logo" />
     <h2 class="mt-3 md:mt-6 text-center text-lg md:text-2xl font-bold tracking-tight text-gray-900">
       PIITA Login
     </h2>
-    <h4>Vallejo Edition</h4>
+    <h4>{PUBLIC_CITY_NAME} Edition</h4>
   </div>
   <!-- Email Form Input Section -->
   <div class="bg-white px-6 py-6 md:py-12 sm:rounded-lg sm:px-12">
-    <form use:enhance class="space-y-2 md:space-y-6" action="?/login" method="POST">
+    <form use:enhance={handleSubmit} class="space-y-2 md:space-y-6" action="?/login" method="POST">
       <!-- Email Input -->
       <div>
         <label for="email" class="block text-sm/6 font-medium text-gray-900">
@@ -55,6 +68,7 @@
       <!-- Email Form Submit -->
       <div>
         <button type="submit" disabled={disabled} class="flex w-full justify-center rounded-md bg-purple-800 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg--500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600">Login</button>
+        <Turnstile callback={handleTurnstileToken} />
       </div>
       <!-- Desktop Styled Separator -->
       <div>
