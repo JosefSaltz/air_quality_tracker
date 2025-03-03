@@ -15,8 +15,14 @@ export function createMarker(L: typeof import("leaflet"), marker: QueriedMarker)
   const description = constructDescription(marker);
   // Assign formatted coordinates
   const markerCoords = [ latitude, longitude ] satisfies LatLngTuple;
+  // Create a leaflet div icon to render the poop emoji
+  const poopIcon = L.divIcon({
+    html: '<span style="font-size: 24px;">💩</span>',
+    iconSize: [32, 32], // adjust size as needed
+    className: 'custom-poop-icon', // you can style this further via CSS if desired
+  });
   // Return a new instantiated marker 
-  const createdMarker = new L.Marker(markerCoords, {});
+  const createdMarker = new L.Marker(markerCoords, { icon: poopIcon });
   // Add the record's description to the marker's pop-up
   description && createdMarker.bindPopup(description);
   // Return the completed marker with it's created pop-up
