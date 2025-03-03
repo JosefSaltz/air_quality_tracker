@@ -25,9 +25,9 @@ const validPassword = z
 export const actions = {
   login: async ({ request, locals: { supabase }, params }) => {
     // Validate our Turnstile Captcha Token
-    const captchaResult = await validateTurnstileToken(request);
+    const turnstileResult = await validateTurnstileToken(request);
     // Turnstile Error Handling
-    if(captchaResult?.status !== "verified") return fail(401, { message: "Failed Captcha Check"});
+    if(turnstileResult?.status !== "verified") return fail(401, { message: "Failed Captcha Check"});
     // Load form data
     const formData = await request.formData();
     // Validate Email
