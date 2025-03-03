@@ -20,6 +20,8 @@ const config = {
 				"script-src": [
 					"'self'",
 					"localhost",
+					"https://challenges.cloudflare.com",
+					"https://challenges.cloudflare.com/turnstile/v0/api.js",
 					"https://accounts.google.com",
 					"https://youtube.com",
 					"sha256-y2WkUILyE4eycy7x+pC0z99aZjTZlWfVwgUAfNc1sY8=",
@@ -44,9 +46,10 @@ const config = {
 					],
 				"connect-src": [
 					"'self'",
-					"http://localhost:54321/", 
+					"http://localhost:54321", 
 					"https://*.sentry.io", 
-					"https://ryyejiiqfbqodsqjexdj.supabase.co"
+					"https://ryyejiiqfbqodsqjexdj.supabase.co",
+					"https://challenges.cloudflare.com"
 				]
 			}
 		}
