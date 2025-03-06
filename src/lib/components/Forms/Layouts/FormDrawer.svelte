@@ -8,7 +8,7 @@
   const buttonConfig = { size: "lg" as "lg", class: "bg-purple-800 hover:bg-purple-600" };
 </script>
 
-<Drawer.Root bind:open>
+<Drawer.Root bind:open repositionInputs={false} >
   <div id="report-placement-container" class="flex justify-center w-full absolute z-20 top-[60%]">
     <div class="flex flex-col justify-center">
       {#if user}

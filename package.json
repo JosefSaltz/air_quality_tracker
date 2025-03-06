@@ -5,6 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
+		"devLAN": "vite dev --host",
 		"build": "vite build",
 		"preview": "vite preview",
 		"serve": "deno run --allow-env --allow-read --allow-net --allow-scripts build/index.js",
@@ -53,7 +54,8 @@
 		"tailwind-variants": "^0.3.0",
 		"tailwindcss": "^3.4.16",
 		"typescript": "^5.7.3",
-		"vaul-svelte": "1.0.0-next.3",
-		"vite": "^6.0.3"
+		"vaul-svelte": "1.0.0-next.6",
+		"vite": "^6.0.3",
+		"xlsx": "^0.18.5"
 	}
 }

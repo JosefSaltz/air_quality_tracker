@@ -1,17 +1,14 @@
 <script lang="ts">
   import Button from "$components/ui/button/button.svelte";
-  import Separator from "$components/ui/separator/separator.svelte";
   import { Title } from "$components/ui/card";
   import OdorToggles from "@/lib/components/Forms/FormTypes/ReportForm/OdorToggles.svelte"
   import GasIcon from "@/lib/assets/svg/gas.svelte";
   import SewageIcon from "@/lib/assets/svg/sewage.svelte";
   import { enhance } from "$app/forms";
-  import type { ActionData, PageProps, SubmitFunction } from "../../../../../routes/$types";
+  import type { ActionData, SubmitFunction } from "../../../../../routes/$types";
   import type { GeoCoords } from "@/lib/components/ReportMap/ReportMap.svelte";
-  import { invalidate } from "$app/navigation";
-  import { resolveRoute } from "$app/paths";
-  import type { ActionResult } from "@sveltejs/kit";
-
+  import { Textarea } from "$components/ui/textarea";
+  Textarea
   type Props = {
     form: ActionData,
     currentGeolocation: GeoCoords,
@@ -47,6 +44,7 @@
       longitude: longitude.toString(),
       location: `POINT(${longitude} ${latitude})`,
       strength: selectedStrength,
+      type: "Sewage",
       full_name
     }
     for (const [key, value] of Object.entries(appended)) {
@@ -66,9 +64,9 @@
     <Title class="mb-4 text-2xl">Report an Odor</Title>
     <form method="POST" use:enhance={handleSubmission}>
 
-      <legend>Odor Type</legend>
-      <OdorToggles selected={selectedOdor} toggles={odorTypes} />
-      <Separator class="my-4" />
+      <!-- <legend>Odor Type</legend> -->
+      <!-- <OdorToggles selected={selectedOdor} toggles={odorTypes} /> -->
+      <!-- <Separator class="my-4" /> -->
 
       <legend>How Strong is the Smell?</legend>
       <OdorToggles bind:selected={selectedStrength} toggles={odorStrengths} />    
@@ -84,11 +82,11 @@
       <Separator class="my-4" /> -->
 
       <legend class="mt-4">Additional Comments</legend>
-      <textarea
+      <Textarea
         id="description"
         class="border w-full max-h-12"
         name="description"
-      ></textarea>
+      ></Textarea>
       <Button class="block my-4" type="submit" formaction="?/report">Submit</Button>
     </form>
   </div>

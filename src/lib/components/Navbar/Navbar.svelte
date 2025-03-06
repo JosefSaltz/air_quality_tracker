@@ -31,7 +31,6 @@
   const handleMenuClick = (cb?: () => any) => {
     cb && cb();
   }
-  console.log(page.route.id)
 </script>
 
 <header class={`${page.route.id === '/' ? 'hidden lg:block' : ''} bg-white shadow-sm md:static lg:overflow-y-visible`}>
