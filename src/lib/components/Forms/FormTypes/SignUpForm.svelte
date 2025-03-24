@@ -4,7 +4,8 @@
   import { z } from 'zod';
   import Turnstile from "./LoginForm/Turnstile.svelte";
   import { PUBLIC_CITY_NAME } from "$env/static/public";
-  import type { SubmitFunction } from "@sveltejs/kit";
+  import type { ActionResult, SubmitFunction } from "@sveltejs/kit";
+  import type { RequestEvent } from "../../../../routes/$types";
   const emailSchema = z.string().email();
   let { googleNonce } = $props();
   let confirm_pw = $state();
@@ -21,13 +22,15 @@
     console.log(response);
   }
 
-  const handleSubmit: SubmitFunction = ({ formData }: { formData: FormData}) => {
+  const handleSubmit: SubmitFunction = ({ formData }): { formData: FormData} => {
     // Check that we have a token
-    if(!cf_token) return console.error(`No Turnstile Token set!`);
-    // Add the token to the form data before sending server_side
-    formData.append("cf_token", cf_token);
-  }
+    const cf_token = formData.get("cf-turnstile-response");
+    if(!cf_token) console.error(`No CF Token`, formData);
+    return async ({result, update}): { result: ActionResult
+    } => {
 
+    }
+  }
 
 </script>
 
@@ -47,9 +50,9 @@
   <!-- Sign Up Form Input -->
   <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
     <div class="bg-white px-6 py-12 sm:px-12">
-      <form use:enhance={handleSubmit} class="space-y-6" action="?/signup" method="POST">
+      <form use:enhance class="" action="?/signup" method="POST">
         <!-- Email Input -->
-        <div>
+        <div id="email-container">
           <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
           <div class="mt-2">
             <input type="email" name="email" id="email" bind:value={email} autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline--600 sm:text-sm/6">
@@ -63,7 +66,7 @@
           {/if}
         </div>
         <!-- Password Inputs -->
-        <div>
+        <div id="password-container">
           <!-- Password Input -->
           <label for="password" class="block text-sm/6 font-medium text-gray-900">Password</label>
           <div class="mt-2">
@@ -84,7 +87,7 @@
           {/if}  
         {/if}
         <!-- Optional Values -->
-        <div>
+        <div id="optionals-container">
           <label for="first_name" class="block text-sm/6 font-medium text-gray-900">First Name (Optional)</label>
           <div class="mt-2">
             <input type="first_name" name="first_name" id="first_name" bind:value={first_name} autocomplete="given-name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline--600 sm:text-sm/6">
@@ -94,14 +97,21 @@
         </div>
         <!-- Submit Button -->
         <div>
-          
-          <button type="submit" class={`flex w-full justify-center rounded-md ${disable_submit ? 'bg-purple-200' : 'bg-purple-800'} px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg--500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600 mb-6`} disabled={disable_submit}>Sign up</button>
-          <Turnstile callback={handleTurnstileToken} />
+          <button type="submit" disabled={disable_submit} class={`
+            w-full rounded-md px-3 py-1.5 my-6 shadow-sm
+            flex justify-center
+            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600 
+            text-sm/6 font-semibold text-white 
+            hover:bg--500  ${disable_submit ? 'bg-purple-200' : 'bg-purple-800'} 
+          `}>
+            Sign Up
+          </button>
+          <Turnstile callback={handleTurnstileToken} className="flex justify-center items-center" />
         </div>
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">
         Already have an account?
-      <a href="/auth/login" class="font-semibold text--600 hover:text--500">Login Here</a>
+        <a href="/auth/login" class="font-semibold text--600 hover:text--500">Login Here</a>
       </p>
     </div>
   </div>

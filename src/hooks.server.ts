@@ -8,7 +8,6 @@ import {
 import { createServerClient } from "@supabase/ssr";
 import { type Handle, redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
-import * as Sentry from "@sentry/sveltekit";
 // Handle dynamic assignment
 const [SUPABASE_URL, SUPABASE_ANON_KEY] = dev
   ? [PUBLIC_LOCAL_SUPABASE_URL, PUBLIC_LOCAL_SUPABASE_ANON_KEY]
@@ -94,4 +93,3 @@ export const handle: Handle = sequence(
   supabase,
   authGuard,
 );
-

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { PUBLIC_TURNSTILE_KEY } from "$env/static/public";
 
-  let { callback }: { callback: (response: Response) => void } = $props()
+  let { callback, className }: { callback: (response: Response) => void, className?: string } = $props()
 </script>
 
 <svelte:head>
@@ -9,7 +9,7 @@
 </svelte:head>
 
 <div
-  class="cf-turnstile flex justify-center"
+  class={`cf-turnstile ${className}`}
   data-sitekey={PUBLIC_TURNSTILE_KEY}
   data-callback={callback}
   data-theme="light"

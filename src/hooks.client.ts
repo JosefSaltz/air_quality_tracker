@@ -19,6 +19,5 @@ const myErrorHandler = ({ error, event }) => {
 };
 
 export const handleError = Sentry.handleErrorWithSentry(myErrorHandler);
-
 // or alternatively, if you don't have a custom error handler:
 // export const handleError = handleErrorWithSentry();

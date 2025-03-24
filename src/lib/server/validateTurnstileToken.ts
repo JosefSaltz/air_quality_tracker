@@ -1,28 +1,29 @@
-import type { RequestEvent } from "../../routes/auth/login/$types";
 import { PRIVATE_TURNSTILE_SECRET } from "$env/static/private"
 
-export async function validateTurnstileToken(request : Request) {
-  const body = await request.formData();
+export async function validateTurnstileToken(formData: FormData, ip: string) {
+  console.log(`🔍 Validating Turnstile Token...`)
   // Turnstile injects a token in "cf-turnstile-response".
-  const token = body.get("cf-turnstile-response");
-  const ip = request.headers.get("CF-Connecting-IP");
-  if(!token) return console.error(`Unable to retrieve token from request`);
-  if(!ip) return console.error(`Unable to retrieve required headers for request`);
+  const captchaToken = formData.get("cf-turnstile-response") as string | undefined | null;
+  if(!captchaToken) return {status: `Unable to retrieve token from request`, captchaToken };
+  if(!ip) return {status: `Unable to retrieve required headers for request`, captchaToken };
   // Validate the token by calling the
-  // "/siteverify" API endpoint.
-  let formData = new FormData();
-  formData.append("secret", PRIVATE_TURNSTILE_SECRET);
-  formData.append("response", token);
-  formData.append("remoteip", ip);
-
+  // "siteverify" API endpoint.
+  let sendFormData = new FormData();
+  sendFormData.append("secret", PRIVATE_TURNSTILE_SECRET);
+  sendFormData.append("response", captchaToken);
+  sendFormData.append("remoteip", ip);
+  // Server side validate the token from our request
   const url = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
-  const result = await fetch(url, {
-    body: formData,
+  const response = await fetch(url, {
+    body: sendFormData,
     method: "POST",
   });
-
-  const outcome = await result.json();
+  // Handle the response accordingly
+  const outcome = await response.json();
   if (outcome.success) {
-    return { status: `valid`, token }
+    return { status: `succeeded`, captchaToken }
   }
+  else {
+    return { status: "failed", captchaToken}
+  };
 }
