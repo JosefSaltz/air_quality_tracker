@@ -37,6 +37,7 @@
 	},
 	"devDependencies": {
 		"@internationalized/date": "^3.7.0",
+		"@svelte-put/cloudflare-turnstile": "^1.1.2",
 		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/enhanced-img": "^0.4.4",
 		"@sveltejs/kit": "^2.16.1",

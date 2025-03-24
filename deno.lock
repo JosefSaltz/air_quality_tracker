@@ -10,6 +10,7 @@
     "npm:@sentry/sveltekit@^8.54.0": "8.55.0_@sveltejs+kit@2.17.1__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.20.0____acorn@8.14.0___vite@6.1.0__svelte@5.20.0___acorn@8.14.0__vite@6.1.0_vite@6.1.0_svelte@5.20.0__acorn@8.14.0_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.20.0___acorn@8.14.0__vite@6.1.0",
     "npm:@supabase/ssr@~0.5.2": "0.5.2_@supabase+supabase-js@2.48.1",
     "npm:@supabase/supabase-js@^2.47.3": "2.48.1",
+    "npm:@svelte-put/cloudflare-turnstile@^1.1.2": "1.1.2_svelte@5.20.0__acorn@8.14.0",
     "npm:@sveltejs/adapter-auto@4": "4.0.0_@sveltejs+kit@2.17.1__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.20.0____acorn@8.14.0___vite@6.1.0__svelte@5.20.0___acorn@8.14.0__vite@6.1.0_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.20.0___acorn@8.14.0__vite@6.1.0_svelte@5.20.0__acorn@8.14.0_vite@6.1.0",
     "npm:@sveltejs/adapter-node@^5.2.12": "5.2.12_@sveltejs+kit@2.17.1__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.20.0____acorn@8.14.0___vite@6.1.0__svelte@5.20.0___acorn@8.14.0__vite@6.1.0_rollup@4.34.7_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.20.0___acorn@8.14.0__vite@6.1.0_svelte@5.20.0__acorn@8.14.0_vite@6.1.0",
     "npm:@sveltejs/enhanced-img@~0.4.4": "0.4.4_svelte@5.20.0__acorn@8.14.0_vite@6.1.0",
@@ -1357,6 +1358,12 @@
         "@supabase/postgrest-js",
         "@supabase/realtime-js",
         "@supabase/storage-js"
+      ]
+    },
+    "@svelte-put/cloudflare-turnstile@1.1.2_svelte@5.20.0__acorn@8.14.0": {
+      "integrity": "sha512-G2fJZHHhMzmzMGZDUfmQrn06w25Uja8rG38pwnqaVONkESNt/NRD685Azm07zPvi+/4yz+pHB3PmSXAdYmgx5g==",
+      "dependencies": [
+        "svelte"
       ]
     },
     "@sveltejs/adapter-auto@4.0.0_@sveltejs+kit@2.17.1__@sveltejs+vite-plugin-svelte@5.0.3___svelte@5.20.0____acorn@8.14.0___vite@6.1.0__svelte@5.20.0___acorn@8.14.0__vite@6.1.0_@sveltejs+vite-plugin-svelte@5.0.3__svelte@5.20.0___acorn@8.14.0__vite@6.1.0_svelte@5.20.0__acorn@8.14.0_vite@6.1.0": {
@@ -3690,6 +3697,7 @@
         "npm:@sentry/sveltekit@^8.54.0",
         "npm:@supabase/ssr@~0.5.2",
         "npm:@supabase/supabase-js@^2.47.3",
+        "npm:@svelte-put/cloudflare-turnstile@^1.1.2",
         "npm:@sveltejs/adapter-auto@4",
         "npm:@sveltejs/adapter-node@^5.2.12",
         "npm:@sveltejs/enhanced-img@~0.4.4",
