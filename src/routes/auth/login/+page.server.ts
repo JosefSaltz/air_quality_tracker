@@ -32,9 +32,11 @@ export const actions = {
     const formData = await request.formData();
     // Validate Email
     const emailResult = await validEmail.safeParseAsync(formData.get("email"));
+    // Email Error Handling
     if(emailResult.error) return fail(422, { message: emailResult.error.message});
     // Validate Password
     const passwordResult = await validPassword.safeParseAsync(formData.get("password"));
+    // Password Error Handling
     if(passwordResult.error) return fail(422, { message: passwordResult.error.message});
     // QOL Assign validated values
     const [ email, password ] = [ emailResult.data, passwordResult.data ]
