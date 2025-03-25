@@ -1,32 +1,41 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { enhance } from "$app/forms";
-  import { z } from 'zod';
+  import { z, type ZodIssue } from 'zod';
   import Turnstile from "../Turnstile.svelte";
   import { PUBLIC_CITY_NAME } from "$env/static/public";
-  import type { SubmitFunction } from "@sveltejs/kit";
+  import { error, type SubmitFunction } from "@sveltejs/kit";
+  import { validPassword } from "@/lib/utils/zSchemas/validPassword";
 
   const emailSchema = z.string().email();
   let { googleNonce } = $props();
   let confirm_pw = $state();
-  let email = $state();
-  let password = $state();
+  let email = $state<string | null>(null);
+  let password = $state<string | null>(null);
+  let passwordErrors = $state<ZodIssue[] | undefined | null>(null)
   let first_name = $state(null);
   let last_name = $state(null);
-  let wasChecked = $state(false)
+  let cfResponse = $state<string | null>(null)
   let valid_email = $derived(emailSchema.safeParse(email).success);
   let verified_pw = $derived(password && confirm_pw && password === confirm_pw);
-  let disable_submit = $derived(!(verified_pw && valid_email && wasChecked));
-  
+  let disable_submit = $derived(!(verified_pw && valid_email && cfResponse));
+
+  const handlePasswordValidation = (password: string) => {
+    const validatedPassword = validPassword.safeParse(password);
+    passwordErrors = validatedPassword.error?.errors;
+  }
+
   const handleTurnstileToken = (response: Response) => {
     console.log(`Turnstile Response: `, response);
   }
   // Enhanced Action Handler
   const handleSubmit: SubmitFunction = ({ formData }: { formData: FormData }) => {
   // Check that we have a token
-  const cf_token = formData.get("cf-turnstile-response");
-  if(!cf_token) console.error(`No CF Token`, formData);
-}
+  cfResponse && formData.append('cf-turnstile-response', cfResponse)
+  }
+  $effect(() => {
+    if(password) handlePasswordValidation(password);
+  })
 </script>
 
 {#if browser}
@@ -81,6 +90,11 @@
             <p class="text-red-500">Passwords do not match</p>
           {/if}  
         {/if}
+        {#if passwordErrors}
+          {#each passwordErrors as error}
+            <p class="text-red-500">{error.message}</p>
+          {/each}
+        {/if}
         <!-- Optional Values -->
         <div id="optionals-container">
           <label for="first_name" class="block text-sm/6 font-medium text-gray-900">First Name (Optional)</label>
@@ -101,7 +115,7 @@
           `}>
             Sign Up
           </button>
-          <Turnstile bind:wasChecked callback={handleTurnstileToken} className="flex justify-center items-center" />
+          <Turnstile bind:cfResponse callback={handleTurnstileToken} className="flex justify-center items-center" />
         </div>
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">
