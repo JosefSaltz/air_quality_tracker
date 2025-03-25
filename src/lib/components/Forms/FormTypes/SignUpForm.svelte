@@ -2,10 +2,11 @@
   import { browser } from "$app/environment";
   import { enhance } from "$app/forms";
   import { z } from 'zod';
-  import Turnstile from "./LoginForm/Turnstile.svelte";
+  import Turnstile from "../Turnstile.svelte";
   import { PUBLIC_CITY_NAME } from "$env/static/public";
   import type { ActionResult, SubmitFunction } from "@sveltejs/kit";
   import type { RequestEvent } from "../../../../routes/$types";
+  import { page } from "$app/state";
   const emailSchema = z.string().email();
   let { googleNonce } = $props();
   let confirm_pw = $state();
@@ -13,25 +14,22 @@
   let password = $state();
   let first_name = $state(null);
   let last_name = $state(null);
+  let cf_token: string | null = $state(null);
+  let wasChecked = $state(false)
+  let needTurnstile = $state(false);
   let valid_email = $derived(emailSchema.safeParse(email).success);
   let verified_pw = $derived(password && confirm_pw && password === confirm_pw);
-  let disable_submit = $derived(!(verified_pw && valid_email));
-  let cf_token: string | null = $state(null)
-
+  let disable_submit = $derived(!(verified_pw && valid_email && wasChecked));
+  
   const handleTurnstileToken = (response: Response) => {
-    console.log(response);
+    console.log(`Turnstile Response: `, response);
   }
-
-  const handleSubmit: SubmitFunction = ({ formData }): { formData: FormData} => {
-    // Check that we have a token
-    const cf_token = formData.get("cf-turnstile-response");
-    if(!cf_token) console.error(`No CF Token`, formData);
-    return async ({result, update}): { result: ActionResult
-    } => {
-
-    }
-  }
-
+  // Enhanced Action Handler
+  const handleSubmit: SubmitFunction = ({ formData }: { formData: FormData }) => {
+  // Check that we have a token
+  const cf_token = formData.get("cf-turnstile-response");
+  if(!cf_token) console.error(`No CF Token`, formData);
+}
 </script>
 
 {#if browser}
@@ -50,7 +48,7 @@
   <!-- Sign Up Form Input -->
   <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
     <div class="bg-white px-6 py-12 sm:px-12">
-      <form use:enhance class="" action="?/signup" method="POST">
+      <form use:enhance={handleSubmit} class="" action="?/signup" method="POST">
         <!-- Email Input -->
         <div id="email-container">
           <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
@@ -86,6 +84,9 @@
             <p class="text-red-500">Passwords do not match</p>
           {/if}  
         {/if}
+        {#if needTurnstile}
+          <p class="text-red-500">Please Complete Captcha Check</p>
+        {/if}
         <!-- Optional Values -->
         <div id="optionals-container">
           <label for="first_name" class="block text-sm/6 font-medium text-gray-900">First Name (Optional)</label>
@@ -106,7 +107,7 @@
           `}>
             Sign Up
           </button>
-          <Turnstile callback={handleTurnstileToken} className="flex justify-center items-center" />
+          <Turnstile bind:wasChecked callback={handleTurnstileToken} className="flex justify-center items-center" />
         </div>
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">
