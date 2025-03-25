@@ -1,21 +1,16 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import { PUBLIC_CITY_NAME, PUBLIC_TURNSTILE_KEY } from "$env/static/public";
-  import { onMount } from "svelte";
   import Turnstile from "../../Turnstile.svelte";
   import type { SubmitFunction } from "@sveltejs/kit";
-  let cf_token: string | null = $state(null);
-  let wasChecked = $state(false);
-  const disabled = $derived(!wasChecked);
+  let cfResponse = $state<string | null>(null);
+  const disabled = $derived(!cfResponse);
   const handleTurnstileToken = (response: Response) => {
     console.log(response);
   }
 
   const handleSubmit: SubmitFunction = ({ formData }: { formData: FormData}) => {
-    // // Check that we have a token
-    // if(!cf_token) return console.error(`No Turnstile Token set!`);
-    // // Add the token to the form data before sending server_side
-    // formData.append("cf_token", cf_token);
+    if(cfResponse) formData.append('cf-turnstile-response', cfResponse)
   }
 </script>
 
@@ -68,9 +63,9 @@
       </div>
       <!-- Email Form Submit -->
       <div>
-        <button type="submit" disabled={disabled} class={`flex w-full justify-center rounded-md ${wasChecked ? 'bg-purple-800' : 'bg-purple-200'} px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg--500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600`}>Login</button>
+        <button type="submit" disabled={disabled} class={`flex w-full justify-center rounded-md ${cfResponse ? 'bg-purple-800' : 'bg-purple-200'} px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg--500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600`}>Login</button>
       </div>
-      <Turnstile bind:wasChecked callback={handleTurnstileToken} className="flex justify-center items-center" />
+      <Turnstile bind:cfResponse callback={handleTurnstileToken} className="flex justify-center items-center" />
       <!-- SSO Separator -->
       <div id="sso-container">
         <div class="relative mt-5 hidden md:block">
