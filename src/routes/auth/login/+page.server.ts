@@ -6,15 +6,6 @@ import { validateTurnstileToken } from "$lib/server/validateTurnstileToken";
 import { z } from "zod";
 import { isActionFailure } from "@sveltejs/kit";
 import { readEmailAuthRequest } from "@/lib/server/readEmailAuthRequest";
-// Zod Validation Schemas
-const validEmail = z.string().email();
-const validPassword = z
-  .string()
-  .min(8, "Password must be at least 8 characters long")
-  .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-  .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-  .regex(/\d/, "Password must contain at least one digit")
-  .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character");
 // Form Action definitions
 export const actions = {
   login: async ({ request, locals: { supabase }, params }) => {
