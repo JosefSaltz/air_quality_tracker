@@ -1,12 +1,17 @@
 <script lang="ts">
-  import { turnstile } from '@svelte-put/cloudflare-turnstile';
+  import { turnstile, type TurnstileEventDetail } from '@svelte-put/cloudflare-turnstile';
   import { PUBLIC_TURNSTILE_KEY } from "$env/static/public";
   type Props = { 
     callback: (response: Response) => void, 
     className?: string, 
-    wasChecked: boolean 
+    cfResponse: null | string 
   };
-  let { callback, className, wasChecked = $bindable() }: Props = $props();
+  let { className, cfResponse = $bindable() }: Props = $props();
+  const handleSuccess = (e: CustomEvent<TurnstileEventDetail<{ token: string }>>) => {
+    let response = e.detail.turnstile.getResponse('#turnstile-widget'); 
+    if(response) cfResponse = response;
+    console.log(`cf-response:`, response)
+  }
 </script>
 
 <div
@@ -15,5 +20,5 @@
   class={`cf-turnstile ${className}`}
   turnstile-sitekey={PUBLIC_TURNSTILE_KEY}
   turnstile-theme="light"
-  onturnstile={(e) => { wasChecked = true } }
+  onturnstile={(e) => { handleSuccess(e) } }
 ></div>
