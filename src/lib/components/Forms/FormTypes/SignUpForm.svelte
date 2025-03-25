@@ -4,9 +4,8 @@
   import { z } from 'zod';
   import Turnstile from "../Turnstile.svelte";
   import { PUBLIC_CITY_NAME } from "$env/static/public";
-  import type { ActionResult, SubmitFunction } from "@sveltejs/kit";
-  import type { RequestEvent } from "../../../../routes/$types";
-  import { page } from "$app/state";
+  import type { SubmitFunction } from "@sveltejs/kit";
+
   const emailSchema = z.string().email();
   let { googleNonce } = $props();
   let confirm_pw = $state();
@@ -14,9 +13,7 @@
   let password = $state();
   let first_name = $state(null);
   let last_name = $state(null);
-  let cf_token: string | null = $state(null);
   let wasChecked = $state(false)
-  let needTurnstile = $state(false);
   let valid_email = $derived(emailSchema.safeParse(email).success);
   let verified_pw = $derived(password && confirm_pw && password === confirm_pw);
   let disable_submit = $derived(!(verified_pw && valid_email && wasChecked));
@@ -83,9 +80,6 @@
           {:else}
             <p class="text-red-500">Passwords do not match</p>
           {/if}  
-        {/if}
-        {#if needTurnstile}
-          <p class="text-red-500">Please Complete Captcha Check</p>
         {/if}
         <!-- Optional Values -->
         <div id="optionals-container">
