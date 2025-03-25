@@ -19,8 +19,8 @@ const validPassword = z
 export const actions = {
   login: async ({ request, locals: { supabase }, params }) => {
     // Action Logging
-    console.log(`📝 Sign Up Request Received!`);
-    console.info(`📧 Headers: ${request.headers}`);
+    console.log(`🗝️ Login Request Received!`);
+    console.info(`📧 Headers: ${JSON.stringify(request.headers)}`);
     try {
       // Attempt to read signup request data
       const reqData = await readEmailAuthRequest(request);

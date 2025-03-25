@@ -13,7 +13,7 @@ export const actions = {
   signup: async ({ request, locals: { supabase } }) => {
     // Action Logging
     console.log(`📝 Sign Up Request Received!`);
-    console.info(`📧 Headers: ${request.headers}`);
+    console.info(`📧 Headers: ${JSON.stringify(request.headers)}`);
     try {
       // Attempt to read signup request data
       const reqData = await readEmailAuthRequest(request);
