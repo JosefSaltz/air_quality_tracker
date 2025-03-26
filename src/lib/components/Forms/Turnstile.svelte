@@ -2,7 +2,6 @@
   import { turnstile, type TurnstileEventDetail } from '@svelte-put/cloudflare-turnstile';
   import { PUBLIC_TURNSTILE_KEY } from "$env/static/public";
   type Props = { 
-    callback: (response: Response) => void, 
     className?: string, 
     cfResponse: null | string 
   };

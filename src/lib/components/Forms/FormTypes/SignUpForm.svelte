@@ -8,6 +8,7 @@
   import { validPassword } from "@/lib/utils/zSchemas/validPassword";
 
   const emailSchema = z.string().email();
+
   let { googleNonce } = $props();
   let confirm_pw = $state();
   let email = $state<string | null>(null);
@@ -19,19 +20,14 @@
   let valid_email = $derived(emailSchema.safeParse(email).success);
   let verified_pw = $derived(password && confirm_pw && password === confirm_pw);
   let disable_submit = $derived(!(verified_pw && valid_email && cfResponse));
-
+  // Zod password validation
   const handlePasswordValidation = (password: string) => {
     const validatedPassword = validPassword.safeParse(password);
     passwordErrors = validatedPassword.error?.errors;
   }
-
-  const handleTurnstileToken = (response: Response) => {
-    console.log(`Turnstile Response: `, response);
-  }
-  // Enhanced Action Handler
+  // Enhanced Form Action Handler
   const handleSubmit: SubmitFunction = ({ formData }: { formData: FormData }) => {
-  // Check that we have a token
-  cfResponse && formData.append('cf-turnstile-response', cfResponse)
+    cfResponse && formData.append('cf-turnstile-response', cfResponse)
   }
   $effect(() => {
     if(password) handlePasswordValidation(password);
@@ -115,7 +111,7 @@
           `}>
             Sign Up
           </button>
-          <Turnstile bind:cfResponse callback={handleTurnstileToken} className="flex justify-center items-center" />
+          <Turnstile bind:cfResponse className="flex justify-center items-center" />
         </div>
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">
