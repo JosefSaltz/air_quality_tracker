@@ -30,13 +30,12 @@ export const actions = {
       });
       // Error handling
       if (error) throw error;
-      redirect(303, "/");
     }
     catch(err) {
-      if(err instanceof String) console.error(err);
-      if(err instanceof Error) console.error(err.message);
+      console.error(`❌ Error during server-side 'login' action: `, err);
       redirect(303, '/auth/error');
     }
+    redirect(303, "/");
   },
   
   google_auth: async ({ request, locals: { supabase }, params}) => {
