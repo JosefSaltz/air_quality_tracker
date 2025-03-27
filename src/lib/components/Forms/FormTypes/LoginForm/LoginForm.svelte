@@ -5,9 +5,6 @@
   import type { SubmitFunction } from "@sveltejs/kit";
   let cfResponse = $state<string | null>(null);
   const disabled = $derived(!cfResponse);
-  const handleTurnstileToken = (response: Response) => {
-    console.log(response);
-  }
 
   const handleSubmit: SubmitFunction = ({ formData }: { formData: FormData}) => {
     if(cfResponse) formData.append('cf-turnstile-response', cfResponse)
@@ -61,11 +58,12 @@
           <a href="/auth/forgot_password" class="font-semibold text--600 hover:text--500">Forgot password?</a>
         </div>
       </div>
+      
       <!-- Email Form Submit -->
       <div>
         <button type="submit" disabled={disabled} class={`flex w-full justify-center rounded-md ${cfResponse ? 'bg-purple-800' : 'bg-purple-200'} px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg--500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600`}>Login</button>
       </div>
-      <Turnstile bind:cfResponse callback={handleTurnstileToken} className="flex justify-center items-center" />
+      <Turnstile bind:cfResponse className="flex justify-center items-center" />
       <!-- SSO Separator -->
       <div id="sso-container">
         <div class="relative mt-5 hidden md:block">
