@@ -21,6 +21,7 @@
 </script>
 
 <div id="error-container" class="w-full h-full flex flex-col justify-center items-center">
-  <p class="text-3xl">⚠️ Error During Authentication Request</p>
+  <h1 class="text-5xl m-4">{ page.status }</h1>
+  <h1>Something went wrong...</h1>
   <p>Redirecting{ time ? ` in ${time / 1000}s` : ``}...</p>
 </div>
