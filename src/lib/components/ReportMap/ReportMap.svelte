@@ -6,7 +6,7 @@
 <script lang="ts">
   import { onMount} from "svelte";
   import bindMissingAssets from "@/lib/utils/bindMissingAssets";
-  import ReportForm from "../Forms/FormTypes/ReportForm/ReportForm.svelte";
+  import ReportForm from "../Forms/ReportForm/ReportForm.svelte";
   import LoginRequired from "../Dashboard/LoginRequired.svelte";
   import FormDrawer from "../Forms/Layouts/FormDrawer.svelte";
   import { createMarker, generateMarkers, } from "$lib/utils/generateMarkers"
