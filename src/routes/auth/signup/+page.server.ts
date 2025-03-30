@@ -1,6 +1,5 @@
 import { fail, isActionFailure, redirect, type Actions, type Load} from "@sveltejs/kit";
 import getNonce from "$lib/server/getNonce";
-import { PRIVATE_TURNSTILE_SECRET } from "$env/static/private";
 import { validateTurnstileToken } from "@/lib/server/validateTurnstileToken";
 import { readEmailAuthRequest } from "@/lib/server/readEmailAuthRequest";
 import { validateEmailAndPassword } from "@/lib/utils/validateEmailAndPassword";
@@ -29,15 +28,15 @@ export const actions = {
       // Check the email and password before saving to DB
       validateEmailAndPassword(email, password);
       // Perform signup action on the DB
-      const { error } = await supabase.auth.signUp({ email, password, options: { captchaToken: turnstileResponse } });
+      const { error } = await supabase.auth.signUp({ email, password, options: { captchaToken: turnstileResponse, emailRedirectTo: "/auth/email_confirm" } });
       // If an error occurred redirect
-      if (error) { console.error(error); throw error };
+      if (error) { fail(400, { error }) };
     }
     catch(err) {
       console.error(`❌ Error during server-side 'signup' action: `, err);
       redirect(303, '/auth/error');
     }
     // Default redirect to root
-    redirect(303, '/');
+    redirect(303, '/auth/welcome');
   }
 } satisfies Actions

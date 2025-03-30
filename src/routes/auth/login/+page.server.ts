@@ -28,8 +28,8 @@ export const actions = {
         email,
         password,
       });
-      // Error handling
-      if (error) throw error;
+      // Login Error Handling
+      if (error) return({ code:'500', message: "Invalid Login"});
     }
     catch(err) {
       console.error(`❌ Error during server-side 'login' action: `, err);
