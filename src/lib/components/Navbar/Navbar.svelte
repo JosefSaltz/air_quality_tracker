@@ -19,7 +19,6 @@
   let { user, profile, supabase }: NavbarProps = $props();
   let menuOpen = $state(false);
   const buttonConfig = { class: `text-lg`};
-  let bannerHeight = $state()
   let toggleMenu = () => { menuOpen = !menuOpen };
   
   const handleSignOut = async () => { 

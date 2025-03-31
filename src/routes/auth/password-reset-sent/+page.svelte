@@ -20,7 +20,6 @@
   }); // Counts down time and runs a redirect // Subtracts time until 0
 </script>
 
-
 <div id="reset-password-container" class="w-full h-full flex flex-col justify-center items-center">
   <h1 class="text-3xl">Password Reset Sent! 📨</h1>
   <p class="text-xl">If your email exists in our systems a reset password link will be emailed to your account.</p>

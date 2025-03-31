@@ -12,11 +12,10 @@ export const GET = async (event) => {
     const tokenResponse = await supabase.auth.exchangeCodeForSession(code);
     const { error } = tokenResponse;
     if (!error) {
-      console.log(`Token Response: `, tokenResponse)
-      throw redirect(303, `/${next.slice(1)}`);
+      redirect(303, `/${next.slice(1)}`);
     }
   }
 
   // return the user to an error page with instructions
-  throw redirect(303, '/auth/auth-code-error');
+  redirect(303, '/auth/auth-code-error');
 };
