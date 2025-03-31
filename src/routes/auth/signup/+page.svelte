@@ -5,7 +5,7 @@
   import { z, type ZodIssue } from 'zod';
   import Turnstile from "$components/Forms/Turnstile.svelte";
   import { type SubmitFunction } from "@sveltejs/kit";
-  import { validPassword } from "@/lib/utils/zSchemas/validPassword";
+  import { validPasswordSchema } from "@/lib/utils/zSchemas/validPasswordSchema";
   import LogoPiita from "$components/LogoPiita.svelte";
 
   const emailSchema = z.string().email();
@@ -19,11 +19,11 @@
   let last_name = $state(null);
   let cfResponse = $state<string | null>(null)
   let valid_email = $derived(emailSchema.safeParse(email).success);
-  let verified_pw = $derived(password && confirm_pw && password === confirm_pw);
+  let verified_pw = $derived(password && confirm_pw && (password === confirm_pw));
   let disable_submit = $derived(!(verified_pw && valid_email && cfResponse));
   // Zod password validation
   const handlePasswordValidation = (password: string) => {
-    const validatedPassword = validPassword.safeParse(password);
+    const validatedPassword = validPasswordSchema.safeParse(password);
     passwordErrors = validatedPassword.error?.errors;
   }
   // Enhanced Form Action Handler
