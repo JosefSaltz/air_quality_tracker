@@ -13,7 +13,7 @@
   $effect(() => {
     if(password)  {
       const { error, success } = validPasswordSchema.safeParse(password);
-      if(error) passwordErrors = error?.errors || null;
+      passwordErrors = error?.errors || null;
       if(success) valid_pw = true;
     }
   })
