@@ -7,11 +7,11 @@ WORKDIR /app
 # Bundle app source inside Docker image
 COPY . .
 
-# Install any needed packages specified in package.json
-RUN deno install --allow-scripts
-
 # Install ca-certificates for Sentry Source map upload
 RUN apt-get update && apt-get install -y ca-certificates
+
+# Install any needed packages specified in package.json
+RUN deno install --allow-scripts
 
 # Build the App
 ARG DOTENV_KEY
