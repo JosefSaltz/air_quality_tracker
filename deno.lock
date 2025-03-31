@@ -44,6 +44,7 @@
     "npm:tailwindcss@^3.4.16": "3.4.17_postcss@8.5.3",
     "npm:typescript@^5.8.2": "5.8.2",
     "npm:vaul-svelte@1.0.0-next.6": "1.0.0-next.6_svelte@5.25.3__acorn@8.14.1",
+    "npm:vite@6.2.3": "6.2.3",
     "npm:vite@^6.2.3": "6.2.3",
     "npm:xlsx@~0.18.5": "0.18.5",
     "npm:zod-form-data@^2.0.7": "2.0.7_zod@3.24.2",
