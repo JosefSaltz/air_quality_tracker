@@ -13,8 +13,6 @@
 	},
 	"dependencies": {
 		"@deno/vite-plugin": "^1.0.3",
-		"@hcaptcha/types": "^1.0.4",
-		"@hcaptcha/vanilla-hcaptcha": "^1.1.1",
 		"@iconify/svelte": "^4.1.0",
 		"@js-temporal/polyfill": "^0.4.4",
 		"@sentry/sveltekit": "^8.54.0",
@@ -25,7 +23,6 @@
 		"@tailwindcss/typography": "^0.5.15",
 		"dotenv": "^16.4.7",
 		"drizzle-orm": "^0.38.2",
-		"hcaptcha": "^0.2.0",
 		"ioredis": "^5.4.2",
 		"leaflet": "^1.9.4",
 		"leaflet.locatecontrol": "^0.83.1",

@@ -2,8 +2,6 @@
   "version": "4",
   "specifiers": {
     "npm:@deno/vite-plugin@^1.0.3": "1.0.3_vite@6.1.0",
-    "npm:@hcaptcha/types@^1.0.4": "1.0.4",
-    "npm:@hcaptcha/vanilla-hcaptcha@^1.1.1": "1.1.1",
     "npm:@iconify/svelte@^4.1.0": "4.2.0_svelte@5.20.0__acorn@8.14.0",
     "npm:@internationalized/date@^3.7.0": "3.7.0",
     "npm:@js-temporal/polyfill@~0.4.4": "0.4.4",
@@ -28,7 +26,6 @@
     "npm:drizzle-orm@~0.38.2": "0.38.4_@types+pg@8.11.11_postgres@3.4.5",
     "npm:eslint-plugin-svelte@^2.46.1": "2.46.1_eslint@9.20.1_svelte@5.20.0__acorn@8.14.0_postcss@8.5.2",
     "npm:eslint@^9.16.0": "9.20.1",
-    "npm:hcaptcha@0.2": "0.2.0",
     "npm:ioredis@^5.4.2": "5.5.0",
     "npm:leaflet.locatecontrol@~0.83.1": "0.83.1",
     "npm:leaflet@^1.9.4": "1.9.4",
@@ -493,12 +490,6 @@
     },
     "@floating-ui/utils@0.2.9": {
       "integrity": "sha512-MDWhGtE+eHw5JW7lq4qhc5yRLS11ERl1c7Z6Xd0a58DozHES6EnNNwUWbMiG4J9Cgj053Bhk8zvlhFYKVhULwg=="
-    },
-    "@hcaptcha/types@1.0.4": {
-      "integrity": "sha512-4CBrdr9DFC7sYZPRvLol82UVZVne8B2skBGfMDUqPC6q9vzHMwv/cNxXW44EIa6DaFDr+EWNSnKJpHxWr7Q42Q=="
-    },
-    "@hcaptcha/vanilla-hcaptcha@1.1.1": {
-      "integrity": "sha512-RRIbnvjOcTgjZptXEZwXHVz8qYow/9Rcj1m0GGjMJDC1U726aPJRkicsbYx8twHyak/eyJxoHqVvX9Jt1O+WZA=="
     },
     "@humanfs/core@0.19.1": {
       "integrity": "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="
@@ -2293,9 +2284,6 @@
         "function-bind"
       ]
     },
-    "hcaptcha@0.2.0": {
-      "integrity": "sha512-x25z3RoEa9oqfyuQsgk2olc+LCNVDAJaGKUP1qFhpAybB6qjqOf4qB2y1E3LJpXDvM229JWEywc6iWnzWvGjNw=="
-    },
     "hey-listen@1.0.8": {
       "integrity": "sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q=="
     },
@@ -3689,8 +3677,6 @@
     "packageJson": {
       "dependencies": [
         "npm:@deno/vite-plugin@^1.0.3",
-        "npm:@hcaptcha/types@^1.0.4",
-        "npm:@hcaptcha/vanilla-hcaptcha@^1.1.1",
         "npm:@iconify/svelte@^4.1.0",
         "npm:@internationalized/date@^3.7.0",
         "npm:@js-temporal/polyfill@~0.4.4",
@@ -3715,7 +3701,6 @@
         "npm:drizzle-orm@~0.38.2",
         "npm:eslint-plugin-svelte@^2.46.1",
         "npm:eslint@^9.16.0",
-        "npm:hcaptcha@0.2",
         "npm:ioredis@^5.4.2",
         "npm:leaflet.locatecontrol@~0.83.1",
         "npm:leaflet@^1.9.4",
