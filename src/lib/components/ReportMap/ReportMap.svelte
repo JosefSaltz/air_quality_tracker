@@ -6,7 +6,7 @@
 <script lang="ts">
   import { onMount} from "svelte";
   import bindMissingAssets from "@/lib/utils/bindMissingAssets";
-  import ReportForm from "../Forms/FormTypes/ReportForm/ReportForm.svelte";
+  import ReportForm from "../Forms/ReportForm/ReportForm.svelte";
   import LoginRequired from "../Dashboard/LoginRequired.svelte";
   import FormDrawer from "../Forms/Layouts/FormDrawer.svelte";
   import { createMarker, generateMarkers, } from "$lib/utils/generateMarkers"
@@ -44,6 +44,17 @@
   let currentGeolocation = $state(initialView);
   // Reference assignment for resizing map with viewport
   let container: undefined | Element;
+  // DEPRECATED FOR NOW
+  // Callback for async getting the current geo data
+  // const fetchGeoAndUpdate = async () => {
+  //   const coords = await fetchGeolocation();
+  //   // Short circuit overwriting the position if the user started moving the map at default
+  //   if(mapDragged) return;
+  //   // current Geolocation will be initial if in dev mode
+  //   currentGeolocation = dev ? initialView : coords;
+  //   // Check that lMap exists and then set it's view to the new coords
+  //   lMap && lMap.setView([currentGeolocation.latitude, currentGeolocation.longitude])
+  // }
   // CSR logic
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)

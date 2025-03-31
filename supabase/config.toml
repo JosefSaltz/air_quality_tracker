@@ -73,10 +73,10 @@ enabled = true
 # Port to use for the email testing server web interface.
 port = 54324
 # Uncomment to expose additional ports for testing user applications that send emails.
-# smtp_port = 54325
+smtp_port = 54325
 # pop3_port = 54326
-# admin_email = "admin@email.com"
-# sender_name = "Admin"
+admin_email = "test@piitadev.com"
+sender_name = "Shodan"
 
 [storage]
 enabled = true
@@ -100,7 +100,18 @@ enabled = true
 # DO NOT CHANGE EITHER OF THESE URLS TO LOCALHOST; BREAKING FOR WSL2 USER; 127.0.0.1 forces IPv4
 site_url = "http://127.0.0.1:3000"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["http://127.0.0.1:3000/auth/callback", "http://localhost:54321/auth/callback"]
+additional_redirect_urls = [
+  "http://127.0.0.1:3000/auth/callback", 
+  "http://localhost:54321/auth/callback", 
+  "http://127.0.0.1:3000/auth",
+  "http://127.0.0.1:3000/auth/welcome",
+  "http://127.0.0.1:3000/auth/confirm",
+  "http://127.0.0.1:3000/auth/login",
+  "http://127.0.0.1:3000/auth/signup",
+  "http://127.0.0.1:3000/auth/password-update",
+  "http://127.0.0.1:3000/auth/password-reset-sent",
+  "http://127.0.0.1:3000/auth/email-confirm"
+]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
 # If disabled, the refresh token will never expire.
@@ -127,7 +138,7 @@ enable_signup = true
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
 # If enabled, users need to confirm their email address before signing in.
-enable_confirmations = false
+enable_confirmations = true
 # If enabled, users will need to reauthenticate or have logged in recently to change their password.
 secure_password_change = false
 # Controls the minimum amount of time that must pass before sending another signup confirmation or password reset email.
@@ -138,7 +149,7 @@ otp_length = 6
 otp_expiry = 3600
 
 # Use a production-ready SMTP server
-# [auth.email.smtp]
+[auth.email.smtp]
 # host = "smtp.sendgrid.net"
 # port = 587
 # user = "apikey"
@@ -150,7 +161,13 @@ otp_expiry = 3600
 # [auth.email.template.invite]
 # subject = "You have been invited"
 # content_path = "./supabase/templates/invite.html"
+[auth.email.template.confirmation]
+content_path="./supabase/templates/email_confirmation.html"
+subject="Confirm Your Email"
 
+[auth.email.template.recovery]
+content_path="./supabase/templates/password_reset.html"
+subject="Reset Your Password"
 [auth.sms]
 # Allow/disallow new user signups via SMS to your project.
 enable_signup = false

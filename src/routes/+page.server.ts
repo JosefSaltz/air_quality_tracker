@@ -40,9 +40,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 export const actions = {
   report: async ({ request, locals: { supabase, user, session } }) => {
     // Action Level Auth Guard
-    if (!user || !session) {
-      return console.error("User is not authenticated for submission");
-    }
+    if (!user || !session) return console.error("User is not authenticated for submission");
     // Assign necessary form data
     const formData = await request.formData();
     const latitude = Number(formData.get("latitude"));
@@ -53,7 +51,7 @@ export const actions = {
       return fail(400, { error: "Latitude is not a number"});
     }
     if (typeof longitude !== "number") {
-      console.error(`Longitude is ${typeof longitude}, not a number!`);
+      console.error(`❌ Longitude is ${typeof longitude}, not a number!`);
       return fail(400, { error: "Longitude is not a number" });
     }
     // Grab remaining form values
