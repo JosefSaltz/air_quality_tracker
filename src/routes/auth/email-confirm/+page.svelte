@@ -13,7 +13,7 @@
     }
     // When out of time redirect to the login page
     else {
-      goto("/auth/login")
+      goto("/")
     }
     // Clean up function
     return () => clearTimeout(timer)
@@ -22,7 +22,7 @@
 
 <div id="email-confirm-container" class="w-full h-full flex flex-col justify-center items-center">
   <h1 class="text-3xl p-4">Your Account is Confirmed! ✅</h1>
-  <p class="text-xl">You're account is validated and you can now login!</p>
+  <p class="text-xl">You're account is validated and you are now logged in!</p>
   <p class="text-lg">Redirecting{ time ? ` in ${time / 1000}s` : ``}...</p>
-  <p>Click <a href="/auth/login">here</a> to go to login now.</p>
+  <p>Click <a href="/">here</a> to return to the front page or you automatic redirect.</p>
 </div>

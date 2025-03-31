@@ -28,7 +28,15 @@ export const actions = {
       // Check the email and password before saving to DB
       validateEmailAndPassword(email, password);
       // Perform signup action on the DB
-      const { error } = await supabase.auth.signUp({ email, password, options: { captchaToken: turnstileResponse, emailRedirectTo: "/auth/email_confirm" } });
+      const { error } = await supabase.auth.signUp({ 
+        email, 
+        password,
+        options: 
+        { 
+          captchaToken: turnstileResponse, 
+          emailRedirectTo: '/auth/email-confirm' 
+        } 
+      });
       // If an error occurred redirect
       if (error) { fail(400, { error }) };
     }
