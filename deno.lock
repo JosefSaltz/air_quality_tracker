@@ -50,6 +50,7 @@
     "npm:typescript-eslint@^8.29.0": "8.29.0_eslint@9.23.0_typescript@5.8.2_@typescript-eslint+parser@8.29.0__eslint@9.23.0__typescript@5.8.2",
     "npm:typescript@^5.8.2": "5.8.2",
     "npm:vaul-svelte@1.0.0-next.6": "1.0.0-next.6_svelte@5.25.6__acorn@8.14.1",
+    "npm:vite@6.2.5": "6.2.5",
     "npm:vite@^6.2.5": "6.2.5",
     "npm:xlsx@~0.18.5": "0.18.5",
     "npm:zod-form-data@^2.0.7": "2.0.7_zod@3.24.2",
