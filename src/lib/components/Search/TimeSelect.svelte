@@ -4,8 +4,11 @@
   import Button from "$components/ui/button/button.svelte";
   import * as DropdownMenu from "$components/ui/dropdown-menu";
   
-  let selection = $state<'today' | 'week' | 'month' | 'custom'>('month')
-  
+  // Create a search params interface from the current page url
+  let params = new URLSearchParams(page.url.searchParams.toString());
+
+  let selection = $state(params.get('time') || 'month');
+
   const timeOptions = new Map([
     ["today", { name: "Today", value: 1 }],
     ['week', { name: "Week", value: 7 }],
@@ -16,15 +19,16 @@
   let selection_name = $derived(timeOptions.get(selection)?.name)
 
   $effect(() => {
-    // Update the url with the time searchParam
-    let timeParam = page.url.searchParams.get('time');
-    if(selection !== timeParam) goto(`/?time=${selection}`);
+    // Update the time param with the current selection
+    params.set('time', selection)
+    // Navigate browser to the new url
+    goto(`/?` + params);
   }) 
 </script>
 
 <DropdownMenu.Root>
   <DropdownMenu.Trigger>
-    <Button class="w-16 bg-purple-700 rounded-sm">{ selection_name }</Button>
+    <Button class="w-16 bg-purple-700 rounded-l-md">{ selection_name }</Button>
   </DropdownMenu.Trigger>
   <DropdownMenu.Content>
     <DropdownMenu.RadioGroup bind:value={selection}>
