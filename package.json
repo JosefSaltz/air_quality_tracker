@@ -13,7 +13,6 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json"
 	},
 	"dependencies": {
-		
 		"@iconify/svelte": "^4.1.0",
 		"@js-temporal/polyfill": "^0.4.4",
 		"@sentry/sveltekit": "^8.54.0",
@@ -21,6 +20,7 @@
 		"@supabase/supabase-js": "^2.49.4",
 		"dotenv": "^16.4.7",
 		"drizzle-orm": "^0.38.2",
+		"fuse.js": "^7.1.0",
 		"ioredis": "^5.6.0",
 		"leaflet": "^1.9.4",
 		"leaflet.locatecontrol": "^0.83.1",
