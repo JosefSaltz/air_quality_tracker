@@ -4,12 +4,11 @@
   import Button from "$components/ui/button/button.svelte";
   import * as DropdownMenu from "$components/ui/dropdown-menu";
   import DateRangePicker from '../DateRangePicker/DateRangePicker.svelte';
-  import type { DateValue } from '@internationalized/date';
+  import type { DateRange } from '@internationalized/date';
   
-  // Create a search params interface from the current page url
-  let params = new URLSearchParams(page.url.searchParams.toString());
-  let dateRange = $state<DateValue | null>(null)
-  let selection = $state(params.get('time') || 'month');
+  
+  let dateRange = $state<DateRange | null>(null)
+  let selection = $state(page.url.searchParams.get('time') || 'month');
 
   const timeOptions = new Map([
     ["today", { name: "Today", value: 1 }],
@@ -19,6 +18,10 @@
   ]);
 
   $effect(() => {
+    // Create a search params interface from the current page url
+    let params = new URLSearchParams(page.url.searchParams.toString());
+    // If state hasn't changed from URL don't run
+    if(selection === params.get('time')) return;
     // Update the time param with the current selection
     params.set('time', selection)
     // Navigate browser to the new url
@@ -41,4 +44,4 @@
   </DropdownMenu.Content>
 </DropdownMenu.Root>
 
-<DateRangePicker bind:dateRange={dateRange} />
+<DateRangePicker presetTime={Number(timeOptions.get(selection)?.value)} />
