@@ -4,10 +4,9 @@
   import Input from "$components/ui/input/input.svelte";
   import TimeSelect from "./TimeSelect.svelte";
 
-  // Create a Search Params interface from existing page params
-  const params = new URLSearchParams(page.url.searchParams.toString());
+  
   // Define state to using existing params if they exist or default to undefined
-  let searchValue = $state<string | undefined>(params.get('search') || undefined);
+  let searchValue = $state<string | undefined>(page.url.searchParams.get('search') || '');
   
   // Extracts the date from searched before: and after: operators in YYYY-MM-DD format
   const parseOperators = (searchInput?: string | null) => {
@@ -24,6 +23,8 @@
   }
 
   $effect(() => {
+    // Create a Search Params interface from existing page params
+    const params = new URLSearchParams(page.url.searchParams.toString());
     // Check if the user wrote before and after search operators
     const { beforeDate, afterDate } = parseOperators(searchValue);
     // If we have a before or after operator set the time to custom

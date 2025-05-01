@@ -3,20 +3,19 @@
   import { goto } from '$app/navigation';
   import Button from "$components/ui/button/button.svelte";
   import * as DropdownMenu from "$components/ui/dropdown-menu";
+  import DateRangePicker from '../DateRangePicker/DateRangePicker.svelte';
   
   // Create a search params interface from the current page url
   let params = new URLSearchParams(page.url.searchParams.toString());
 
   let selection = $state(params.get('time') || 'month');
-
+  
   const timeOptions = new Map([
     ["today", { name: "Today", value: 1 }],
     ['week', { name: "Week", value: 7 }],
     ['month', { name: "Month", value: 30 }],
     ['custom', { name: "Custom", value: false }]
   ]);
-
-  let selection_name = $derived(timeOptions.get(selection)?.name)
 
   $effect(() => {
     // Update the time param with the current selection
@@ -28,7 +27,7 @@
 
 <DropdownMenu.Root>
   <DropdownMenu.Trigger>
-    <Button class="w-16 bg-purple-700 rounded-l-md">{ selection_name }</Button>
+    <Button class="w-16 bg-purple-700 rounded-l-md">{ timeOptions.get(selection)?.name }</Button>
   </DropdownMenu.Trigger>
   <DropdownMenu.Content>
     <DropdownMenu.RadioGroup bind:value={selection}>
@@ -40,3 +39,4 @@
     </DropdownMenu.RadioGroup>
   </DropdownMenu.Content>
 </DropdownMenu.Root>
+<DateRangePicker />
