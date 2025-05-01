@@ -10,6 +10,8 @@
   import defaultAvatar from "$lib/assets/defaultAvatar.png"
   import { page } from "$app/state";
   import Search from "../Search/Search.svelte";
+  import { RangeCalendar } from "bits-ui";
+  import DateRangePicker from "../DateRangePicker/DateRangePicker.svelte";
 
   type NavbarProps = { 
     profile: ProfileResponse
@@ -19,6 +21,7 @@
   
   let { user, profile, supabase }: NavbarProps = $props();
   let menuOpen = $state(false);
+  let dateSelection = $state(undefined);
   const buttonConfig = { class: `text-lg`};
   let toggleMenu = () => { menuOpen = !menuOpen };
   
@@ -36,18 +39,18 @@
 <header class={`${page.route.id === '/' ? 'hidden lg:block' : ''} bg-white shadow-sm md:static lg:overflow-y-visible py-1`}>
   <div id="centering-container" class="w-full flex justify-center">
     <div id="grid-container" class="w-full max-w-[80vw] grid grid-cols-12">
-      <div id="home-button-container" class="col-span-4">
+      <div id="home-button-container" class="col-span-2">
         <a href="/" class={`${buttonVariants({ ...buttonConfig, variant: "link"})}`}>
           <!-- <span>{ HomeLogo }</span> -->
           Home
         </a>
       </div>
       <!-- Search Bar -->
-      <div id="searchbar-container" class="col-span-4 w-full">
+      <div id="searchbar-container" class="flex col-span-8 w-full">
         <Search />
       </div>
       <!-- Desktop Profile Button -->
-      <div id="profile-container" class={'col-span-4 justify-self-end px-8'}> 
+      <div id="profile-container" class={'col-span-2 justify-self-end px-8'}> 
         <div id="profile-dropdown" class="relative ml-5 shrink-0">
           {#if user}
             <span >{profile?.first_name ?? ""}</span>
