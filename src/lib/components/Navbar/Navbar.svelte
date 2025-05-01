@@ -9,9 +9,7 @@
   import { buttonVariants } from "$lib/components/ui/button";
   import defaultAvatar from "$lib/assets/defaultAvatar.png"
   import { page } from "$app/state";
-  import Search from "../Search/Search.svelte";
-  import { RangeCalendar } from "bits-ui";
-  import DateRangePicker from "../DateRangePicker/DateRangePicker.svelte";
+  import Search from "$components/Search/Search.svelte";
 
   type NavbarProps = { 
     profile: ProfileResponse
@@ -21,7 +19,6 @@
   
   let { user, profile, supabase }: NavbarProps = $props();
   let menuOpen = $state(false);
-  let dateSelection = $state(undefined);
   const buttonConfig = { class: `text-lg`};
   let toggleMenu = () => { menuOpen = !menuOpen };
   

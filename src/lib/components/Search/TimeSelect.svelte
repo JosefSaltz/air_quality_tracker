@@ -4,12 +4,13 @@
   import Button from "$components/ui/button/button.svelte";
   import * as DropdownMenu from "$components/ui/dropdown-menu";
   import DateRangePicker from '../DateRangePicker/DateRangePicker.svelte';
+  import type { DateValue } from '@internationalized/date';
   
   // Create a search params interface from the current page url
   let params = new URLSearchParams(page.url.searchParams.toString());
-
+  let dateRange = $state<DateValue | null>(null)
   let selection = $state(params.get('time') || 'month');
-  
+
   const timeOptions = new Map([
     ["today", { name: "Today", value: 1 }],
     ['week', { name: "Week", value: 7 }],
@@ -39,4 +40,5 @@
     </DropdownMenu.RadioGroup>
   </DropdownMenu.Content>
 </DropdownMenu.Root>
-<DateRangePicker />
+
+<DateRangePicker bind:dateRange={dateRange} />
