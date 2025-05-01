@@ -11,22 +11,48 @@
   import { buttonVariants } from "$lib/components/ui/button/index.js";
   import { RangeCalendar } from "$lib/components/ui/range-calendar/index.js";
   import * as Popover from "$lib/components/ui/popover/index.js";
+  import { page } from "$app/state";
+  import { goto } from "$app/navigation";
   
-  let { dateRange = $bindable() } = $props();
-  
+  type Props = {
+    dateRange: DateRange | null,
+    presetTime?: number
+  }
+
+  let { dateRange = $bindable(), presetTime }: Props = $props();
+
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth();
+  const currentDay = today.getDate();
+  const currentCalendarDate = new CalendarDate(currentYear, currentMonth, currentDay);
+
   const df = new DateFormatter("en-US", {
    dateStyle: "medium"
   });
-  
+  const stateInvalidated = () => {
+    const startMatch = value.start?.toString() === page.url.searchParams.get('after');
+    const endMatch = value.end?.toString() === page.url.searchParams.get('before');
+    // If the state start and end dates match return false
+    return !(startMatch && endMatch);
+  }
   let value: DateRange = $state({
-   start: new CalendarDate(2022, 1, 20),
-   end: new CalendarDate(2022, 1, 20).add({ days: 20 })
+   start: presetTime ? currentCalendarDate.subtract({ days: presetTime}) : currentCalendarDate,
+   end: currentCalendarDate
   });
-  
+  $inspect(value)
   let startValue: DateValue | undefined = $state(undefined);
 
   $effect(() => {
-    dateRange = value
+    // Get URL Params Interface from current page state
+    const params = new URLSearchParams(page.url.searchParams.toString())
+    // Don't manipulate state when custom search isn't selected and state hasn't changed
+    if(params.get('time') !== 'custom' || !stateInvalidated()) return;
+    // Add necessary operators to current params
+    value.start && params.set('after', value.start.toString())
+    value.end && params.set('before', value.end.toString())
+    // Renavigate and don't lose focus
+    goto('/?' + params.toString(), { keepFocus: true })
   })
  </script>
   
