@@ -15,6 +15,7 @@
 	"dependencies": {
 		"@iconify/svelte": "^4.1.0",
 		"@js-temporal/polyfill": "^0.4.4",
+		"@lucide/svelte": "^0.503.0",
 		"@sentry/sveltekit": "^8.54.0",
 		"@supabase/ssr": "^0.5.2",
 		"@supabase/supabase-js": "^2.49.4",

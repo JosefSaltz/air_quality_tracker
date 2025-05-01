@@ -4,14 +4,10 @@
 	import { cn } from "$lib/utils.js";
 	import { toggleVariants } from "$lib/components/ui/toggle/index.js";
 
-	type $$Props = ToggleGroupPrimitive.ItemProps & ToggleVariants;
-
-	let className: string | undefined | null = undefined;
-
+	type Props = ToggleGroupPrimitive.ItemProps & ToggleVariants & { children: any};
+	let { children, size = "default", variant = "default", value, ...otherProps }: Props = $props();
+	let className: string | undefined | null = $state(undefined);
 	export { className as class };
-	export let variant: $$Props["variant"] = "default";
-	export let size: $$Props["size"] = "default";
-	export let value: $$Props["value"];
 
 	const ctx = getToggleGroupCtx();
 </script>
@@ -25,7 +21,7 @@
 		className
 	)}
 	{value}
-	{...$$restProps}
+	{...otherProps}
 >
-	<slot />
+	{@render children()}
 </ToggleGroupPrimitive.Item>
