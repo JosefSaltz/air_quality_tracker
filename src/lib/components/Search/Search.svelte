@@ -4,10 +4,19 @@
   import Input from "$components/ui/input/input.svelte";
   import { parseTimeOperators } from "@/lib/utils/parseTimeOperators";
   import TimeSelect from "./TimeSelect.svelte";
+  import { onMount } from "svelte";
   
   // Define state to using existing params if they exist or default to undefined
   let searchValue = $state<string | undefined>(page.url.searchParams.get('search') || '');
   
+  // Lifecycle function to overload the initialized search input with an existing param
+  onMount(() => {
+    // Create a Search Params interface from current page state
+    const params = new URLSearchParams(page.url.searchParams.toString());
+    // Overload the searchValue if there's already a search param present
+    if(params.get('search')) searchValue = params.get('search') || undefined;
+  })
+
   $effect(() => {
     // Create a Search Params interface from current page state
     const params = new URLSearchParams(page.url.searchParams.toString());
@@ -18,12 +27,14 @@
     // Add a before or after operator params to the string
     if(beforeDate) params.set('before', beforeDate);
     if(afterDate) params.set('after', afterDate);
-    // Update Search if there's a value in state and it doesn't match the current search Param
-    if(searchValue) params.set('search', searchValue);
-    else params.delete('search');
+    // If there's a search value and it doesn't equal the current search paramter
+    if(searchValue && searchValue !== params.get('search')) params.set('search', searchValue)
     // Debounce Search Input and parse relevant parameters
     const debounceAndParseInput = setTimeout(() => {
-      goto('/?' + params, { keepFocus: true });
+      // Make a copy of the old URL params
+      const oldParams = new URLSearchParams(page.url.searchParams.toString());
+      // If the current params object doesn't match the current page state update it
+      if(oldParams.toString() !== params.toString()) goto('/?' + params, { keepFocus: true });
     }, 300)
     // Clean up function to clear the timeout
     return () => {
