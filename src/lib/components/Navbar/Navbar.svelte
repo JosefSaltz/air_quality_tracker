@@ -10,6 +10,8 @@
   import defaultAvatar from "$lib/assets/defaultAvatar.png"
   import { page } from "$app/state";
   import Search from "$components/Search/Search.svelte";
+  import TimeSelect from "$components/Search/TimeSelect.svelte";
+  import DateRangePicker from "$components/DateRangePicker/DateRangePicker.svelte";
 
   type NavbarProps = { 
     profile: ProfileResponse
@@ -44,7 +46,9 @@
       </div>
       <!-- Search Bar -->
       <div id="searchbar-container" class="flex col-span-8 w-full">
-        <Search />
+        <TimeSelect />
+        <Search class="w-full max-w-[80ch]" />
+
       </div>
       <!-- Desktop Profile Button -->
       <div id="profile-container" class={'col-span-2 justify-self-end px-8'}> 
