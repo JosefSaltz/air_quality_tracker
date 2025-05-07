@@ -3,13 +3,14 @@
   import { page } from "$app/state";
   import Input from "$components/ui/input/input.svelte";
   import { parseTimeOperators } from "@/lib/utils/parseTimeOperators";
-  import TimeSelect from "./TimeSelect.svelte";
   import { onMount } from "svelte";
   
+  let { class: className = '', id = ''} = $props();
   // Define state to using existing params if they exist or default to undefined
   let searchValue = $state<string | undefined>(page.url.searchParams.get('search') || '');
   
-  // Lifecycle function to overload the initialized search input with an existing param
+  // Lifecycle function to overload the 
+  // initialized search input with an existing param
   onMount(() => {
     // Create a Search Params interface from current page state
     const params = new URLSearchParams(page.url.searchParams.toString());
@@ -28,7 +29,7 @@
     if(beforeDate) params.set('before', beforeDate);
     if(afterDate) params.set('after', afterDate);
     // If there's a search value and it doesn't equal the current search paramter
-    if(searchValue && searchValue !== params.get('search')) params.set('search', searchValue)
+    if(searchValue && searchValue !== params.get('search')) params.set('search', searchValue);
     // Debounce Search Input and parse relevant parameters
     const debounceAndParseInput = setTimeout(() => {
       // Make a copy of the old URL params
@@ -38,15 +39,10 @@
     }, 300)
     // Clean up function to clear the timeout
     return () => {
-      clearTimeout(debounceAndParseInput) 
+      clearTimeout(debounceAndParseInput); 
     }
   })
 </script>
 
-<div 
-  id="search-container gap-2"
-  class="w-full flex justify-center items-center"
-> <TimeSelect />
-  <Input bind:value={searchValue} class="md:max-w-96 ring-0 ml-4" autocomplete={'off'} />
-  
-</div>
+<Input id={id} class={className} bind:value={searchValue} autocomplete={'off'} />
+
