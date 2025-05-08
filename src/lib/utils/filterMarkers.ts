@@ -3,6 +3,7 @@ import type { PageProps } from "../../routes/$types";
 import { Temporal } from '@js-temporal/polyfill';
 import Fuse from 'fuse.js';
 import { browser } from "$app/environment";
+import { isOnAfter, isOnBefore } from "./timeCompare";
 
 function filterMarkersByDate(markers: Awaited<PageProps["data"]["markers"]>, days = 30) { 
   // Null Guard
@@ -17,8 +18,10 @@ function filterMarkersByDate(markers: Awaited<PageProps["data"]["markers"]>, day
   return markers.filter(marker => {
     // Get an instant of the marker's date
     const markerDate = Temporal.Instant.from(marker.created_at).toZonedDateTimeISO(timeZone);
+    const isAfter = isOnAfter(Temporal.ZonedDateTime.compare(markerDate, oldestLimit));
+    const isBefore = isOnBefore(Temporal.ZonedDateTime.compare(markerDate, now));
     // Return true if markerDate is newer than the oldest allowed time and before now
-    return !Temporal.ZonedDateTime.compare(markerDate, oldestLimit) && !Temporal.ZonedDateTime.compare(markerDate, now);
+    return isAfter && isBefore;
   })
 }
 
