@@ -1,11 +1,12 @@
 import { page } from "$app/state";
 import type { PageProps } from "../../routes/$types";
 import { Temporal } from '@js-temporal/polyfill';
-import Fuse from 'fuse.js';
+import Fuse, { type FuseResult, type FuseSearchOptions } from 'fuse.js';
 import { browser } from "$app/environment";
 import { isOnAfter, isOnBefore } from "./timeCompare";
+import type { PageProps } from "../../routes/$types";
 
-function filterMarkersByDate(markers: Awaited<PageProps["data"]["markers"]>, days = 30) { 
+function filterMarkersByDate(markers: PageProps["data"]["markers"], days = 30) { 
   // Null Guard
   if(!markers) return markers;
   // Instantiate Temporal Timezone
@@ -27,24 +28,24 @@ function filterMarkersByDate(markers: Awaited<PageProps["data"]["markers"]>, day
 
 function filterMarkersByTerm(markers: ReturnType<typeof filterMarkersByDate>, searchTerm?: string) {
   if(!searchTerm || !markers) return markers;
+  const options = {
+    keys: ['description', 'strength']
+  }
   // Initialize fuse on data set
-  const fuse = new Fuse(markers);
-  return fuse.search(searchTerm);
+  const fuse = new Fuse(markers, options);
+  return fuse.search(searchTerm).map(result => result.item);
 }
 
-export async function filterMarkers(markers: PageProps["data"]["markers"], searchTerm?: string | null) {
+export function filterMarkers(markers: PageProps["data"]["markers"], searchTerm?: string | null) {
   if(!browser) return null;
-  // Await markers from promise data
-  const markerData = await markers;
-  type AwaitedMarkers = typeof markerData | ReturnType<typeof filterMarkersByTerm>
   // Null Guard in case no data
-  if(!markerData) return null;
+  if(!markers) return null;
   // Retrieve potential before and after operators
   const beforeOp = page.url.searchParams.get("before");
   const afterOp = page.url.searchParams.get("after");
   // Assign and return a new reference of the post-processed data
-  let markerList: AwaitedMarkers = markerData;
-  if(beforeOp || afterOp) markerList = filterMarkersByDate(markerData);
+  let markerList: typeof markers | null = markers;
+  if(beforeOp && afterOp) markerList = filterMarkersByDate(markers);
   if(searchTerm && markerList) markerList = filterMarkersByTerm(markerList, searchTerm)
   return markerList;
 } 
