@@ -17,20 +17,21 @@
   })
 
   $effect(() => {
-    const newParams = new URLSearchParams(page.url.searchParams.toString());
+    // Create a Search Params interface from current page state
+    const oldParams = page.url.searchParams.toString();
+    const newParams = new URLSearchParams(oldParams);
     const searchParam = newParams.get('search');
     // If params and searchValue desynced and searchValue isn't just undefined
     if (searchValue !== searchParam && searchValue !== undefined) {
-      // Set the new search value
-      newParams.set('search', searchValue);
       // If it was an empty string, delete the param entirely
       if(searchValue === '') newParams.delete('search');
+      // Otherwise set the new param value
+      else newParams.set('search', searchValue);
     }
     // Debounce Search Input and parse relevant parameters
     const debounceAndParseInput = setTimeout(() => {
-      const oldParams = page.url.searchParams.toString();
       // If the current params object doesn't match the current page state update it
-      if(oldParams !== newParams.toString()) goto('/?' + newParams, { keepFocus: true });
+      if(oldParams !== newParams.toString()) goto('/?' + newParams, { keepFocus: true, replaceState: true });
     }, 300)
     // Clean up function to clear the timeout
     return () => {
@@ -39,5 +40,5 @@
   })
 </script>
 
-<Input id={id} class={className} bind:value={searchValue}  autocomplete={'off'} />
+<Input id={id} class={className} bind:value={searchValue} autocomplete={'off'} />
 
