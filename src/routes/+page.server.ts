@@ -30,7 +30,7 @@ const ReportSchema = z.object({
 export const load: PageServerLoad = async ({ locals }) => {
   const { supabase } = locals;
   // Fetch minimum required data
-  const markers = getMarkers(supabase);
+  const markers = await getMarkers(supabase);
   // Generate cryptographic nonce for use with Google SSO
   const googleNonce = getNonce();
   

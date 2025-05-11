@@ -1,3 +1,5 @@
+
+
 // Extracts the date from searched before: and after: operators in YYYY-MM-DD format
 export const parseTimeOperators = (searchInput?: string | null) => {
   // Invalid input returns the standard output with null values
@@ -11,3 +13,4 @@ export const parseTimeOperators = (searchInput?: string | null) => {
   // Return object matched pattern or null
   return { afterDate, beforeDate };
 }
+

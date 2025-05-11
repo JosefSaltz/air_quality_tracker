@@ -9,7 +9,6 @@
   let { data, children }: LayoutProps = $props()
   let { session, supabase, user, profile } = $derived(data);
 
-  // $inspect(data)
   // Auth Event Listener
   onMount(() => {
     const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
