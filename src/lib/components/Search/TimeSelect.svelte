@@ -23,10 +23,9 @@
   import type { DateRange } from "bits-ui";
   import { today, getLocalTimeZone, type DateValue, parseDate  } from '@internationalized/date';
   import { daysBetween } from '$lib/utils/getTimeSpan';
+  import { onMount } from 'svelte';
   
   let selection = $state<TimeOptionKey>(page.url.searchParams.get('time') as TimeOptionKey || 'Month');
-
-  let initToday = today(getLocalTimeZone());
   let timeRange = $state<DateRange | undefined>(getCurrentRange() || selectedTimeRange(selection));
 
   function getCurrentRange() {
@@ -47,18 +46,29 @@
     if(selectedTime === 'Month') return { end: todayCalDate, start: todayCalDate.subtract({ days: 30 }) };
   }
 
+  onMount(() => {
+    // Create a Search Params interface from current page state
+    const params = new URLSearchParams(page.url.searchParams.toString());
+    // Overload the searchValue if there's already a search param present
+    selection = params.get('time') as TimeOptionKey || 'Month';
+  })
+
   $effect(() => {
+    const { pathname } = page.url;
+    // Get a preset timerange if it matches the current selection
     const presetTime = selectedTimeRange(selection);
     if(presetTime) timeRange = presetTime;
+    // Otherwise try getting directly from the URL
     if(!presetTime) timeRange = getCurrentRange();
     // Create a search params interface from the current page url
-    let params = new URLSearchParams(page.url.searchParams.toString());
+    const params = new URLSearchParams(page.url.searchParams.toString());
+    const oldParams = page.url.searchParams.toString()
     // If state is the same from URL don't run
     if(selection === params.get('time')) return;
     // Update the time param with the current selection
     params.set('time', selection)
-    // Navigate browser to the new url
-    goto(`/?` + params);
+    // Navigate browser to the new url if params are different and path is root
+    if(params.toString() !== oldParams && pathname === "/") goto(`/?` + params);
   })
 
 </script>

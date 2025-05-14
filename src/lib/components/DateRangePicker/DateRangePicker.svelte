@@ -34,6 +34,7 @@
   $effect(() => {
     // Get URL Params Interface from current page state
     const params = new URLSearchParams(page.url.searchParams.toString());
+    const { pathname } = page.url;
     // Destructure value
     const { start, end } = value;
     // Add necessary operators to current params
@@ -42,8 +43,7 @@
     // QOL Assign Old Params from page state
     const oldParams = new URLSearchParams(page.url.searchParams.toString());
     // Renavigate if params changed and don't lose focus
-    if(oldParams.toString() === params.toString()) return; 
-    goto('/?' + params.toString(), { keepFocus: true })
+    if(oldParams.toString() !== params.toString() && pathname === "/") goto('/?' + params.toString(), { keepFocus: true })
   })
  </script>
   
