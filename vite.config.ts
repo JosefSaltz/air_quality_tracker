@@ -13,6 +13,7 @@ export default defineConfig(({ mode }) => {
 		assetsInlineLimit: 0
 		},
 		plugins: [
+			enhancedImages(),
 			deno(),
 			sentrySvelteKit({
 				sourceMapsUploadOptions: {
@@ -26,8 +27,7 @@ export default defineConfig(({ mode }) => {
 					},
 				},
 			}),
-			sveltekit(),
-			enhancedImages(),
+			sveltekit()
 		],
 		resolve: {
 			alias: {
