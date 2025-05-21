@@ -14,7 +14,6 @@
   import DateRangePicker from '$components/DateRangePicker/DateRangePicker.svelte';
   import type { DateRange } from "bits-ui";
   import {  parseDate  } from '@internationalized/date';
-  import { daysBetween } from '$lib/utils/getTimeSpan';
   import { onMount } from 'svelte';
   import { generateTimeRange } from '@/lib/utils/generateTimeRange';
   

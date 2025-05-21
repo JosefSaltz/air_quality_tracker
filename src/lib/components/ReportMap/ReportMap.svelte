@@ -45,7 +45,8 @@
   let currentSearch = $state(page.url.searchParams.get('search'));
   let currentBefore = $state(page.url.searchParams.get('before'));
   let currentAfter = $state(page.url.searchParams.get('after'));
-  
+  let currentTime = $state(page.url.searchParams.get('time'));
+
   let markersToShow = $state(filterMarkers(markers, params.get('search')));
   let existingMarkerLayer = $state<LayerGroup | undefined>();
   const initialView = {
@@ -55,7 +56,8 @@
   let currentGeolocation = $state(initialView);
   // Reference assignment for resizing map with viewport
   let container: undefined | Element;
-  $inspect(markersToShow)
+  $inspect(markers, 'markers updating...')
+  $inspect(markersToShow, 'markersToShow updating...')
   // Encapsulated function to set the map listener events for the selection marker
   function setSelectionMarkerEvents(leafMap: typeof lMap, marker: Marker) {
     if(!leafMap) return;
@@ -118,13 +120,13 @@
   });
 
   $effect(() => {
-    const [search, before, after] = [params.get('search'), params.get('before'), params.get('after')];
+    const [search, before, after, time] = [params.get('search'), params.get('before'), params.get('after'), params.get('time')];
     // Null guard against leaflet map intializiation
     if(!L || !lMap) return;
     // If there's a search term or date range in the URL
     if(search || (before && after)) {
       // Check if current params mismatch current state
-      if(search !== currentSearch || before !== currentBefore || after !== currentAfter) {
+      if(search !== currentSearch || before !== currentBefore || after !== currentAfter || time !== currentTime) {
         console.log('Rerunning Search!')
         // Clear out currently existingMarkerLayer
         const refilteredMarkers = filterMarkers(markers, params.get('search'));
@@ -132,9 +134,9 @@
           // Clear existing markers out of the marker layer
           existingMarkerLayer.clearLayers();
           // Regenerate and attach the markers with the filteredMarkers 
-          generateMarkers(L, lMap, existingMarkerLayer, refilteredMarkers);
-          markersToShow = refilteredMarkers;
+          generateMarkers(L, lMap, existingMarkerLayer, refilteredMarkers);  
         }
+        markersToShow = refilteredMarkers;
         // Update mismatched state params
         if(search !== currentSearch) currentSearch = search;
         if(before !== currentBefore) currentBefore = before;
