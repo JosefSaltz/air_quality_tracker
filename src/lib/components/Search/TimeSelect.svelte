@@ -1,14 +1,6 @@
 <script lang="ts" module>
-  const timeOptions = {
-    'Today': { name: "Today", days: 1 },
-    'Week': { name: "Week", days: 7 },
-    'Month': { name: "Month", days: 30 },
-    'Custom': { name: "Custom", days: false }
-  } as const;
-
-  type TimeOptionKey = keyof typeof timeOptions;
-
-  export function matchTimeOption(days: number) {
+    import { timeOptions, type TimeOptionKey } from '@/lib/constants';
+    export function matchTimeOption(days: number) {
     return Object.values(timeOptions)
       .find(option => option.days === days) || { name: 'Custom'};
   }
@@ -21,12 +13,13 @@
   import * as DropdownMenu from "$components/ui/dropdown-menu";
   import DateRangePicker from '$components/DateRangePicker/DateRangePicker.svelte';
   import type { DateRange } from "bits-ui";
-  import { today, getLocalTimeZone, type DateValue, parseDate  } from '@internationalized/date';
+  import {  parseDate  } from '@internationalized/date';
   import { daysBetween } from '$lib/utils/getTimeSpan';
   import { onMount } from 'svelte';
+  import { generateTimeRange } from '@/lib/utils/generateTimeRange';
   
   let selection = $state<TimeOptionKey>(page.url.searchParams.get('time') as TimeOptionKey || 'Month');
-  let timeRange = $state<DateRange | undefined>(getCurrentRange() || selectedTimeRange(selection));
+  let timeRange = $state<DateRange | undefined>(getCurrentRange() || generateTimeRange(selection));
 
   function getCurrentRange() {
     const params = new URLSearchParams(page.url.searchParams.toString());
@@ -35,15 +28,6 @@
     const start = parseDate(after);
     const end = parseDate(before);
     return { start, end } satisfies DateRange;
-  }
-
-  function selectedTimeRange(selectedTime: TimeOptionKey) {
-    // Simplest return first
-    if(selectedTime === 'Custom') return;
-    const todayCalDate = today(getLocalTimeZone());
-    if(selectedTime === 'Today') return { end: todayCalDate, start: todayCalDate };
-    if(selectedTime === 'Week') return { end: todayCalDate, start: todayCalDate.subtract({ days: 7 }) };
-    if(selectedTime === 'Month') return { end: todayCalDate, start: todayCalDate.subtract({ days: 30 }) };
   }
 
   onMount(() => {
@@ -56,7 +40,7 @@
   $effect(() => {
     const { pathname } = page.url;
     // Get a preset timerange if it matches the current selection
-    const presetTime = selectedTimeRange(selection);
+    const presetTime = generateTimeRange(selection);
     if(presetTime) timeRange = presetTime;
     // Otherwise try getting directly from the URL
     if(!presetTime) timeRange = getCurrentRange();
