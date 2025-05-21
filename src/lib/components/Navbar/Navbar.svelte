@@ -30,6 +30,10 @@
     location.reload();
   }
 
+  const isOnMapPage = () => {
+    return page.url.pathname === "/"
+  }
+
   const handleMenuClick = (cb?: () => any) => {
     cb && cb();
   }
@@ -45,10 +49,9 @@
         </a>
       </div>
       <!-- Search Bar -->
-      <div id="searchbar-container" class="flex col-span-8 w-full">
+      <div id="searchbar-container" class={`${isOnMapPage() ? 'flex' : 'hidden'} col-span-8 w-full`}>
         <TimeSelect />
         <Search class="w-full max-w-[80ch]" />
-
       </div>
       <!-- Desktop Profile Button -->
       <div id="profile-container" class={'col-span-2 justify-self-end px-8'}> 
