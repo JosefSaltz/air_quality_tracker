@@ -1,7 +1,6 @@
 <script lang="ts">
   import CalendarIcon from "@lucide/svelte/icons/calendar";
   import {
-   CalendarDate,
    DateFormatter,
    type DateValue,
    getLocalTimeZone,
@@ -15,19 +14,17 @@
   import { goto } from "$app/navigation";
 
   
-  let { timeRange: value = $bindable(), selection = $bindable() }: Props = $props();
+  let { timeRange: value = $bindable(), selection = $bindable() } = $props();
 
   const today = new Date();
-  const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth();
-  const currentDay = today.getDate();
-  const currentCalendarDate = new CalendarDate(currentYear, currentMonth, currentDay);
-  const isCustomTime = () => {
-    return page.url.searchParams.get('time') === 'Custom';
-  }
+
   const df = new DateFormatter("en-US", {
    dateStyle: "medium"
   });
+  
+  const isCustomTime = () => {
+    return page.url.searchParams.get('time') === 'Custom';
+  }
 
   let startValue: DateValue | undefined = $state(undefined);
 
@@ -44,7 +41,7 @@
     const oldParams = new URLSearchParams(page.url.searchParams.toString());
     // Renavigate if params changed and don't lose focus
     if(oldParams.toString() !== params.toString() && pathname === "/") goto('/?' + params.toString(), { keepFocus: true })
-  })
+  });
  </script>
   
  <div class={`grid gap-2 ${isCustomTime() ? '': 'hidden'}`}>
@@ -81,4 +78,3 @@
    </Popover.Content>
   </Popover.Root>
  </div>
-
