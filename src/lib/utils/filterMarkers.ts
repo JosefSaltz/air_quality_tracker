@@ -42,10 +42,14 @@ export function filterMarkers(markers: PageProps["data"]["markers"], searchTerm?
   if(!browser) return null;
   // Null Guard in case no data
   if(!markers) return null;
+  // QOL Assign params
+  const params = page.url.searchParams;
+  // Return all markers if time param is 'All'
+  if(params.get('time') === "All") return markers;
   // Retrieve potential before and after operators
-  const beforeOp = page.url.searchParams.get("before");
-  const afterOp = page.url.searchParams.get("after");
-  const time: TimeOptionKey = page.url.searchParams.get('time') as TimeOptionKey | undefined || 'Month';
+  const beforeOp = params.get("before");
+  const afterOp = params.get("after");
+  const time: TimeOptionKey = params.get('time') as TimeOptionKey | undefined || 'Month';
   // Assign and return a new reference of the post-processed data
   let markerList: typeof markers | null = markers;
   if(beforeOp && afterOp) markerList = filterMarkersByDate(markers, time);
