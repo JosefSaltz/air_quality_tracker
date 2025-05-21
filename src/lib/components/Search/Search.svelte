@@ -18,6 +18,7 @@
 
   $effect(() => {
     // Create a Search Params interface from current page state
+    const { pathname } = page.url;
     const oldParams = page.url.searchParams.toString();
     const newParams = new URLSearchParams(oldParams);
     const searchParam = newParams.get('search');
@@ -28,10 +29,11 @@
       // Otherwise set the new param value
       else newParams.set('search', searchValue);
     }
+    if(pathname !== "/") return;
     // Debounce Search Input and parse relevant parameters
     const debounceAndParseInput = setTimeout(() => {
       // If the current params object doesn't match the current page state update it
-      if(oldParams !== newParams.toString()) goto('/?' + newParams, { keepFocus: true, replaceState: true });
+      if(oldParams !== newParams.toString()) goto(`/?${newParams}`, { keepFocus: true, replaceState: true });
     }, 300)
     // Clean up function to clear the timeout
     return () => {
