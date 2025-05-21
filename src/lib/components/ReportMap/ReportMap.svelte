@@ -41,8 +41,13 @@
   let L: undefined | typeof import('leaflet');
   let lMap: undefined | Map = $state();
   let params = $derived(page.url.searchParams);
-  let markersToShow = $derived(filterMarkers(markers, params.get('search')));
-  let renderedMarkers = $state<LayerGroup | undefined>();
+  
+  let currentSearch = $state(page.url.searchParams.get('search'));
+  let currentBefore = $state(page.url.searchParams.get('before'));
+  let currentAfter = $state(page.url.searchParams.get('after'));
+  
+  let markersToShow = $state(filterMarkers(markers, params.get('search')));
+  let existingMarkerLayer = $state<LayerGroup | undefined>();
   const initialView = {
     latitude: 38.097557,
     longitude: -122.250036
@@ -71,7 +76,7 @@
       currentGeolocation = { latitude: Number(lat), longitude: Number(lng) }
     });
   }
-  // Client Side Rendering logic
+  // Client side Leaflet set up and configuration
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
     L = await import("leaflet");
@@ -102,23 +107,39 @@
     });
     // Watch the binded element
     resizeObserver.observe(container);
-    renderedMarkers = L.layerGroup().addTo(lMap)
+    existingMarkerLayer = L.layerGroup().addTo(lMap)
     // Generate markers from the search processed list
-    generateMarkers(L, lMap, renderedMarkers, markersToShow);
+    generateMarkers(L, lMap, existingMarkerLayer, markersToShow);
     // Clean up function
     return () =>  { 
       resizeObserver.disconnect();
       lMap && lMap.remove(); 
     }
   });
-  //$inspect(renderedMarkers);
+
   $effect(() => {
     const [search, before, after] = [params.get('search'), params.get('before'), params.get('after')];
+    // Null guard against leaflet map intializiation
     if(!L || !lMap) return;
+    // If there's a search term or date range in the URL
     if(search || (before && after)) {
-      console.log('Rerunning Search!')
-      if(renderedMarkers) renderedMarkers.clearLayers() && 
-      generateMarkers(L, lMap, renderedMarkers, markersToShow);
+      // Check if current params mismatch current state
+      if(search !== currentSearch || before !== currentBefore || after !== currentAfter) {
+        console.log('Rerunning Search!')
+        // Clear out currently existingMarkerLayer
+        const refilteredMarkers = filterMarkers(markers, params.get('search'));
+        if(existingMarkerLayer) {
+          // Clear existing markers out of the marker layer
+          existingMarkerLayer.clearLayers();
+          // Regenerate and attach the markers with the filteredMarkers 
+          generateMarkers(L, lMap, existingMarkerLayer, refilteredMarkers);
+          markersToShow = refilteredMarkers;
+        }
+        // Update mismatched state params
+        if(search !== currentSearch) currentSearch = search;
+        if(before !== currentBefore) currentBefore = before;
+        if(after !== currentAfter) currentAfter = after;
+      }
     }
   })
   
