@@ -1,6 +1,7 @@
-export const timeOptions = new Map([
-  ["today", { name: "Today", value: 1 }],
-  ['week', { name: "Week", value: 7 }],
-  ['month', { name: "Month", value: 30 }],
-  ['custom', { name: "Custom", value: false }]
-]);
+export type TimeOptionKey = keyof typeof timeOptions;
+export const timeOptions = {
+    'Today': { name: "Today", days: 1 },
+    'Week': { name: "Week", days: 7 },
+    'Month': { name: "Month", days: 30 },
+    'Custom': { name: "Custom", days: false }
+  } as const;
