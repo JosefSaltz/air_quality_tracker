@@ -42,5 +42,5 @@
   })
 </script>
 
-<Input id={id} class={className} bind:value={searchValue} autocomplete={'off'} />
+<Input id={id} class={className} bind:value={searchValue} autocomplete={'off'} placeholder="Search" />
 
