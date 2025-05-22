@@ -20,7 +20,6 @@
         {:else}
           <toggle.icon />
         {/if}
-
       </Toggle>
       <label for="${toggle.name.toLowerCase()}_type">{toggle.name}</label>
     </div>

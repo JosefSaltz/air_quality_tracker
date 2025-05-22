@@ -12,10 +12,16 @@
   import { createMarker, generateMarkers, } from "$lib/utils/generateMarkers"
   import MapSkeleton from "$components/ReportMap/MapSkeleton.svelte";
   import type { PageProps } from "../../../routes/$types";
-  import type { Map } from "leaflet";
+  import type { LayerGroup, Map, Marker } from "leaflet";
   import type { User } from "@supabase/supabase-js";
-  import MobileMenuButton from "../MobileMenu/MobileMenuButton.svelte";
-
+  import MobileMenuButton from "$components/MobileMenu/MobileMenuButton.svelte";
+  import Search from "$components/Search/Search.svelte";
+  import TimeSelect from "$components/Search/TimeSelect.svelte";
+  // import Search from "$components/Search/Search.svelte";
+  import { page } from "$app/state";
+  import { filterMarkers } from "$lib/utils/filterMarkers";
+  import { innerWidth } from "svelte/reactivity/window";
+  // Extrapolated PageProps
   type Props = {
     markers: PageProps["data"]["markers"],
     form: PageProps["form"]
@@ -37,6 +43,15 @@
   let L: undefined | typeof import('leaflet');
   let lMap: undefined | Map = $state();
 
+  let params = $derived(page.url.searchParams);
+  
+  let currentSearch = $state(page.url.searchParams.get('search'));
+  let currentBefore = $state(page.url.searchParams.get('before'));
+  let currentAfter = $state(page.url.searchParams.get('after'));
+  let currentTime = $state(page.url.searchParams.get('time'));
+
+  let markersToShow = $state(filterMarkers(markers, params.get('search')));
+  let existingMarkerLayer = $state<LayerGroup | undefined>();
   const initialView = {
     latitude: 38.097557,
     longitude: -122.250036
@@ -44,24 +59,35 @@
   let currentGeolocation = $state(initialView);
   // Reference assignment for resizing map with viewport
   let container: undefined | Element;
-  // DEPRECATED FOR NOW
-  // Callback for async getting the current geo data
-  // const fetchGeoAndUpdate = async () => {
-  //   const coords = await fetchGeolocation();
-  //   // Short circuit overwriting the position if the user started moving the map at default
-  //   if(mapDragged) return;
-  //   // current Geolocation will be initial if in dev mode
-  //   currentGeolocation = dev ? initialView : coords;
-  //   // Check that lMap exists and then set it's view to the new coords
-  //   lMap && lMap.setView([currentGeolocation.latitude, currentGeolocation.longitude])
-  // }
-  // CSR logic
+  $inspect(markers, 'markers updating...')
+  $inspect(markersToShow, 'markersToShow updating...')
+  // Encapsulated function to set the map listener events for the selection marker
+  function setSelectionMarkerEvents(leafMap: typeof lMap, marker: Marker) {
+    if(!leafMap) return;
+    // Update the marker position to center on drag
+    leafMap.on("move", () => { 
+      // Latch the mapDragged state to true
+      if(!mapDragged) mapDragged = true;
+      // Undefined guard
+      const centerCoords = leafMap?.getCenter();
+      // Set marker coordinate
+      centerCoords && marker.setLatLng(centerCoords); 
+    });
+    // Update state on end of drag
+    leafMap.on("moveend", () => { 
+      // Destructure
+      const { lat, lng } = marker.getLatLng();
+      // Update state
+      currentGeolocation = { latitude: Number(lat), longitude: Number(lng) }
+    });
+  }
+  // Client side Leaflet set up and configuration
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
     L = await import("leaflet");
     const { LocateControl } = await import("leaflet.locatecontrol");
     const locateButton = new LocateControl();
-    // Function to pin needed marker image assets for CSR compatibility
+    // Function to bind needed marker image assets for CSR compatibility
     bindMissingAssets(L);
     // Destructure current geo state values
     const { latitude: x, longitude: y } = currentGeolocation;
@@ -72,26 +98,13 @@
       .tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {})
       .addTo(lMap);
     locateButton.addTo(lMap);
+    // Set the watermark attribution
+    lMap.attributionControl.setPrefix("github.com/JosefSaltz");
     // Create the centered selector marker
     const selectionMarker = new L.Marker(lMap.getCenter()).addTo(lMap);
     // Map Event Listeners
-    // Update the marker position to center on drag
-    lMap.on("move", () => { 
-      // Latch the mapDragged state to true
-      if(!mapDragged) mapDragged = true;
-      // Undefined guard
-      const centerCoords = lMap?.getCenter();
-      // Set marker coordinate
-      centerCoords && selectionMarker.setLatLng(centerCoords); 
-    });
-    // Update state on end of drag
-    lMap.on("moveend", () => { 
-      // Destructure
-      const { lat, lng } = selectionMarker.getLatLng();
-      // Update state
-      currentGeolocation = { latitude: Number(lat), longitude: Number(lng) }
-    });
-    // Null Guard
+    setSelectionMarkerEvents(lMap, selectionMarker);
+    // Null Guard if the target div hasn't mounted to the DOM yet
     if(!container) return;
     // Invalidate leaflet size on resizes
     const resizeObserver = new ResizeObserver(() => {
@@ -99,23 +112,49 @@
     });
     // Watch the binded element
     resizeObserver.observe(container);
-    // Marker generation 
-    generateMarkers(L, lMap, markers);
-    // Set the watermark attribution
-    lMap.attributionControl.setPrefix("github.com/JosefSaltz");
+    existingMarkerLayer = L.layerGroup().addTo(lMap)
+    // Generate markers from the search processed list
+    generateMarkers(L, lMap, existingMarkerLayer, markersToShow);
     // Clean up function
     return () =>  { 
       resizeObserver.disconnect();
       lMap && lMap.remove(); 
     }
   });
+  // Param change effect
+  $effect(() => {
+    const [search, before, after, time] = [params.get('search'), params.get('before'), params.get('after'), params.get('time')];
+    // Null guard against leaflet map intializiation
+    if(!L || !lMap) return;
+    // If there's a search term or date range in the URL
+    if(search || (before && after)) {
+      // Check if current params mismatch current state
+      if(search !== currentSearch || before !== currentBefore || after !== currentAfter || time !== currentTime) {
+        console.log('Rerunning Search!')
+        // Clear out currently existingMarkerLayer
+        const refilteredMarkers = filterMarkers(markers, params.get('search'));
+        if(existingMarkerLayer) {
+          // Clear existing markers out of the marker layer
+          existingMarkerLayer.clearLayers();
+          // Regenerate and attach the markers with the filteredMarkers 
+          generateMarkers(L, lMap, existingMarkerLayer, refilteredMarkers);  
+        }
+        markersToShow = refilteredMarkers;
+        // Update mismatched state params
+        if(search !== currentSearch) currentSearch = search;
+        if(before !== currentBefore) currentBefore = before;
+        if(after !== currentAfter) currentAfter = after;
+        if(time !== currentTime) currentTime = time;
+      }
+    }
+  })
+  
   // New marker effect
   $effect(() => {
     // New form generated marker logic
     if(form?.newMarker) {
       // Null guard for global deps
       if(!L || !lMap) return;
-      console.log(`New Marker Detected`);
       const createdMarker = createMarker(L, form.newMarker);
       createdMarker && createdMarker.addTo(lMap);
     }
@@ -128,7 +167,13 @@
 <!-- Leafly attachment node -->
 <div id="map-container" class="w-full h-full" >
   <div id="map" bind:this={container} class="w-full h-full z-[1]">
-    <MobileMenuButton class={`lg:hidden flex justify-end relative z-[999]`} user={user} profile={profile} supabase={supabase} />
+    {#if innerWidth?.current && innerWidth?.current <= 768}
+      <div id="mobile-search-container" class={`flex flex-col-reverse md:hidden relative z-[999] px-16 pt-4`}>
+        <TimeSelect class="" />
+        <Search class="w-full max-w-[80ch]" />
+      </div>
+    {/if}
+    <MobileMenuButton class={`md:hidden flex justify-end relative z-[999]`} user={user} profile={profile} supabase={supabase} />
   </div>
   {#if !lMap}
     <MapSkeleton />

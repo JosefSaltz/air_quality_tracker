@@ -1,12 +1,13 @@
-import type { Map } from "leaflet";
+import type { LayerGroup, Map } from "leaflet";
 import type { PageProps } from "../../routes/$types";
 import type { Tables } from "$root/database.types";
 import type { LatLngTuple } from "leaflet";
 
 
 type QueriedMarker = Omit<Tables<"reports">, "created_by" | "precipitation" | "location"> 
+type LeafLib = typeof import("leaflet");
 
-export function createMarker(L: typeof import("leaflet"), marker: QueriedMarker) {
+export function createMarker(L: LeafLib, marker: QueriedMarker) {
   // Type appeasement
   if(!L) return console.error('Leaflet is not initialized!')
   // Destructure
@@ -29,15 +30,16 @@ export function createMarker(L: typeof import("leaflet"), marker: QueriedMarker)
   return createdMarker;
 }
 
-export async function generateMarkers(L: typeof import("leaflet"), lMap: Map, markers: PageProps["data"]["markers"]) {    
-  const receivedData = await markers;
-  if(!receivedData) return;
+export async function generateMarkers(L: LeafLib, lMap: Map, layerGroup: LayerGroup, markers: PageProps["data"]["markers"]) {    
+  // Marker Data Null Guard
+  if(!markers) return;
   // Iterate through marker data and create a new marker to be placed on the leaflet map
-  return receivedData.map((marker) => {
+  return markers.map((marker) => {
     const createdMarker = createMarker(L, marker);
     if(!createdMarker) return console.error(`Failed to create marker`);
+    createdMarker.addTo(layerGroup)
     createdMarker.addTo(lMap);
-  })
+  });
 }
 // Credit: https://gist.github.com/theKAKAN/b40bf54144a6eb90313ad00681e3fbcc
 function toMPH(knots: number | null) {
@@ -65,12 +67,12 @@ function constructDescription(marker: QueriedMarker) {
   const cardinal_dir = getDirection(wind_direction);
   const wind_mph = toMPH(wind_speed_kn);
   return `
+    <strong>Date:</strong> ${localeString}<br />
     <strong>Strength:</strong> ${strength}<br />
     <strong>Wind Direction:</strong> ${ cardinal_dir} (${wind_direction?.toFixed(0)}deg)<br />
     <strong>Wind Speed:</strong> ${wind_speed_kn?.toFixed(2)}kn (${wind_mph}mph)<br />
     <strong>Temperature:</strong> ${temperature_f?.toFixed(0)}F<br />
     <strong>Humidity:</strong> ${humidity}%<br />
-    <strong>Time:</strong> ${localeString}<br />
     <strong>Description:</strong> ${description}<br />
   `;
 }

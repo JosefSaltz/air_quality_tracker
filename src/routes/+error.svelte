@@ -13,7 +13,7 @@
     }
     // When out of time redirect to the login page
     else {
-      goto("/auth/login")
+      goto("/")
     }
     // Clean up function
     return () => clearTimeout(timer)
