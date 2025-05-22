@@ -17,6 +17,8 @@
   import { onMount } from 'svelte';
   import { generateTimeRange } from '@/lib/utils/generateTimeRange';
   
+  let { class: className = '' } = $props()
+
   let selection = $state<TimeOptionKey>(page.url.searchParams.get('time') as TimeOptionKey || 'Month');
   let timeRange = $state<DateRange | undefined>(getCurrentRange() || generateTimeRange(selection));
 
@@ -56,19 +58,21 @@
 
 </script>
 
-<DropdownMenu.Root>
-  <DropdownMenu.Trigger>
-    <Button class="w-16 bg-purple-700 rounded-l-md">{ selection }</Button>
-  </DropdownMenu.Trigger>
-  <DropdownMenu.Content>
-    <DropdownMenu.RadioGroup bind:value={selection}>
-      {#each Object.values(timeOptions) as option}
-        <DropdownMenu.RadioItem value={option.name}>
-          {option.name}
-        </DropdownMenu.RadioItem>
-      {/each}
-    </DropdownMenu.RadioGroup>
-  </DropdownMenu.Content>
-</DropdownMenu.Root>
+<div class={`flex ${className} pt-2 md:pt-0`}>
+  <DropdownMenu.Root>
+    <DropdownMenu.Trigger>
+      <Button class="w-16 bg-purple-700 rounded-l-md">{ selection }</Button>
+    </DropdownMenu.Trigger>
+    <DropdownMenu.Content>
+      <DropdownMenu.RadioGroup bind:value={selection}>
+        {#each Object.values(timeOptions) as option}
+          <DropdownMenu.RadioItem value={option.name}>
+            {option.name}
+          </DropdownMenu.RadioItem>
+        {/each}
+      </DropdownMenu.RadioGroup>
+    </DropdownMenu.Content>
+  </DropdownMenu.Root>
 
-<DateRangePicker bind:timeRange={timeRange} bind:selection={selection} />
+  <DateRangePicker bind:timeRange={timeRange} bind:selection={selection} />
+</div>
