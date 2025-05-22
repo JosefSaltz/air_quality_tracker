@@ -30,12 +30,11 @@ export function createMarker(L: LeafLib, marker: QueriedMarker) {
   return createdMarker;
 }
 
-export async function generateMarkers(L: LeafLib, lMap: Map, layerGroup: LayerGroup, markers: PageProps["data"]["markers"] | Awaited<PageProps["data"]["markers"]>) {    
-  // Handle if the markers are in promise form
-  const receivedData = (markers instanceof Promise) ? await markers : markers;
-  if(!receivedData) return;
+export async function generateMarkers(L: LeafLib, lMap: Map, layerGroup: LayerGroup, markers: PageProps["data"]["markers"]) {    
+  // Marker Data Null Guard
+  if(!markers) return;
   // Iterate through marker data and create a new marker to be placed on the leaflet map
-  return receivedData.map((marker) => {
+  return markers.map((marker) => {
     const createdMarker = createMarker(L, marker);
     if(!createdMarker) return console.error(`Failed to create marker`);
     createdMarker.addTo(layerGroup)
@@ -68,12 +67,12 @@ function constructDescription(marker: QueriedMarker) {
   const cardinal_dir = getDirection(wind_direction);
   const wind_mph = toMPH(wind_speed_kn);
   return `
+    <strong>Date:</strong> ${localeString}<br />
     <strong>Strength:</strong> ${strength}<br />
     <strong>Wind Direction:</strong> ${ cardinal_dir} (${wind_direction?.toFixed(0)}deg)<br />
     <strong>Wind Speed:</strong> ${wind_speed_kn?.toFixed(2)}kn (${wind_mph}mph)<br />
     <strong>Temperature:</strong> ${temperature_f?.toFixed(0)}F<br />
     <strong>Humidity:</strong> ${humidity}%<br />
-    <strong>Time:</strong> ${localeString}<br />
     <strong>Description:</strong> ${description}<br />
   `;
 }
