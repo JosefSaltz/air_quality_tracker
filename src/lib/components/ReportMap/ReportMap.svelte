@@ -168,8 +168,8 @@
 <div id="map-container" class="w-full h-full" >
   <div id="map" bind:this={container} class="w-full h-full z-[1]">
     {#if innerWidth?.current && innerWidth?.current <= 768}
-      <div id="mobile-search-container" class={`flex md:hidden relative z-[999] px-16 pt-4`}>
-        <TimeSelect />
+      <div id="mobile-search-container" class={`flex flex-col-reverse md:hidden relative z-[999] px-16 pt-4`}>
+        <TimeSelect class="" />
         <Search class="w-full max-w-[80ch]" />
       </div>
     {/if}
