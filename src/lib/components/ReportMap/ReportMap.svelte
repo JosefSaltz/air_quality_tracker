@@ -15,10 +15,12 @@
   import type { LayerGroup, Map, Marker } from "leaflet";
   import type { User } from "@supabase/supabase-js";
   import MobileMenuButton from "$components/MobileMenu/MobileMenuButton.svelte";
+  import Search from "$components/Search/Search.svelte";
+  import TimeSelect from "$components/Search/TimeSelect.svelte";
   // import Search from "$components/Search/Search.svelte";
   import { page } from "$app/state";
   import { filterMarkers } from "$lib/utils/filterMarkers";
-
+  import { innerWidth } from "svelte/reactivity/window";
   // Extrapolated PageProps
   type Props = {
     markers: PageProps["data"]["markers"],
@@ -40,6 +42,7 @@
   let drawerIsOpen = $state(false);
   let L: undefined | typeof import('leaflet');
   let lMap: undefined | Map = $state();
+
   let params = $derived(page.url.searchParams);
   
   let currentSearch = $state(page.url.searchParams.get('search'));
@@ -118,7 +121,7 @@
       lMap && lMap.remove(); 
     }
   });
-
+  // Param change effect
   $effect(() => {
     const [search, before, after, time] = [params.get('search'), params.get('before'), params.get('after'), params.get('time')];
     // Null guard against leaflet map intializiation
@@ -141,6 +144,7 @@
         if(search !== currentSearch) currentSearch = search;
         if(before !== currentBefore) currentBefore = before;
         if(after !== currentAfter) currentAfter = after;
+        if(time !== currentTime) currentTime = time;
       }
     }
   })
@@ -163,8 +167,13 @@
 <!-- Leafly attachment node -->
 <div id="map-container" class="w-full h-full" >
   <div id="map" bind:this={container} class="w-full h-full z-[1]">
-    <!-- <Search id="mobile-search" class="relative z-[99]" /> -->
-    <MobileMenuButton class={`lg:hidden flex justify-end relative z-[999]`} user={user} profile={profile} supabase={supabase} />
+    {#if innerWidth?.current && innerWidth?.current <= 768}
+      <div id="mobile-search-container" class={`flex md:hidden relative z-[999] px-16 pt-4`}>
+        <TimeSelect />
+        <Search class="w-full max-w-[80ch]" />
+      </div>
+    {/if}
+    <MobileMenuButton class={`md:hidden flex justify-end relative z-[999]`} user={user} profile={profile} supabase={supabase} />
   </div>
   {#if !lMap}
     <MapSkeleton />

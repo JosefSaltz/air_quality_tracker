@@ -11,8 +11,8 @@
   import { page } from "$app/state";
   import Search from "$components/Search/Search.svelte";
   import TimeSelect from "$components/Search/TimeSelect.svelte";
-  import DateRangePicker from "$components/DateRangePicker/DateRangePicker.svelte";
-
+  import { browser } from "$app/environment";
+  import { innerWidth } from "svelte/reactivity/window";
   type NavbarProps = { 
     profile: ProfileResponse
     user: User | null, 
@@ -39,7 +39,7 @@
   }
 </script>
 
-<header class={`${page.route.id === '/' ? 'hidden lg:block' : ''} bg-white shadow-sm md:static lg:overflow-y-visible py-1`}>
+<header class={`${page.route.id === '/' ? 'hidden' : ''} bg-white shadow-sm md:static md:block lg:overflow-y-visible py-1`}>
   <div id="centering-container" class="w-full flex justify-center">
     <div id="grid-container" class="w-full max-w-[80vw] grid grid-cols-12">
       <div id="home-button-container" class="col-span-2">
@@ -49,10 +49,12 @@
         </a>
       </div>
       <!-- Search Bar -->
-      <div id="searchbar-container" class={`${isOnMapPage() ? 'flex' : 'hidden'} col-span-8 w-full`}>
-        <TimeSelect />
-        <Search class="w-full max-w-[80ch]" />
-      </div>
+      {#if innerWidth?.current && innerWidth?.current > 768}
+        <div id="searchbar-container" class={`${isOnMapPage() ? 'flex' : 'hidden'} col-span-8 w-full justify-center`}>
+          <TimeSelect />
+          <Search class="w-full max-w-[80ch]" />
+        </div>
+      {/if}
       <!-- Desktop Profile Button -->
       <div id="profile-container" class={'col-span-2 justify-self-end px-8'}> 
         <div id="profile-dropdown" class="relative ml-5 shrink-0">
