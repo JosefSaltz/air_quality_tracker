@@ -12,21 +12,33 @@
   import * as Popover from "$lib/components/ui/popover/index.js";
   import { page } from "$app/state";
   import { goto } from "$app/navigation";
-
+  import { innerWidth } from "svelte/reactivity/window";
   
   let { timeRange: value = $bindable(), selection = $bindable() } = $props();
-
+  const dateStyle = $state<"short" | "medium">("medium")
   const today = new Date();
-
-  const df = new DateFormatter("en-US", {
-   dateStyle: "medium"
-  });
+  let df = $state(new DateFormatter("en-US", {
+   dateStyle: "short"
+  }))
   
   const isCustomTime = () => {
     return page.url.searchParams.get('time') === 'Custom';
   }
 
   let startValue: DateValue | undefined = $state(undefined);
+
+  $effect(() => {
+    if(innerWidth?.current && innerWidth.current <= 768) {
+      df = new DateFormatter("en-US", {
+        dateStyle: "short"
+      });
+    }
+    else {
+      df = new DateFormatter("en-US", {
+        dateStyle: "medium"
+      })
+    }
+  })
 
   $effect(() => {
     // Get URL Params Interface from current page state
@@ -67,13 +79,14 @@
       Pick a date
     {/if}
    </Popover.Trigger>
-   <Popover.Content class="w-auto p-0" align="start">
+   <Popover.Content class="w-auto p-0 " align="start">
     <RangeCalendar
      bind:value
      onStartValueChange={(v) => {
       startValue = v;
      }}
-     numberOfMonths={2}
+     numberOfMonths={innerWidth?.current && innerWidth.current <= 768 ? 1 : 2}
+     class={'relative z-[1000]'}
     />
    </Popover.Content>
   </Popover.Root>
