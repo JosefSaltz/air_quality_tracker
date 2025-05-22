@@ -168,21 +168,22 @@
 <div id="map-container" class="w-full h-full" >
   <div id="map" bind:this={container} class="w-full h-full z-[1]">
     {#if innerWidth?.current && innerWidth?.current <= 768}
-      <div id="mobile-search-container" class={`flex flex-col-reverse md:hidden relative z-[999] px-16 pt-4`}>
-        <TimeSelect class="" />
+      <div id="mobile-search-container" class={`flex flex-col-reverse md:hidden relative z-[505] px-16 pt-4`}>
+        <TimeSelect class="relative z-[20]" />
         <Search class="w-full max-w-[80ch]" />
       </div>
     {/if}
-    <MobileMenuButton class={`md:hidden flex justify-end relative z-[999]`} user={user} profile={profile} supabase={supabase} />
+    <MobileMenuButton class={`md:hidden flex justify-end relative z-[500]`} user={user} profile={profile} supabase={supabase} />
+    <FormDrawer user={user} form={form} bind:open={drawerIsOpen} >
+      {#if user}
+        <ReportForm bind:currentGeolocation bind:drawerIsOpen form={form} />
+      {:else}
+        <LoginRequired />
+      {/if}
+    </FormDrawer>
   </div>
   {#if !lMap}
     <MapSkeleton />
   {/if}
-  <FormDrawer user={user} form={form} bind:open={drawerIsOpen} >
-    {#if user}
-      <ReportForm bind:currentGeolocation bind:drawerIsOpen form={form} />
-    {:else}
-      <LoginRequired />
-    {/if}
-  </FormDrawer>
+  
 </div>

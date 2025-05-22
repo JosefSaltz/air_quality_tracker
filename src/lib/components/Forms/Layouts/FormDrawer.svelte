@@ -20,16 +20,16 @@
   })
 
 </script>
-<div >
+<div class="">
   <Drawer.Root bind:open repositionInputs={false} >
-    <div id="report-placement-container" class="flex justify-center w-full absolute z-20 top-[60%]">
+    <div id="report-placement-container" class="flex justify-center absolute w-full z-[500] top-[60%]">
       <div class="flex flex-col justify-center">
         {#if user}
           <Drawer.Trigger class={`${buttonVariants(buttonConfig)}`}>
             Report
           </Drawer.Trigger>
         {:else} <!-- Show Login Button-->
-          <Button href="/auth/login" class={`${buttonVariants(buttonConfig)}`}>Login</Button>
+          <Button href="/auth/login" class={`${buttonVariants(buttonConfig)} z-[10]`}>Login</Button>
         {/if}
 
         {#if form?.success && showAlert}<Alert.Root><Alert.Description class="success text-green-500 ">Report Successfully Submitted!</Alert.Description></Alert.Root>{/if}
