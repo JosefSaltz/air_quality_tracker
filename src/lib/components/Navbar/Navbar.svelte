@@ -11,8 +11,8 @@
   import { page } from "$app/state";
   import Search from "$components/Search/Search.svelte";
   import TimeSelect from "$components/Search/TimeSelect.svelte";
-  import { browser } from "$app/environment";
   import { innerWidth } from "svelte/reactivity/window";
+  
   type NavbarProps = { 
     profile: ProfileResponse
     user: User | null, 
@@ -56,7 +56,7 @@
         </div>
       {/if}
       <!-- Desktop Profile Button -->
-      <div id="profile-container" class={'col-span-2 justify-self-end px-8'}> 
+      <div id="profile-container" class={'col-span-1 justify-self-end px-8'}> 
         <div id="profile-dropdown" class="relative ml-5 shrink-0">
           {#if user}
             <span >{profile?.first_name ?? ""}</span>
@@ -83,6 +83,12 @@
             <a href="/" onclick={() => {handleMenuClick(handleSignOut)}} class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a> 
           </div>
         </div>
+      </div>
+      <div id="support-button-container" class="col-span-1">
+        <a href="/support" class={`${buttonVariants({ ...buttonConfig, variant: "link"})}`}>
+          <!-- <span>{ HomeLogo }</span> -->
+          Help
+        </a>
       </div>
     </div>
   </div>
