@@ -10,6 +10,6 @@ export const actions = {
     });
     // Quietly log the error to the console without telling the user
     if(error) console.error(error);
-    redirect(303, "/auth/resend-verification-sent");
+    redirect(303, "/support/resend/verification-sent");
   }
 } satisfies Actions

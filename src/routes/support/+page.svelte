@@ -12,7 +12,7 @@
     <h2 class="text-3xl">Links</h2>
     <ul>
       <li class="py-4">
-          <a class="support-link text-xl hover:text-sky-300 text-sky-800 underline" href="/support/resend-verification">Resend Verification Email</a>
+          <a class="support-link text-xl hover:text-sky-300 text-sky-800 underline" href="/support/resend/verification">Resend Verification Email</a>
       </li>
     </ul>
   </div>
