@@ -27,12 +27,6 @@
             <p class="text-red-500">Invalid Email</p>
           {/if}
         {/if}
-        <!-- Navigate back to Login -->
-        <div class="flex items-center justify-right">
-          <div class="text-sm/6">
-            <a href="/auth/login" class="font-semibold text--600 hover:text--500">🔙 to Login</a>
-          </div>
-        </div>
         <!-- Submit Button -->
         <div>
           <button type="submit" disabled={!validEmail} formaction="?/resend-verification" class={`flex w-full justify-center rounded-md ${validEmail ? 'bg-purple-500' : 'bg-purple-200'} px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg--500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600`}>Send email</button>
