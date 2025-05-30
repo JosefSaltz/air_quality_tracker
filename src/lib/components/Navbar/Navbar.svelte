@@ -50,9 +50,11 @@
       </div>
       <!-- Search Bar -->
       {#if innerWidth?.current && innerWidth?.current > 768}
-        <div id="searchbar-container" class={`${isOnMapPage() ? 'flex' : 'hidden'} col-span-8 w-full justify-center`}>
-          <TimeSelect />
-          <Search class="w-full max-w-[80ch]" />
+        <div id="searchbar-container" class={`w-full col-span-8 flex justify-center`}>
+          {#if isOnMapPage()}
+            <TimeSelect />
+            <Search class="w-full max-w-[80ch]" />
+          {/if}
         </div>
       {/if}
       <!-- Desktop Profile Button -->
