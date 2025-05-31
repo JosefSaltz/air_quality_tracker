@@ -4,6 +4,7 @@ export const actions = {
   "resend-verification": async ({ request, locals: { supabase } }) => {
     const formData = await request.formData();
     const email = formData.get("email") as string;
+    console.log(`Resending a verification email!`)
     const { error } = await supabase.auth.resend({ 
       type: 'signup',
       email 
