@@ -14,7 +14,7 @@
   import type { PageProps } from "../../../routes/$types";
   import type { LayerGroup, Map, Marker } from "leaflet";
   import type { User } from "@supabase/supabase-js";
-  import MobileMenuButton from "$components/MobileMenu/MobileMenuButton.svelte";
+  import MobileMenuButton from "@/lib/components/HamburgerMenu/HamburgerMenuButton.svelte";
   import Search from "$components/Search/Search.svelte";
   import TimeSelect from "$components/Search/TimeSelect.svelte";
   // import Search from "$components/Search/Search.svelte";
@@ -168,12 +168,15 @@
 <div id="map-container" class="w-full h-full" >
   <div id="map" bind:this={container} class="w-full h-full z-[1]">
     {#if innerWidth?.current && innerWidth?.current <= 768}
-      <div id="mobile-search-container" class={`flex flex-col-reverse md:hidden relative z-[505] px-16 pt-4`}>
+    <div class="flex justify-center w-full">
+      <div id="mobile-search-container" class={`w-full flex flex-col-reverse md:hidden relative z-[500] pl-16 pr-4 pt-4`}>
         <TimeSelect class="relative z-[20]" />
-        <Search class="w-full max-w-[80ch]" />
+        <Search class="w-full max-w-[80ch]" />  
       </div>
+      <MobileMenuButton class={`md:hidden relative z-[500] aspect-square pt-4`} user={user} profile={profile} supabase={supabase} />
+    </div>
     {/if}
-    <MobileMenuButton class={`md:hidden flex justify-end relative z-[500]`} user={user} profile={profile} supabase={supabase} />
+    
     <FormDrawer user={user} form={form} bind:open={drawerIsOpen} >
       {#if user}
         <ReportForm bind:currentGeolocation bind:drawerIsOpen form={form} />
