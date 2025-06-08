@@ -2,6 +2,7 @@
   import type { PageProps } from "../../../routes/$types";
   import * as Popover from "$components/ui/popover";
   import defaultAvatar from "$lib/assets/defaultAvatar.png"
+  
   type Props = {
     user: PageProps["data"]["user"], 
     profile: PageProps["data"]["profile"], 
@@ -47,15 +48,15 @@
 </div>
 
 <style>
-.menu-entry {
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.25rem;
-  text-decoration: none !important;
-}
+  .menu-entry {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    text-decoration: none !important;
+  }
 
-.menu-entry:hover {
-  /* Tailwind bg-gray-100 utility class */
-  --tw-bg-opacity: 1;
-  background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
-}
+  .menu-entry:hover {
+    /* Tailwind bg-gray-100 utility class */
+    --tw-bg-opacity: 1;
+    background-color: rgb(243 244 246 / var(--tw-bg-opacity, 1));
+  }
 </style>

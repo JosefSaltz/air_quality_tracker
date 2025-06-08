@@ -7,7 +7,6 @@
   import type { SupabaseClient, User } from "@supabase/supabase-js";
   import type { ProfileResponse } from "@/routes/+layout.server";
   import { buttonVariants } from "$lib/components/ui/button";
-  import defaultAvatar from "$lib/assets/defaultAvatar.png"
   import { page } from "$app/state";
   import Search from "$components/Search/Search.svelte";
   import TimeSelect from "$components/Search/TimeSelect.svelte";
@@ -60,8 +59,7 @@
           {/if}
         </div>
       {/if}
-      <HamburgerMenuButton user={user} profile={profile} supabase={supabase} />
+      <HamburgerMenuButton class="col-start-11 col-end-13" user={user} profile={profile} supabase={supabase} />
     </div>
   </div>
 </header>
-den
