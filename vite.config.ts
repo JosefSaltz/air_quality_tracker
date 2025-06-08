@@ -35,7 +35,10 @@ export default defineConfig(({ mode }) => {
 			}
 		},
 		server: {
-			port: 3000
+			port: 3000,
+			allowedHosts: [
+				"jsysd-wsl"
+			]
 		}
 	})
 });

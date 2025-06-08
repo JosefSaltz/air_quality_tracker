@@ -41,10 +41,10 @@
 
 <div id="signup-form-container" class="w-full h-full flex flex-col justify-center">
   <!-- Logo and Header -->
-  <LogoPiita name="Sign Up" />
+  <LogoPiita class="flex flex-col items-center" name="Login" />
   <!-- Sign Up Form Input -->
   <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
-    <div class="bg-white px-6 py-12 sm:px-12">
+    <div class="bg-white px-6 sm:px-12">
       <form use:enhance={handleSubmit} class="" action="?/signup" method="POST">
         <!-- Email Input -->
         <div id="email-container">
@@ -106,7 +106,7 @@
           `}>
             Sign Up
           </button>
-          <Turnstile bind:cfResponse className="flex justify-center items-center" />
+          <Turnstile bind:cfResponse class="flex justify-center items-center" />
         </div>
       </form>
       <p class="mt-10 text-center text-sm/6 text-gray-500">
