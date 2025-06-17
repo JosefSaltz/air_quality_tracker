@@ -1,7 +1,7 @@
-import { error } from '@sveltejs/kit';
 import Excel from "exceljs";
+import { error } from '@sveltejs/kit';
+import { getMarkers } from '$lib/server/getMarkers.js';
 import { getAdminReports } from '$lib/server/getAdminReports.js';
-import { getMarkers } from '@/lib/server/getMarkers.js';
 
 type ReportData = Awaited<ReturnType<typeof getMarkers> | ReturnType<typeof getAdminReports>>
 
@@ -13,7 +13,7 @@ const createExcelFile = async (reportData: ReportData, password?: string) => {
   const workbook = new Excel.Workbook();
   // Assign Workbook Metadata
   [workbook.creator, workbook.lastModifiedBy] = 'PIITA';
-  [workbook.created, workbook.modified] = new Date();
+  workbook.created = new Date();
   // Create the worksheet with report data
   const worksheet = workbook.addWorksheet('Report Data');
   // Create column headers
