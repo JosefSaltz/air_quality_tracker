@@ -18,8 +18,9 @@
     "npm:@sveltejs/vite-plugin-svelte@^5.0.3": "5.0.3_svelte@5.30.2__acorn@8.14.1_vite@6.3.5__picomatch@4.0.2",
     "npm:@tailwindcss/container-queries@~0.1.1": "0.1.1_tailwindcss@3.4.17__postcss@8.5.3",
     "npm:@tailwindcss/typography@~0.5.16": "0.5.16_tailwindcss@3.4.17__postcss@8.5.3",
-    "npm:@types/leaflet@^1.9.17": "1.9.17",
+    "npm:@types/leaflet@^1.9.18": "1.9.18",
     "npm:@types/pg@^8.11.10": "8.11.14",
+    "npm:@types/pg@^8.15.4": "8.15.4",
     "npm:autoprefixer@^10.4.21": "10.4.21_postcss@8.5.3",
     "npm:bits-ui@^1.5.3": "1.5.3_svelte@5.30.2__acorn@8.14.1",
     "npm:clsx@^2.1.1": "2.1.1",
@@ -2156,8 +2157,8 @@
     "@types/json-schema@7.0.15": {
       "integrity": "sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA=="
     },
-    "@types/leaflet@1.9.17": {
-      "integrity": "sha512-IJ4K6t7I3Fh5qXbQ1uwL3CFVbCi6haW9+53oLWgdKlLP7EaS21byWFJxxqOx9y8I0AP0actXSJLVMbyvxhkUTA==",
+    "@types/leaflet@1.9.18": {
+      "integrity": "sha512-ht2vsoPjezor5Pmzi5hdsA7F++v5UGq9OlUduWHmMZiuQGIpJ2WS5+Gg9HaAA79gNh1AIPtCqhzejcIZ3lPzXQ==",
       "dependencies": [
         "@types/geojson"
       ]
@@ -2189,6 +2190,14 @@
         "@types/node@22.12.0",
         "pg-protocol",
         "pg-types@4.0.2"
+      ]
+    },
+    "@types/pg@8.15.4": {
+      "integrity": "sha512-I6UNVBAoYbvuWkkU3oosC8yxqH21f4/Jc4DK71JLG3dT2mdlGe1z+ep/LQGXaKaOgcvUrsQoPRqfgtMcvZiJhg==",
+      "dependencies": [
+        "@types/node@22.12.0",
+        "pg-protocol",
+        "pg-types@2.2.0"
       ]
     },
     "@types/pg@8.6.1": {
@@ -4929,8 +4938,8 @@
         "npm:@sveltejs/vite-plugin-svelte@^5.0.3",
         "npm:@tailwindcss/container-queries@~0.1.1",
         "npm:@tailwindcss/typography@~0.5.16",
-        "npm:@types/leaflet@^1.9.17",
-        "npm:@types/pg@^8.11.10",
+        "npm:@types/leaflet@^1.9.18",
+        "npm:@types/pg@^8.15.4",
         "npm:autoprefixer@^10.4.21",
         "npm:bits-ui@^1.5.3",
         "npm:clsx@^2.1.1",
