@@ -1,5 +1,5 @@
 import Excel from "exceljs";
-import { type ReportData } from "@/routes/api/download";
+import { type ReportData } from "@/routes/api/download/reports/+server";
 // Utility function for preparing an Excel file to send to the user
 export const createExcelFile = async (reportData: ReportData, password?: string) => {
   // Null Guard

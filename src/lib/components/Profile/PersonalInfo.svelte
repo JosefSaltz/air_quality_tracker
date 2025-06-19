@@ -12,7 +12,7 @@
 
 <div id="profile-info-section" class="w-full flex flex-col gap-4">
   <h2 class="text-xl">Personal Info</h2>
-  <ul>
+  <ul class="space-y-2">
     <li>
       <label for="first-name">First name:</label>
       <Input type="text" name="first-name" placeholder={first_name ?? 'Add your first name'} />
