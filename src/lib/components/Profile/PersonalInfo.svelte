@@ -32,4 +32,7 @@
   #profile-info-section li {
     display: flex;
   }
+  label {
+    width: 16ch;
+  }
 </style>

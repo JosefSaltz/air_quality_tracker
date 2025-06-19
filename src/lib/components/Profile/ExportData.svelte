@@ -15,6 +15,6 @@
   <h2 class="text-xl">Request Report Data</h2>
   <div class="flex flex-col gap-2">
     <label for="download-reports">Download Reports as a CSV file</label>
-    <Button class="max-w-24" name="download-reports" href="/auth/profile/download-data" download={`reports_${mm_dd_yyyy()}`}>Download</Button>
+    <Button class="max-w-24" name="download-reports" formaction="?/request-reports" variant="secondary" download={`reports_${mm_dd_yyyy()}`}>Download</Button>
   </div>
 </div>
