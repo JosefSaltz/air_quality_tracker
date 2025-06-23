@@ -2,12 +2,12 @@
   import { enhance } from "$app/forms";
   import Button from "$components/ui/button/button.svelte";
   import type { PageProps } from "./$types"
-  import PersonalInfo from "@/lib/components/Profile/PersonalInfo.svelte";
-  import ExportData from "@/lib/components/Profile/ExportData.svelte";
+  import PersonalInfo from "$components/Profile/PersonalInfo.svelte";
+  import ExportData from "$components/Profile/ExportData.svelte";
   
   let { data }: PageProps  = $props();
   // QOL Role Check
-  const isAdmin = data.user?.role === "admin";
+  const isAdmin = data.profile?.is_admin || false;
   // Initialize personal info string values
   let [first_name, last_name, email ]: string[] | null[] = ['', '', ''];
   // Update from user's profile if available
