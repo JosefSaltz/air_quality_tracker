@@ -18,7 +18,7 @@ export const createExcelFile = async (reportData: ReportData, password?: string)
   // Add all the data rows
   reportData.forEach(report => worksheet.addRow(report));
   // Set the password for the workbook
-  const protectOptions = {};
+  const protectOptions = {} satisfies Partial<Excel.WorksheetProtection>;
   if(password) await worksheet.protect(password, protectOptions)
   // Return generated workbook
   return workbook;

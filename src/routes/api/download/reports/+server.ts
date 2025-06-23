@@ -30,8 +30,7 @@ export const POST = async ({ locals, request }) => {
   const { user, supabase } = locals;
   if(!user || user.role !== 'admin') return error(401, { message: 'User unauthorized'});
   // Get the password from the form data
-  const formData = await request.formData();
-  const password = formData.get('password') as string | null;
+  const { password } = await request.json() as { password: string };
   if(!password) return error(400, { message: 'A password was not passed with the request'});
   // Get Admin report with private data
   const reportData = await getAdminReports(supabase);
