@@ -2,6 +2,7 @@ import { createExcelFile } from '$lib/server/createExcel';
 import { getMarkers } from '$lib/server/getMarkers';
 import { error } from '@sveltejs/kit';
 import { getAdminReports } from '@/lib/server/getAdminReports.js';
+import { checkUserRole } from '@/lib/server/checkUserRole';
 
 export type ReportData = Awaited<ReturnType<typeof getMarkers> | ReturnType<typeof getAdminReports>>
 
@@ -28,7 +29,10 @@ export const GET = async({ locals }) => {
 export const POST = async ({ locals, request }) => {
   // Check if user is authorized for the request
   const { user, supabase } = locals;
-  if(!user || user.role !== 'admin') return error(401, { message: 'User unauthorized'});
+  // Validate if the user is admin
+  const { isAdmin } = await checkUserRole(user, supabase);
+  // Auth Guard
+  if(!user || !isAdmin) return error(401, { message: 'User unauthorized'});
   // Get the password from the form data
   const { password } = await request.json() as { password: string };
   if(!password) return error(400, { message: 'A password was not passed with the request'});
