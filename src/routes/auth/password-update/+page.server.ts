@@ -1,4 +1,4 @@
-import { validPasswordSchema } from "@/lib/utils/zSchemas/validPasswordSchema";
+import { validPasswordSchema } from "$zSchemas";
 import { fail, redirect, type Actions } from "@sveltejs/kit";
 
 export const actions = {

@@ -62,6 +62,7 @@ export const supabase: Handle = async ({ event, resolve }) => {
     const { data: { user }, ...userResponse } = await event.locals.supabase.auth.getUser();
     // If JWT validation has failed
     if (userResponse.error) return { session: null, user: null };
+    // Get the request user's profile after validating their JWT
     const { data: profile, ...profileResponse } = await event.locals.supabase
       .from("profiles")
       .select("*")

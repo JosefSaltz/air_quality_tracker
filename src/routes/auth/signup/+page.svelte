@@ -2,14 +2,13 @@
   import type { PageProps } from "./$types";
   import { browser } from "$app/environment";
   import { enhance } from "$app/forms";
-  import { z, type ZodIssue } from 'zod';
+  import { type ZodIssue } from 'zod';
   import Turnstile from "$components/Forms/Turnstile.svelte";
   import { type SubmitFunction } from "@sveltejs/kit";
-  import { validPasswordSchema } from "@/lib/utils/zSchemas/validPasswordSchema";
+  import { validEmailSchema, validPasswordSchema } from "$zSchemas";
   import LogoPiita from "$components/LogoPiita.svelte";
   import PasswordInputs from "@/lib/components/Forms/signup/PasswordInputs.svelte";
 
-  const emailSchema = z.string().email();
   let { data }: PageProps = $props();
   let { googleNonce } = data;
   let confirm_pw = $state();
@@ -19,7 +18,7 @@
   let first_name = $state(null);
   let last_name = $state(null);
   let cfResponse = $state<string | null>(null)
-  let valid_email = $derived(emailSchema.safeParse(email).success);
+  let valid_email = $derived(validEmailSchema.safeParse(email).success);
   let verified_pw = $derived(password && confirm_pw && (password === confirm_pw));
   let disable_submit = $derived(!(verified_pw && valid_email && cfResponse));
   // Zod password validation
@@ -62,20 +61,7 @@
           {/if}
         </div>
         <!-- Password Inputs -->
-        <PasswordInputs bind:password bind:confirm_pw />
-        <!-- Dynamic Validation Feedback -->
-        {#if password && confirm_pw}
-          {#if verified_pw}
-            <p class="text-green-500">Passwords match</p>
-          {:else}
-            <p class="text-red-500">Passwords do not match</p>
-          {/if}  
-        {/if}
-        {#if passwordErrors}
-          {#each passwordErrors as error}
-            <p class="text-red-500">{error.message}</p>
-          {/each}
-        {/if}
+        <PasswordInputs bind:password bind:confirm_pw {passwordErrors} />
         <!-- Optional Values -->
         <div id="optionals-container">
           <label for="first_name" class="block text-sm/6 font-medium text-gray-900">First Name (Optional)</label>

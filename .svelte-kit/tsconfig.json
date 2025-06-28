@@ -25,6 +25,12 @@
 			"$routes/*": [
 				"../src/routes/*"
 			],
+			"$zSchemas": [
+				"../src/lib/utils/zSchemas"
+			],
+			"$zSchemas/*": [
+				"../src/lib/utils/zSchemas/*"
+			],
 			"$lib": [
 				"../src/lib"
 			],
