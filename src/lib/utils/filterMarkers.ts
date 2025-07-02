@@ -40,7 +40,6 @@ function filterMarkersByTerm(markers: ReturnType<typeof filterMarkersByDate> | M
 }
 
 export function filterMarkers(markers: Markers, searchTerm?: string | null) {
-  console.log('Filtering markers:', markers)
   // Null guard for now browser or marker data
   if(!browser || !markers) return null;
   // QOL Assign params
