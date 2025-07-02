@@ -101,6 +101,8 @@ enabled = true
 site_url = "http://127.0.0.1:3000"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
 additional_redirect_urls = [
+  "http://localhost:3000**",
+  "127.0.0.1:3000**",
   "http://127.0.0.1:3000/auth/callback", 
   "http://localhost:54321/auth/callback", 
   "http://127.0.0.1:3000/auth",
@@ -233,7 +235,7 @@ client_id = "env(PUBLIC_GOOGLE_CLIENT_ID)"
 # DO NOT commit your OAuth provider secret to git. Use environment variable substitution instead:
 secret = "env(PRIVATE_GOOGLE_CLIENT_SECRET)"
 # Overrides the default auth redirectUrl.
-redirect_uri = "env(PUBLIC_DEV_AUTH_REDIRECT_URL)"
+redirect_uri = "http://localhost:54321/auth/v1/callback"
 # Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
 # or any other third-party OIDC providers.
 # url = ""
