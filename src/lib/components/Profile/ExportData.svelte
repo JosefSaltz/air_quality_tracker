@@ -53,7 +53,10 @@
       });
     }
     // Error handling
-    if(!response.ok) throw new Error('Error downloading file');
+    if(!response.ok) {
+      console.error('Failed to download report data');
+      return downloading = false;
+    }
     // Extract the blob data
     const blob = await response.blob();
     // Run the a tag workaround file download logic
