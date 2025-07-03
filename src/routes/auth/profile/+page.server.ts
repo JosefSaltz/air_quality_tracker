@@ -1,12 +1,13 @@
 import { validEmailSchema } from "$zSchemas";
-import { type Actions, error } from "@sveltejs/kit";
+import { error } from "@sveltejs/kit";
+import type { Actions } from "./$types";
 
 type FormDataString = string | null
 
 export const actions = {
   "update-profile": async ({ request, locals }) => {
     // Destrucutre our request local variables
-    const { user, supabase, profile } = locals;
+    const { supabase, profile } = locals;
     // Ensure the profile exists beforehand
     if(!profile) return error(404, { message: "Profile not found!"})
     // Retrieve formdata from request body
