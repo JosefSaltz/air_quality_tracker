@@ -1,10 +1,11 @@
 import { fail } from "@sveltejs/kit";
 import type { RequestEvent } from "../../routes/auth/signup/$types";
-import { validateEmailAndPassword } from "../utils/validateEmailAndPassword";
+import { validateEmailAndPassword } from "$lib/utils/validateEmailAndPassword";
 
 export async function readEmailAuthRequest(request: RequestEvent["request"]) {
   console.log(`Reading Headers...`)
   console.table(request.headers)
+  
   try {
     // Assign relevant request header names
     const cfTokenKey = "cf-turnstile-response";
@@ -28,6 +29,7 @@ export async function readEmailAuthRequest(request: RequestEvent["request"]) {
     // Return our relevant signup data
     return { turnstileIP, turnstileResponse, email, password, first_name, last_name };
   }
+
   catch(err) {
     if(err instanceof Error) console.error(err);
     if(err instanceof String) console.error(err);
