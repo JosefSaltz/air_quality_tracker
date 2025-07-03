@@ -39,12 +39,10 @@ export const POST = async ({ locals, request }) => {
   // Get Admin report with private data
   const reportData = await getAdminReports(supabase);
   // Generate the new workbook instance
-  const newWorkbook = await createExcelFile(reportData, password);
-  if(!newWorkbook) return error(500, {message: 'Something went wrong trying to retrieve requested data'})
-    // Generate the buffer for the Excel file
-  const buffer = await newWorkbook.xlsx.writeBuffer();
+  const newWorkbookBuffer = await createExcelFile(reportData, password);
+  if(!newWorkbookBuffer) return error(500, {message: 'Something went wrong trying to retrieve requested data'})
   // Return buffer as a Response
-  return new Response(buffer, {
+  return new Response(newWorkbookBuffer, {
     headers: {
       'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': 'attachment; filename="admin_report.xlsx"'

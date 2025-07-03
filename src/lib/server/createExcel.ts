@@ -1,4 +1,5 @@
 import Excel from "exceljs";
+import officeCrypto from "officecrypto-tool";
 import { type ReportData } from "@/routes/api/download/reports/+server";
 // Utility function for preparing an Excel file to send to the user
 export const createExcelFile = async (reportData: ReportData, password?: string) => {
@@ -17,9 +18,14 @@ export const createExcelFile = async (reportData: ReportData, password?: string)
   worksheet.columns = extrapolatedColumns;
   // Add all the data rows
   reportData.forEach(report => worksheet.addRow(report));
-  // Set the password for the workbook
-  const protectOptions = {} satisfies Partial<Excel.WorksheetProtection>;
-  if(password) await worksheet.protect(password, protectOptions)
-  // Return generated workbook
-  return workbook;
+  // Generate the buffer for the Excel file
+  const workbookBuffer = await workbook.xlsx.writeBuffer();
+  // Return an encrypted copy if there's a password present
+  if(password) {
+    console.log(`Encrypting...`)
+    // Ignore the Buffer type issue
+    return officeCrypto.encrypt(workbookBuffer, { password })
+  }
+  // Otherwise return the plain buffer
+  return workbookBuffer;
 }
