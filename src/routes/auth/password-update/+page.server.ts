@@ -3,10 +3,10 @@ import { fail, redirect } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
 export const actions = {
-  "password-update": async ({ request, locals: { supabase }}) => {
+  "password-update": async ({ request, locals: { safeGetSession, supabase }}) => {
     // Validate User
-    const user = await supabase.auth.getUser()
-    if(!user) return fail(401, { message: "Unauthorized Request"})
+    const { user, session } = await safeGetSession()
+    if(!user || !session) return fail(401, { message: "Unauthorized Request"})
     // Extract FormData object
     const formData = await request.formData();
     // Retrieve password and handle if invalid

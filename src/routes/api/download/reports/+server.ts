@@ -8,11 +8,11 @@ import { retrieveDateParams } from '@/lib/server/retrieveDateParams.js';
 
 export type ReportData = Awaited<ReturnType<typeof getMarkers> | ReturnType<typeof getAdminReports>>
 
-export const GET = async({ locals }) => {
-  // Destructure the user and supabase clients from the request local values
-  const { user, supabase } = locals;
+export const GET = async ({ locals: { safeGetSession, supabase } }) => {
+  const { user, session } = await safeGetSession()
+  // Destructure the user and supabase clients fr
   // Unauthorized error handling
-  if(!user) return error(401, { message: 'User unauthorized'});
+  if(!user || !session) return error(401, { message: 'User unauthorized'});
   // Retrieve report data and create an excel workbookb
   const reportData = await getMarkers(supabase);
   const newWorkbook = await createExcelFile(reportData);
@@ -26,14 +26,14 @@ export const GET = async({ locals }) => {
   });
 }
 
-export const POST = async ({ locals, request, url }) => {
+export const POST = async ({ locals: { safeGetSession, supabase }, request, url }) => {
   // Check if user is authorized for the request
-  const { user, supabase } = locals;
+  const { user, session } = await safeGetSession();
   const dateRange = retrieveDateParams(url);
   // Validate if the user is admin
   const { isAdmin } = await checkUserRole(user, supabase);
   // Auth Guard
-  if(!user || !isAdmin) return error(401, { message: 'User unauthorized'});
+  if(!user || !session || !isAdmin) return error(401, { message: 'User unauthorized'});
   // Get the password from the form data
   const { password } = await request.json() as { password: string };
   if(!password) return error(400, { message: 'A password was not passed with the request'});
