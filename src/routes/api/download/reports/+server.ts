@@ -1,8 +1,10 @@
 import { createExcelFile } from '$lib/server/createExcel';
 import { getMarkers } from '$lib/server/getMarkers';
-import { error } from '@sveltejs/kit';
+import { error, fail, json } from '@sveltejs/kit';
 import { getAdminReports } from '@/lib/server/getAdminReports.js';
 import { checkUserRole } from '@/lib/server/checkUserRole';
+import { retrieveDateParams } from '@/lib/server/retrieveDateParams.js';
+
 
 export type ReportData = Awaited<ReturnType<typeof getMarkers> | ReturnType<typeof getAdminReports>>
 
@@ -15,10 +17,8 @@ export const GET = async({ locals }) => {
   const reportData = await getMarkers(supabase);
   const newWorkbook = await createExcelFile(reportData);
   if(!newWorkbook) return error(500, {message: 'Something went wrong trying to retrieve requested data'})
-  // Generate the buffer for the Excel file
-  const buffer = await newWorkbook.xlsx.writeBuffer();
   // Return buffer as a Response
-  return new Response(buffer, {
+  return new Response(newWorkbook, {
     headers: {
       'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'Content-Disposition': 'attachment; filename="report.xlsx"'
@@ -26,9 +26,10 @@ export const GET = async({ locals }) => {
   });
 }
 
-export const POST = async ({ locals, request }) => {
+export const POST = async ({ locals, request, url }) => {
   // Check if user is authorized for the request
   const { user, supabase } = locals;
+  const dateRange = retrieveDateParams(url);
   // Validate if the user is admin
   const { isAdmin } = await checkUserRole(user, supabase);
   // Auth Guard
@@ -37,7 +38,10 @@ export const POST = async ({ locals, request }) => {
   const { password } = await request.json() as { password: string };
   if(!password) return error(400, { message: 'A password was not passed with the request'});
   // Get Admin report with private data
-  const reportData = await getAdminReports(supabase);
+  const reportData = await getAdminReports(supabase, dateRange);
+  if(!reportData) return error(500, '❌ Something went wrong retrieving reports');
+  // Respond early if there's no data
+  if(!reportData.length) return json(reportData);
   // Generate the new workbook instance
   const newWorkbookBuffer = await createExcelFile(reportData, password);
   if(!newWorkbookBuffer) return error(500, {message: 'Something went wrong trying to retrieve requested data'})
@@ -49,3 +53,4 @@ export const POST = async ({ locals, request }) => {
     }
   });
 }
+
