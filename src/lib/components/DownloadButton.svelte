@@ -6,6 +6,6 @@
 </script>
 
 <Button class="max-w-32" variant="secondary" {...rest}>
-  {#if downloading}<Loader2Icon className="animate-spin" />{/if}
+  {#if downloading}<Loader2Icon class="animate-spin" />{/if}
   {downloading ? 'Downloading...' : 'Download'}
 </Button>
