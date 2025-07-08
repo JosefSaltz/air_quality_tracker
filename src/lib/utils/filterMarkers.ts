@@ -29,7 +29,6 @@ function filterMarkersByDate(markers: Markers, time: TimeOptionKey = 'Month') {
 }
 
 function filterMarkersByTerm(markers: ReturnType<typeof filterMarkersByDate> | Markers, searchTerm?: string) {
-  console.log('Filtering By Term')
   if(!searchTerm || !markers) return markers;
   const options = {
     keys: ['description', 'strength']
