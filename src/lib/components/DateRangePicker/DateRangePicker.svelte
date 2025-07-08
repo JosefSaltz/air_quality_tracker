@@ -15,11 +15,11 @@
   import { innerWidth } from "svelte/reactivity/window";
   
   let { timeRange: value = $bindable(), selection = $bindable() } = $props();
-  const dateStyle = $state<"short" | "medium">("medium")
+  const dateStyle = $state<"short" | "medium">("medium");
   const today = new Date();
   let df = $state(new DateFormatter("en-US", {
    dateStyle: "short"
-  }))
+  }));
   
   const isCustomTime = () => {
     return page.url.searchParams.get('time') === 'Custom';
@@ -90,4 +90,4 @@
     />
    </Popover.Content>
   </Popover.Root>
- </div>
+</div>

@@ -1,9 +1,10 @@
 <script lang="ts">
-  import LogoPiita from "@/lib/components/LogoPiita.svelte";
-  import { z } from "zod";
+  import LogoPiita from "$lib/components/LogoPiita.svelte";
+  import { validEmailSchema } from "$zSchemas";
+  
   let email = $state(null);
-  const emailSchema = z.string().email();
-  let validEmail = $derived(emailSchema.safeParse(email).success);
+
+  let validEmail = $derived(validEmailSchema.safeParse(email).success);
 </script>
 
 <div id="password-reset-container" class="w-ful h-full flex flex-col justify-center items-center">

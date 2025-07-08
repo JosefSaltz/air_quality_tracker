@@ -1,6 +1,7 @@
 import { NODE_ENV } from "$env/static/private";
 import { PUBLIC_DEV_AUTH_REDIRECT_URL, PUBLIC_AUTH_REDIRECT_URL } from "$env/static/public";
-import { type Actions, fail, redirect } from "@sveltejs/kit";
+import { fail, redirect } from "@sveltejs/kit";
+import type { Actions } from "./$types";
 import type { AuthError } from "@supabase/supabase-js";
 import { validateTurnstileToken } from "$lib/server/validateTurnstileToken";
 import { z } from "zod";

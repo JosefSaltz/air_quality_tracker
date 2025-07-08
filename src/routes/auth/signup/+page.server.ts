@@ -1,4 +1,5 @@
-import { fail, isActionFailure, redirect, type Actions, type Load} from "@sveltejs/kit";
+import { fail, isActionFailure, redirect, type Load} from "@sveltejs/kit";
+import type { Actions } from "./$types"
 import getNonce from "$lib/server/getNonce";
 import { validateTurnstileToken } from "@/lib/server/validateTurnstileToken";
 import { readEmailAuthRequest } from "@/lib/server/readEmailAuthRequest";

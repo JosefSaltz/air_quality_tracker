@@ -59,11 +59,18 @@ export const supabase: Handle = async ({ event, resolve }) => {
     // If no valid session return nothing
     if (!session) return { session: null, user: null };
     // Destructure user and error
-    const { data: { user }, error } = await event.locals.supabase.auth.getUser();
+    const { data: { user }, ...userResponse } = await event.locals.supabase.auth.getUser();
     // If JWT validation has failed
-    if (error) return { session: null, user: null };
+    if (userResponse.error) return { session: null, user: null };
+    // Get the request user's profile after validating their JWT
+    const { data: profile, ...profileResponse } = await event.locals.supabase
+      .from("profiles")
+      .select("*")
+      .eq("user_id", user?.id);
+    // If JWT validation has failed
+    if (profileResponse.error) return { session, user, profile: null };
     // Return our supabase session and user objects
-    return { session, user };
+    return { session, user, profile };
   };
 
   return resolve(event, {

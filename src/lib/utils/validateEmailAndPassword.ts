@@ -1,11 +1,9 @@
-import { z } from "zod";
-import { validPasswordSchema } from "./zSchemas/validPasswordSchema";
+
+import { validEmailSchema, validPasswordSchema } from "$zSchemas";
 
 export function validateEmailAndPassword(email: string, password: string) {
-  // Zod Validation Schemas
-  const validEmail = z.string().email();
   // Parse Data
-  const validatedEmail = validEmail.safeParse(email);
+  const validatedEmail = validEmailSchema.safeParse(email);
   const validatedPassword = validPasswordSchema.safeParse(password);
   // Throw errors if anything fails
   if(validatedEmail.error) throw Error(`❌ Invalid Email Format`);

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { enhance } from "$app/forms";
   import LogoPiita from "$lib/components/LogoPiita.svelte";
-  import { validPasswordSchema } from "@/lib/utils/zSchemas/validPasswordSchema";
+  import { validPasswordSchema } from "$zSchemas";
   import type { ZodIssue } from "zod";
   
   let password = $state(null);

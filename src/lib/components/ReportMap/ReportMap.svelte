@@ -59,8 +59,7 @@
   let currentGeolocation = $state(initialView);
   // Reference assignment for resizing map with viewport
   let container: undefined | Element;
-  $inspect(markers, 'markers updating...')
-  $inspect(markersToShow, 'markersToShow updating...')
+
   // Encapsulated function to set the map listener events for the selection marker
   function setSelectionMarkerEvents(leafMap: typeof lMap, marker: Marker) {
     if(!leafMap) return;

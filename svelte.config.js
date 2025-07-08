@@ -12,7 +12,8 @@ const config = {
 			"@": "./src",
 			"$root": "./",
 			"$components": "./src/lib/components",
-			"$routes": "./src/routes"
+			"$routes": "./src/routes",
+			"$zSchemas": "./src/lib/utils/zSchemas"
 		},
 		csp: {
 			mode: "auto",
