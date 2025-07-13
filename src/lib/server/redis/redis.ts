@@ -36,7 +36,6 @@ export async function storeReports() {
 export async function getCachedReports() {
   return redisClient.json.get("reports")
 }
-
 console.log(`❤️ Redis Connecting...`)
 const connection = await redisClient.connect();
 if(connection) init();
