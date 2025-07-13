@@ -1,6 +1,5 @@
-import supabase from "../utils/client";
 import { getCachedReports } from "./redis/redis";
-export async function getMarkers() {
+export async function getMarkers(supabase: App.Locals["supabase"]) {
   // See if we have any cached Reports
   const cachedReports = await getCachedReports();
   // If we don't get them from the DB
@@ -17,5 +16,6 @@ export async function getMarkers() {
     }
     return data;
   }
+  return cachedReports
 }
 
