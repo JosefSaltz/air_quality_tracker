@@ -26,6 +26,7 @@
     "npm:dotenv@^16.4.7": "16.6.1",
     "npm:drizzle-kit@~0.31.1": "0.31.4_esbuild@0.25.6",
     "npm:drizzle-orm@~0.44.2": "0.44.2_@types+pg@8.15.4_postgres@3.4.7",
+    "npm:effect@^3.16.13": "3.16.13",
     "npm:eslint-plugin-svelte@^3.9.2": "3.10.1_eslint@9.31.0_svelte@5.35.6__acorn@8.15.0_postcss@8.5.6",
     "npm:eslint@^9.29.0": "9.31.0",
     "npm:exceljs@^4.4.0": "4.4.0",
@@ -1469,6 +1470,9 @@
         "unplugin"
       ]
     },
+    "@standard-schema/spec@1.0.0": {
+      "integrity": "sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA=="
+    },
     "@supabase/auth-js@2.70.0": {
       "integrity": "sha512-BaAK/tOAZFJtzF1sE3gJ2FwTjLf4ky3PSvcvLGEgEmO4BSBkwWKu8l67rLLIBZPDnCyV7Owk2uPyKHa0kj5QGg==",
       "dependencies": [
@@ -2257,6 +2261,13 @@
     "eastasianwidth@0.2.0": {
       "integrity": "sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA=="
     },
+    "effect@3.16.13": {
+      "integrity": "sha512-xJDgOhD7+3qIY1d8PGfkaPZMfmdJuSp2XAQgc9dVF8pSl1FJL6WK4ZUpMh177R+GH8XgPloT8dlZsEYUYDo1Ag==",
+      "dependencies": [
+        "@standard-schema/spec",
+        "fast-check"
+      ]
+    },
     "electron-to-chromium@1.5.182": {
       "integrity": "sha512-Lv65Btwv9W4J9pyODI6EWpdnhfvrve/us5h1WspW8B2Fb0366REPtY3hX7ounk1CkV/TBjWCEvCBBbYbmV0qCA=="
     },
@@ -2475,6 +2486,12 @@
         "tmp",
         "unzipper",
         "uuid"
+      ]
+    },
+    "fast-check@3.23.2": {
+      "integrity": "sha512-h5+1OzzfCC3Ef7VbtKdcv7zsstUQwUDlYpUTvjeUsJAssPgLn7QzbboPtL5ro04Mq0rPOsMzl7q5hIbRs2wD1A==",
+      "dependencies": [
+        "pure-rand"
       ]
     },
     "fast-csv@4.3.6": {
@@ -3368,6 +3385,9 @@
     },
     "punycode@2.3.1": {
       "integrity": "sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg=="
+    },
+    "pure-rand@6.1.0": {
+      "integrity": "sha512-bVWawvoZoBYpp6yIoQtQXHZjmz35RSVHnUOTefl8Vcjr8snTPY1wnpSPMWekcFwbxI6gtmT7rSYPFvz71ldiOA=="
     },
     "queue-microtask@1.2.3": {
       "integrity": "sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A=="
@@ -4325,6 +4345,7 @@
         "npm:dotenv@^16.4.7",
         "npm:drizzle-kit@~0.31.1",
         "npm:drizzle-orm@~0.44.2",
+        "npm:effect@^3.16.13",
         "npm:eslint-plugin-svelte@^3.9.2",
         "npm:eslint@^9.29.0",
         "npm:exceljs@^4.4.0",
