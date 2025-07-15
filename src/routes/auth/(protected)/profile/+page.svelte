@@ -4,7 +4,7 @@
   import type { PageProps } from "./$types"
   import PersonalInfo from "$components/Profile/PersonalInfo.svelte";
   import ExportData from "$components/Profile/ExportData.svelte";
-  
+  // Declare props
   let { data }: PageProps  = $props();
   // QOL Role Check
   const isAdmin = data.profile?.is_admin || false;
