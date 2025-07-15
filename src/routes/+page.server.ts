@@ -1,9 +1,10 @@
 import { getMarkers } from "$lib/server/getMarkers";
 import { fail } from "@sveltejs/kit";
 import type { Actions, PageServerLoad } from "./$types";
-import getNonce from "@/lib/server/getNonce";
+import getNonce from "$lib/server/getNonce";
 import { fetchMeteoData } from "$lib/server/fetchMeteoData";
 import type { TablesInsert } from "$root/database.types";
+import { invalidateRedis } from "$lib/server/redis/redis";
 import z from "zod";
 
 
@@ -116,9 +117,9 @@ export const actions = {
       .from("reports")
       .insert(validatedInsert satisfies TablesInsert<"reports">)
       .select();
-    if (response.error) fail(400, {});
-    // Mutable payload
-    
+    if (response.error) return fail(400, {});
+    // Invalidate reports cache after db has been updated
+    invalidateRedis();
     // Assign 
     let newMarker = response.data?.[0];
     return { success: true, newMarker}
