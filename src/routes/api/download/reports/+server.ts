@@ -4,17 +4,19 @@ import { error, fail, json } from '@sveltejs/kit';
 import { getAdminReports } from '@/lib/server/getAdminReports.js';
 import { checkUserRole } from '@/lib/server/checkUserRole';
 import { retrieveDateParams } from '@/lib/server/retrieveDateParams.js';
+import { getReports } from '@/lib/server/getReports.js';
 
 
 export type ReportData = Awaited<ReturnType<typeof getMarkers> | ReturnType<typeof getAdminReports>>
 
-export const GET = async ({ locals: { safeGetSession, supabase } }) => {
-  const { user, session } = await safeGetSession()
+export const GET = async ({ locals: { safeGetSession, supabase }, url }) => {
+  const { user, session } = await safeGetSession();
+  const dateRange = retrieveDateParams(url);
   // Destructure the user and supabase clients fr
   // Unauthorized error handling
   if(!user || !session) return error(401, { message: 'User unauthorized'});
   // Retrieve report data and create an excel workbookb
-  const reportData = await getMarkers(supabase);
+  const reportData = await getReports(supabase, dateRange);
   const newWorkbook = await createExcelFile(reportData);
   if(!newWorkbook) return error(500, {message: 'Something went wrong trying to retrieve requested data'})
   // Return buffer as a Response

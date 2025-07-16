@@ -41,7 +41,7 @@
     // Reset the noData warning text while we check
     noData = false;
     // Admin privileged logic
-    if(isAdmin) {
+    if(isAdmin && enableEncrypt) {
       // No Password guard
       if(!password) { [enablePasswordWarning, downloading] = [true, false];  return; }
       // Check password against schema for errors and short circuit if necessary
