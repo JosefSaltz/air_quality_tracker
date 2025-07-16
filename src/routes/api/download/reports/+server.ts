@@ -15,9 +15,13 @@ export const GET = async ({ locals: { safeGetSession, supabase }, url }) => {
   // Destructure the user and supabase clients fr
   // Unauthorized error handling
   if(!user || !session) return error(401, { message: 'User unauthorized'});
-  // Retrieve report data and create an excel workbookb
-  const reportData = await getReports(supabase, dateRange);
+  // Validate if the user is admin
+  const { isAdmin } = await checkUserRole(user, supabase);
+  // Retrieve reports with emails depending on if the user is an admin
+  const reportData = isAdmin ? await getAdminReports(supabase, dateRange) : await getReports(supabase, dateRange);
+  // Generate the new workbook from the data
   const newWorkbook = await createExcelFile(reportData);
+  // Failed workbook handling
   if(!newWorkbook) return error(500, {message: 'Something went wrong trying to retrieve requested data'})
   // Return buffer as a Response
   return new Response(newWorkbook, {
