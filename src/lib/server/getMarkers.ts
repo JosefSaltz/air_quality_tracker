@@ -1,9 +1,9 @@
 import { getCachedReports } from "./redis/redis";
 export async function getMarkers(supabase: App.Locals["supabase"]) {
   console.log('🚚 Getting Marker Data...')
-  // See if we have any cached Reports
+  // See if we have any cached reports
   const cachedReports = await getCachedReports();
-  // If we don't get them from the DB
+  // If we don't, get them from the DB
   if(!cachedReports ) {
     console.log(`No cached reports found`)
     // Query a specific column set

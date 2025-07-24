@@ -29,8 +29,6 @@ async function init(secondAttempt = false) {
     if(!secondAttempt) init(true);
     return;
   }
-  // Log success
-  console.log(`✅ Redis Connected!`);
   // Get a copy of reports from the DB
   await cacheReports();
   // Log that the cache is ready
