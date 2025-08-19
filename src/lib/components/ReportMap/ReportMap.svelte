@@ -84,6 +84,7 @@
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
     L = await import("leaflet");
+    await import("leaflet.markercluster");
     const { LocateControl } = await import("leaflet.locatecontrol");
     const locateButton = new LocateControl();
     // Function to bind needed marker image assets for CSR compatibility
@@ -111,7 +112,7 @@
     });
     // Watch the binded element
     resizeObserver.observe(container);
-    existingMarkerLayer = L.layerGroup().addTo(lMap)
+    existingMarkerLayer = L.markerClusterGroup().addTo(lMap)
     // Generate markers from the search processed list
     generateMarkers(L, lMap, existingMarkerLayer, markersToShow);
     // Clean up function
