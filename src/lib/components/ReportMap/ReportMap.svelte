@@ -9,10 +9,10 @@
   import ReportForm from "../Forms/ReportForm/ReportForm.svelte";
   import LoginRequired from "../Dashboard/LoginRequired.svelte";
   import FormDrawer from "../Forms/Layouts/FormDrawer.svelte";
-  import { createMarker, generateMarkers, } from "$lib/utils/generateMarkers"
+  import { createMarker, generateMarkers } from "$lib/utils/generateMarkers"
   import MapSkeleton from "$components/ReportMap/MapSkeleton.svelte";
   import type { PageProps } from "../../../routes/$types";
-  import type { LayerGroup, Map, Marker } from "leaflet";
+  import type { LayerGroup, Map, Marker, MarkerClusterGroup } from "leaflet";
   import type { User } from "@supabase/supabase-js";
   import MobileMenuButton from "@/lib/components/HamburgerMenu/HamburgerMenuButton.svelte";
   import Search from "$components/Search/Search.svelte";
@@ -49,7 +49,6 @@
   let currentBefore = $state(page.url.searchParams.get('before'));
   let currentAfter = $state(page.url.searchParams.get('after'));
   let currentTime = $state(page.url.searchParams.get('time'));
-
   let markersToShow = $state(filterMarkers(markers, params.get('search')));
   let existingMarkerLayer = $state<LayerGroup | undefined>();
   const initialView = {
@@ -84,7 +83,11 @@
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
     L = await import("leaflet");
+    // Ensure the import and window global are in sync
+    window.L = L;
+    // Add in the markercluster plugin that patches itself to the window global
     await import("leaflet.markercluster");
+    // Destructure LocateControl constructor from plugin
     const { LocateControl } = await import("leaflet.locatecontrol");
     const locateButton = new LocateControl();
     // Function to bind needed marker image assets for CSR compatibility
@@ -148,7 +151,6 @@
       }
     }
   })
-  
   // New marker effect
   $effect(() => {
     // New form generated marker logic
@@ -160,9 +162,10 @@
     }
   })
 </script>
-<!-- CDN Tag for Location Button -->
+<!-- CDN Tag for Leaflet Plugin Stylesheets -->
 <svelte:head>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.locatecontrol@0.83.1/dist/L.Control.Locate.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
 </svelte:head>
 <!-- Leafly attachment node -->
 <div id="map-container" class="w-full h-full" >
