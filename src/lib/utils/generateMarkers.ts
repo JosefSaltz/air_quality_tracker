@@ -1,8 +1,7 @@
-import type { LayerGroup, Map } from "leaflet";
+import type { LayerGroup, Map, MarkerClusterGroup } from "leaflet";
 import type { PageProps } from "../../routes/$types";
 import type { Tables } from "$root/database.types";
 import type { LatLngTuple } from "leaflet";
-
 
 type QueriedMarker = Omit<Tables<"reports">, "created_by" | "precipitation" | "location"> 
 type LeafLib = typeof import("leaflet");
@@ -33,12 +32,12 @@ export function createMarker(L: LeafLib, marker: QueriedMarker) {
 export async function generateMarkers(L: LeafLib, lMap: Map, layerGroup: LayerGroup, markers: PageProps["data"]["markers"]) {    
   // Marker Data Null Guard
   if(!markers) return;
+  console.log('Markers', markers);
   // Iterate through marker data and create a new marker to be placed on the leaflet map
   return markers.map((marker) => {
     const createdMarker = createMarker(L, marker);
     if(!createdMarker) return console.error(`Failed to create marker`);
     createdMarker.addTo(layerGroup)
-    createdMarker.addTo(lMap);
   });
 }
 // Credit: https://gist.github.com/theKAKAN/b40bf54144a6eb90313ad00681e3fbcc
