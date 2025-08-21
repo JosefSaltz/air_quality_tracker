@@ -22,7 +22,7 @@
 </script>
 <div class="">
   <Drawer.Root bind:open repositionInputs={false} >
-    <div id="report-placement-container" class="flex justify-center absolute w-full z-[500] top-[60%]">
+    <div id="report-placement-container" class="flex justify-center absolute left-1/2 transform -translate-x-1/2 z-[500] top-[60%]">
       <div class="flex flex-col justify-center">
         {#if user}
           <Drawer.Trigger class={`${buttonVariants(buttonConfig)}`}>
