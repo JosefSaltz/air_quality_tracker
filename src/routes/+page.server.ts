@@ -13,11 +13,11 @@ const ReportSchema = z.object({
   created_by: z.string(), // Assuming user.id is a string (e.g., UUID)
   description: z.string(),
   latitude: z.number().refine(
-    (val) => val >= -90 && val <= 90,
+    (val: number) => val >= -90 && val <= 90,
     "Invalid latitude",
   ),
   longitude: z.number().refine(
-    (val) => val >= -180 && val <= 180,
+    (val: number) => val >= -180 && val <= 180,
     "Invalid longitude",
   ),
   location: z.string(),
