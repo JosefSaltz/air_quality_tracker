@@ -102,7 +102,7 @@
       .addTo(lMap);
     locateButton.addTo(lMap);
     // Set the watermark attribution
-    lMap.attributionControl.setPrefix("github.com/JosefSaltz");
+    lMap.attributionControl.setPrefix("github.com/JosefSaltz/air_quality_tracker");
     // Create the centered selector marker
     const selectionMarker = new L.Marker(lMap.getCenter()).addTo(lMap);
     // Map Event Listeners
