@@ -7,9 +7,9 @@ type QueriedMarker = Omit<Tables<"reports">, "created_by" | "precipitation" | "l
 type LeafLib = typeof import("leaflet");
 
 export function createMarker(L: LeafLib, marker: QueriedMarker) {
-  // Type appeasement
+  // Null Guard
   if(!L) return console.error('Leaflet is not initialized!')
-  // Destructure
+  // Destructure coordinates
   const { latitude, longitude } = marker;
   // Generate pop up content
   const description = constructDescription(marker);
@@ -48,7 +48,7 @@ function toMPH(knots: number | null) {
 
 function getDirection( angle: number | null ) {
   if(!angle) return null;
-  let directions: string[] = [
+  const directions: string[] = [
     "N", "NNE", "NE", "ENE",
     "E", "ESE", "SE", "SSE",
     "S", "SSW", "SW", "WSW",
