@@ -46,7 +46,7 @@
       <!-- Home Button -->
       <div id="home-button-container" class="col-span-4 md:col-span-2">
         <a href="/" class={`${buttonVariants({ ...buttonConfig, variant: "link"})}`}>
-          Home
+          PIITA
         </a>
       </div>
       <!-- Search Bar -->
