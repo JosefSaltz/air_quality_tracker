@@ -82,11 +82,11 @@
   // Client side Leaflet set up and configuration
   onMount(async () => {
     // Dynamically import the leaflet library to resolve CSR requirements (window global req)
-    const { default: L } = await import("leaflet");
-    // Ensure the import and window global are in sync
-    window.L = L;
+    await import("leaflet");
     // Add in the markercluster plugin that patches itself to the window global
     await import("leaflet.markercluster");
+    // Assign the Window's Leaflet instance to the state rune
+    L = window.L
     // Destructure LocateControl constructor from plugin
     const { LocateControl } = await import("leaflet.locatecontrol");
     const locateButton = new LocateControl();

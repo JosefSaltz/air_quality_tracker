@@ -32,7 +32,6 @@ export function createMarker(L: LeafLib, marker: QueriedMarker) {
 export async function generateMarkers(L: LeafLib, lMap: Map, layerGroup: LayerGroup, markers: PageProps["data"]["markers"]) {    
   // Marker Data Null Guard
   if(!markers) return;
-  console.log('Markers', markers);
   // Iterate through marker data and create a new marker to be placed on the leaflet map
   return markers.map((marker) => {
     const createdMarker = createMarker(L, marker);
