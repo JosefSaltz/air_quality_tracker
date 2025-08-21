@@ -4,11 +4,9 @@ import type { Actions, PageServerLoad } from "./$types";
 import getNonce from "$lib/server/getNonce";
 import { fetchMeteoData } from "$lib/server/fetchMeteoData";
 import type { TablesInsert } from "$root/database.types";
-import { cacheReports } from "$lib/server/redis/redis";
+import { cacheReports } from "$lib/server/redis";
 import z from "zod";
 
-
-// Deepseek generated schema
 const ReportSchema = z.object({
   created_by: z.string(), // Assuming user.id is a string (e.g., UUID)
   description: z.string(),

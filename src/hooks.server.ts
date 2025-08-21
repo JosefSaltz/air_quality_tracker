@@ -8,10 +8,36 @@ import {
 import { createServerClient } from "@supabase/ssr";
 import { type Handle, redirect } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
+import { initRedis } from "@/lib/server/redis";
+import pRetry, { type FailedAttemptError } from 'p-retry';
+import { getRedisStatus, setRedisStatus } from "@/lib/server/redis/state";
 // Handle dynamic assignment
 const [SUPABASE_URL, SUPABASE_ANON_KEY] = dev
   ? [PUBLIC_LOCAL_SUPABASE_URL, PUBLIC_LOCAL_SUPABASE_ANON_KEY]
   : [PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY];
+
+// Redis Start Up Logic
+const bootRedis = async () => { 
+  const { redisOnline } = getRedisStatus();
+  try {
+    if(!redisOnline) await initRedis();
+    // Set Redis Status State to OK
+    setRedisStatus({ redisFailed: false, redisOnline: true }); 
+  }
+  catch(err) {
+    throw new Error(`❌ Something went wrong during Redis boot up: ${err}`);
+  }
+}
+// Redis Boot Up Logic
+const onFailedAttempt = (err: FailedAttemptError) => { console.error(err); }
+// Attempt to boot Redis three times on server start
+try {
+  await pRetry(bootRedis, { onFailedAttempt, retries: 3 })
+}
+catch(err) {
+  console.error('❌ Unable to connect to Redis, Querying DB directly...')
+  setRedisStatus({ redisFailed: true, redisOnline: false });
+}
 // Request middleware
 export const supabase: Handle = async ({ event, resolve }) => {
   // Security Headers
@@ -79,7 +105,7 @@ export const supabase: Handle = async ({ event, resolve }) => {
     },
   });
 };
-
+// Safe Get Session Middleware
 const authGuard: Handle = async ({ event, resolve }) => {
   const { session, user } = await event.locals.safeGetSession();
   event.locals.session = session;
@@ -95,6 +121,7 @@ const authGuard: Handle = async ({ event, resolve }) => {
 
   return resolve(event);
 };
+
 
 export const handle: Handle = sequence(
   supabase,
