@@ -1,5 +1,5 @@
 import { getRedisStatus } from "$lib/server/redis/state";
-import { getCachedReports, pingRedis } from "$lib/server/redis";
+import { getCachedReports } from "$lib/server/redis";
 
 export async function getMarkers(supabase: App.Locals["supabase"]) {
   console.log('🚚 Getting Marker Data...')

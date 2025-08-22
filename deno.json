@@ -1,6 +1,7 @@
 {
   "nodeModulesDir": "auto",
   "imports": {
-    "node:zlib": "https://deno.land/std@0.175.0/node/zlib.ts"
+    "node:zlib": "https://deno.land/std@0.175.0/node/zlib.ts",
+    "esbuild": "npm:esbuild-wasm"
   }
 }
