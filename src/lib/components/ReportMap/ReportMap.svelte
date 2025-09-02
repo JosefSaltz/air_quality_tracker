@@ -121,7 +121,7 @@
     // Clean up function
     return () =>  { 
       resizeObserver.disconnect();
-      lMap && lMap.remove(); 
+      if(lMap) lMap.remove(); 
     }
   });
   // Param change effect

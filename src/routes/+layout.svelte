@@ -1,7 +1,7 @@
 <script lang="ts">
 	import "@/app.css";
   import { invalidate } from '$app/navigation'
-  import { onMount, type Snippet } from 'svelte'
+  import { onMount } from 'svelte'
   import Navbar from "@/lib/components/Navbar/Navbar.svelte"
   import DisclaimerBanner from "@/lib/components/Banner/DisclaimerBanner.svelte";
   import type { LayoutProps } from "./$types";

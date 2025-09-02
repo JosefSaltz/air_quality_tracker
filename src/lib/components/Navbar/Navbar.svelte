@@ -1,17 +1,12 @@
-<!--
-  When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars
-
-  Open: "fixed inset-0 z-40 overflow-y-auto", Closed: ""
--->
 <script lang="ts">
+  import { page } from "$app/state";
   import type { SupabaseClient, User } from "@supabase/supabase-js";
   import type { ProfileResponse } from "@/routes/+layout.server";
   import { buttonVariants } from "$lib/components/ui/button";
-  import { page } from "$app/state";
   import Search from "$components/Search/Search.svelte";
   import TimeSelect from "$components/Search/TimeSelect.svelte";
-  import { innerWidth } from "svelte/reactivity/window";
   import HamburgerMenuButton from "$components/HamburgerMenu/HamburgerMenuButton.svelte";
+  import { innerWidth } from "svelte/reactivity/window";
 
   type NavbarProps = { 
     profile: ProfileResponse
@@ -25,19 +20,19 @@
 
   let toggleMenu = () => { menuOpen = !menuOpen };
   
-  const handleSignOut = async () => { 
-    const { error } = await supabase.auth.signOut();
-    error && console.error(error); 
-    location.reload();
-  }
+  // const handleSignOut = async () => { 
+  //   const { error } = await supabase.auth.signOut();
+  //   error && console.error(error); 
+  //   location.reload();
+  // }
 
   const isOnMapPage = () => {
     return page.url.pathname === "/"
   }
 
-  const handleMenuClick = (cb?: () => any) => {
-    cb && cb();
-  }
+  // const handleMenuClick = (cb?: () => any) => {
+  //   cb && cb();
+  // }
 </script>
 
 <header class={`${page.route.id === '/' ? 'hidden' : ''} bg-white shadow-sm md:static md:block lg:overflow-y-visible py-1`}>
@@ -52,7 +47,7 @@
       <!-- Search Bar -->
       <!-- Only render when the display size is larger than our medium breakpoint -->
       {#if innerWidth?.current && innerWidth?.current >= 768}
-        <div id="searchbar-container" class={`w-full col-span-8 flex justify-center`}>
+        <div id="searchbar-container" class="w-full col-span-8 flex justify-center">
           {#if isOnMapPage()}
             <TimeSelect />
             <Search class="w-full max-w-[80ch]" />
