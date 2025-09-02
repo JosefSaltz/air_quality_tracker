@@ -20,6 +20,8 @@
     // Create a Search Params interface from current page state
     const { pathname } = page.url;
     const oldParams = page.url.searchParams.toString();
+    // We do not want the reactive version inside an effect
+    // eslint-disable-next-line svelte/prefer-svelte-reactivity
     const newParams = new URLSearchParams(oldParams);
     const searchParam = newParams.get('search');
     // If params and searchValue desynced and searchValue isn't just undefined
