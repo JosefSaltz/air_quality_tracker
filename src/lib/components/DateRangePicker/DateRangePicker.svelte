@@ -14,7 +14,7 @@
   import { goto } from "$app/navigation";
   import { innerWidth } from "svelte/reactivity/window";
   
-  let { timeRange: value = $bindable(), selection = $bindable() } = $props();
+  let { dateRange: value = $bindable(), selection = $bindable() } = $props();
   const dateStyle = $state<"short" | "medium">("medium");
   const today = new Date();
   let df = $state(new DateFormatter("en-US", {
@@ -47,8 +47,8 @@
     // Destructure value
     const { start, end } = value;
     // Add necessary operators to current params
-    start && params.set('after', start.toString())
-    end && params.set('before', end.toString())
+    if(start) params.set('after', start.toString())
+    if(end) params.set('before', end.toString())
     // QOL Assign Old Params from page state
     const oldParams = new URLSearchParams(page.url.searchParams.toString());
     // Renavigate if params changed and don't lose focus
@@ -86,7 +86,7 @@
       startValue = v;
      }}
      numberOfMonths={innerWidth?.current && innerWidth.current <= 768 ? 1 : 2}
-     class={'relative z-[1000]'}
+     class='relative z-[1000]'
     />
    </Popover.Content>
   </Popover.Root>

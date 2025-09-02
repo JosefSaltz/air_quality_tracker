@@ -20,7 +20,7 @@
   let { class: className = '' } = $props()
 
   let selection = $state<TimeOptionKey>(page.url.searchParams.get('time') as TimeOptionKey || 'Month');
-  let timeRange = $state<DateRange | undefined>(getCurrentRange() || generateTimeRange(selection));
+  let dateRange = $state<DateRange | undefined>(getCurrentRange() || generateTimeRange(selection));
 
   function getCurrentRange() {
     const params = new URLSearchParams(page.url.searchParams.toString());
@@ -32,28 +32,28 @@
   }
 
   onMount(() => {
-    // Create a Search Params interface from current page state
-    const params = new URLSearchParams(page.url.searchParams.toString());
     // Overload the searchValue if there's already a search param present
-    selection = params.get('time') as TimeOptionKey || 'Month';
+    selection = page.url.searchParams.get('time') as TimeOptionKey || 'Month';
   })
 
   $effect(() => {
     const { pathname } = page.url;
     // Get a preset timerange if it matches the current selection
     const presetTime = generateTimeRange(selection);
-    if(presetTime) timeRange = presetTime;
+    if(presetTime) dateRange = presetTime;
     // Otherwise try getting directly from the URL
-    if(!presetTime) timeRange = getCurrentRange();
+    if(!presetTime) dateRange = getCurrentRange();
     // Create a search params interface from the current page url
-    const params = new URLSearchParams(page.url.searchParams.toString());
+    // We do not want the reactive interface inside of an effect
+    // eslint-disable-next-line svelte/prefer-svelte-reactivity
+    const newParams = new URLSearchParams(page.url.searchParams.toString());
     const oldParams = page.url.searchParams.toString()
     // If state is the same from URL don't run
-    if(selection === params.get('time')) return;
+    if(selection === newParams.get('time')) return;
     // Update the time param with the current selection
-    params.set('time', selection)
-    // Navigate browser to the new url if params are different and path is root
-    if(params.toString() !== oldParams && pathname === "/") goto(`/?` + params);
+    newParams.set('time', selection)
+    // Navigate browser to the new url if newParams are different and path is root
+    if(newParams.toString() !== oldParams && pathname === "/") goto(`/?` + newParams);
   })
 
 </script>
@@ -65,7 +65,7 @@
     </DropdownMenu.Trigger>
     <DropdownMenu.Content>
       <DropdownMenu.RadioGroup bind:value={selection}>
-        {#each Object.values(timeOptions) as option}
+        {#each Object.values(timeOptions) as option (option.name)}
           <DropdownMenu.RadioItem value={option.name}>
             {option.name}
           </DropdownMenu.RadioItem>
@@ -74,5 +74,5 @@
     </DropdownMenu.Content>
   </DropdownMenu.Root>
 
-  <DateRangePicker bind:timeRange={timeRange} bind:selection={selection} />
+  <DateRangePicker bind:dateRange={dateRange} bind:selection={selection} />
 </div>
