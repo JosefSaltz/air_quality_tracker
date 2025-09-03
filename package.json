@@ -7,6 +7,7 @@
 		"dev": "vite dev",
 		"devLAN": "vite dev --host",
 		"build": "vite build",
+		"build:debug": "vite build --debug",
 		"lint": "eslint .",
 		"preview": "vite preview",
 		"serve": "deno run --allow-env --allow-read --allow-net --allow-scripts build/index.js",
