@@ -44,7 +44,6 @@
 		"@internationalized/date": "^3.9.0",
 		"@svelte-put/cloudflare-turnstile": "^1.1.2",
 		"@sveltejs/adapter-auto": "^6.1.0",
-		"@sveltejs/adapter-node": "^5.3.1",
 		"@sveltejs/enhanced-img": "^0.6.0",
 		"@sveltejs/kit": "^2.37.0",
 		"@sveltejs/vite-plugin-svelte": "^5.1.1",
