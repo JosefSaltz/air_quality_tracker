@@ -14,6 +14,8 @@ export const GET = async (event) => {
     if (!error) {
       redirect(303, `/${next.slice(1)}`);
     }
+    // Error page for expired verification links
+    if(error.code === "otp_expired") redirect(303, `/auth/expired-verification`);
   }
 
   // return the user to an error page with instructions
