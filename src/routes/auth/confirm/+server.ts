@@ -23,11 +23,14 @@ export const GET = async (event) => {
 
   if (token_hash && type) {
     const { error } = await supabase.auth.verifyOtp({ token_hash, type })
-    if(error) console.error(error);
     if (!error) {
       redirectTo.searchParams.delete('next')
       return redirect(303, redirectTo)
     }
+    // Log error
+    console.error(error);
+    // If the link token expired redirect to expired verification page
+    if(error.code === "otp_expired") redirect(303, '/auth/expired-verification')
   }
   
   // return the user to an error page with some instructions
