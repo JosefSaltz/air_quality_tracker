@@ -1,5 +1,5 @@
 
-FROM denoland/deno:2.3.5 AS builder
+FROM denoland/deno:2.5.4 AS builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -19,7 +19,7 @@ ARG DOTENV_KEY
 RUN DOTENV_KEY=${DOTENV_KEY} deno task build
 
 # Use Deno as a new stage to serve the application
-FROM denoland/deno:alpine-2.3.5
+FROM denoland/deno:alpine-2.5.4
 
 # Set the working directory in the container
 WORKDIR /app
