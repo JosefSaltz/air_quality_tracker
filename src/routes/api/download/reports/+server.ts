@@ -7,7 +7,7 @@ import { retrieveDateParams } from '@/lib/server/retrieveDateParams.js';
 import { getReports } from '@/lib/server/getReports.js';
 
 
-export type ReportData = Awaited<ReturnType<typeof getMarkers> | ReturnType<typeof getAdminReports>>
+export type ReportData = Awaited<ReturnType<typeof getReports> | ReturnType<typeof getAdminReports>>
 
 export const GET = async ({ locals: { safeGetSession, supabase }, url }) => {
   const { user, session } = await safeGetSession();
