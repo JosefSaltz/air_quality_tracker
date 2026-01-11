@@ -1,6 +1,6 @@
 import type { retrieveDateParams } from "./retrieveDateParams";
-
 import { getUniqueLogins } from "./getUniqueLogins";
+
 export async function getAdminReports(supabase: App.Locals["supabase"], dateRange: ReturnType<typeof retrieveDateParams>) {
   const { start_date, end_date } = dateRange;
   const markers = await supabase
@@ -18,7 +18,7 @@ export async function getAdminReports(supabase: App.Locals["supabase"], dateRang
   // Retrieve the count of the unique logins we had since the 1st of the month
   const { uniqueLogins } = await getUniqueLogins();
   // Escape early if there isn't any records returned
-  if(!markers.data.length) return markers.data;
+  if(!markers.data.length) return null;
 
   const markerReports = markers.data.map(record => {
     const { profiles, ...restOfRecord } = record;
@@ -26,5 +26,5 @@ export async function getAdminReports(supabase: App.Locals["supabase"], dateRang
     return { ...restOfRecord, email };
   })
 
-  return { markerReports, uniqueLogins };
+  return { markerReports, uniqueLogins } as const;
 }

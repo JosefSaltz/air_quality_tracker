@@ -16,5 +16,5 @@ export async function getReports(supabase: App.Locals["supabase"], dateRange: Re
   // Escape early if there isn't any records returned
   if(!data.length) return null;
   // Return data
-  return { markerReports: data };
+  return { markerReports: data } as const;
 }
