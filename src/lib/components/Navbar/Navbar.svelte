@@ -40,7 +40,7 @@
   }
 </script>
 
-<header class={`${page.route.id === '/' ? 'hidden' : ''} bg-white shadow-sm md:static md:block lg:overflow-y-visible py-1`}>
+<header class={`${page.route.id === '/' ? 'hidden' : ''} bg-white shadow-xs md:static md:block lg:overflow-y-visible py-1`}>
   <div id="centering-container" class="w-full flex justify-center">
     <div id="grid-container" class="w-full md:max-w-4xl grid grid-cols-12">
       <!-- Home Button -->

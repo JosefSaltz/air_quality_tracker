@@ -22,14 +22,14 @@
 </script>
 <div class="">
   <Drawer.Root bind:open repositionInputs={false} >
-    <div id="report-placement-container" class="flex justify-center absolute left-1/2 transform -translate-x-1/2 z-[500] top-[60%]">
+    <div id="report-placement-container" class="flex justify-center absolute left-1/2 transform -translate-x-1/2 z-500 top-[60%]">
       <div class="flex flex-col justify-center">
         {#if user}
           <Drawer.Trigger class={`${buttonVariants(buttonConfig)}`}>
             Report
           </Drawer.Trigger>
         {:else} <!-- Show Login Button-->
-          <Button href="/auth/login" class={`${buttonVariants(buttonConfig)} z-[10]`}>Login</Button>
+          <Button href="/auth/login" class={`${buttonVariants(buttonConfig)} z-10`}>Login</Button>
         {/if}
 
         {#if form?.success && showAlert}<Alert.Root><Alert.Description class="success text-green-500 ">Report Successfully Submitted!</Alert.Description></Alert.Root>{/if}
@@ -38,7 +38,7 @@
     </div>
       <Drawer.Content>
         {@render children()}
-        <div id="drawer-footer" class="flex justify-center flex-grow-1">
+        <div id="drawer-footer" class="flex justify-center grow">
           <Drawer.Footer class="w-full xl:w-auto">
             <Drawer.Close class={`bg-stone-300 ${buttonVariants(buttonConfig)}`}>Close</Drawer.Close>
           </Drawer.Footer>

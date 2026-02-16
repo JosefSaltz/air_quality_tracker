@@ -86,7 +86,7 @@
       startValue = v;
      }}
      numberOfMonths={innerWidth?.current && innerWidth.current <= 768 ? 1 : 2}
-     class={'relative z-[1000]'}
+     class={'relative z-1000'}
     />
    </Popover.Content>
   </Popover.Root>

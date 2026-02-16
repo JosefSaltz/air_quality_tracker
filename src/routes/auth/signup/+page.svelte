@@ -50,7 +50,7 @@
         <div id="email-container">
           <label for="email" class="block text-sm/6 font-medium text-gray-900">Email address</label>
           <div class="mt-2">
-            <input type="email" name="email" id="email" bind:value={email} autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline--600 sm:text-sm/6">
+            <input type="email" name="email" id="email" bind:value={email} autocomplete="email" required class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-solid outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline--600 sm:text-sm/6">
           </div>
           {#if email}
             {#if valid_email}
@@ -66,17 +66,17 @@
         <div id="optionals-container">
           <label for="first_name" class="block text-sm/6 font-medium text-gray-900">First Name (Optional)</label>
           <div class="mt-2">
-            <input type="first_name" name="first_name" id="first_name" bind:value={first_name} autocomplete="given-name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline--600 sm:text-sm/6">
+            <input type="first_name" name="first_name" id="first_name" bind:value={first_name} autocomplete="given-name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-solid outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline--600 sm:text-sm/6">
             <label for="last_name" class="block text-sm/6 font-medium text-gray-900">Last Name (Optional)</label>
-            <input type="last_name" name="last_name" id="last_name" bind:value={last_name} autocomplete="family-name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline--600 sm:text-sm/6">
+            <input type="last_name" name="last_name" id="last_name" bind:value={last_name} autocomplete="family-name" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-solid outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline--600 sm:text-sm/6">
           </div>
         </div>
         <!-- Submit Button -->
         <div>
           <button type="submit" disabled={disable_submit} class={`
-            w-full rounded-md px-3 py-1.5 my-6 shadow-sm
+            w-full rounded-md px-3 py-1.5 my-6 shadow-xs
             flex justify-center
-            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600 
+            focus-visible:outline-solid focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline--600 
             text-sm/6 font-semibold text-white 
             hover:bg--500  ${disable_submit ? 'bg-purple-200' : 'bg-purple-800'} 
           `}>

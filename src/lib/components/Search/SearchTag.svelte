@@ -26,6 +26,6 @@
 <div class="text-sm m-2 py-1 px-2 bg-fuchsia-200 rounded-sm" bind:this={nodeRef}>
   {#if type === 'time'}
     <span>{ tagPrefix }: { date ? dateTime.toLocaleString("en-US", { "timeStyle": "short", "dateStyle": "medium" }) : null }</span>
-    <button onclick={selfRemove} class="hover:bg-fuchisa-400 rounded-full px-[0.5rem]">x</button>
+    <button onclick={selfRemove} class="hover:bg-fuchisa-400 rounded-full px-2">x</button>
   {/if}
 </div>

@@ -20,9 +20,9 @@
   }
 </script>
 
-<div id="mobile-menu-button" class={`relative z-[500] ${className}`}>
+<div id="mobile-menu-button" class={`relative z-500 ${className}`}>
   <Popover.Root>
-    <Popover.Trigger class="bg-white relative mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-stone-500 border-black border">
+    <Popover.Trigger class="bg-white relative mx-2 inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-inset focus:ring-stone-500 border-black border">
       <span class="sr-only">Open menu</span>
       <svg class="block size-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -30,7 +30,7 @@
     </Popover.Trigger>
     <Popover.Content>
       <nav>
-        <div class="relative text-lg flex flex-col z-[1000] space-y-2">
+        <div class="relative text-lg flex flex-col z-1000 space-y-2">
           {#if user}
             <a href="/auth/profile" class="w-full flex items-center menu-entry">
               <img class="size-5 mr-2 rounded-full" src={ user.user_metadata.avatar_url ?? defaultAvatar } alt="user-profile-avatar">

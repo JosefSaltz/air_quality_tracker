@@ -18,7 +18,7 @@
 	<Card.Content>
 		{#if avatar}
 			<div class="flex justify-start">
-				<img src={avatar} alt="user avatar" class="mb-5 h-24 w-24 rounded-lg object-cover shadow" />
+				<img src={avatar} alt="user avatar" class="mb-5 h-24 w-24 rounded-lg object-cover shadow-sm" />
 			</div>
 		{/if}
 		<form
