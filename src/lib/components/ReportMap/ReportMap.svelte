@@ -170,14 +170,14 @@
 </svelte:head>
 <!-- Leafly attachment node -->
 <div id="map-container" class="w-full h-full" >
-  <div id="map" bind:this={container} class="w-full h-full z-[1]">
+  <div id="map" bind:this={container} class="w-full h-full z-1">
     {#if innerWidth?.current && innerWidth?.current <= 768}
     <div class="flex justify-center w-full">
-      <div id="mobile-search-container" class={`w-full flex flex-col-reverse md:hidden relative z-[500] pl-16 pr-4 pt-4`}>
-        <TimeSelect class="relative z-[20]" />
+      <div id="mobile-search-container" class={`w-full flex flex-col-reverse md:hidden relative z-500 pl-16 pr-4 pt-4`}>
+        <TimeSelect class="relative z-20" />
         <Search class="w-full max-w-[80ch]" />  
       </div>
-      <MobileMenuButton class={`md:hidden relative z-[500] aspect-square pt-4`} user={user} profile={profile} supabase={supabase} />
+      <MobileMenuButton class={`md:hidden relative z-500 aspect-square pt-4`} user={user} profile={profile} supabase={supabase} />
     </div>
     {/if}
     

@@ -12,7 +12,7 @@
   let { onClickHandler, permissionState }: Props = $props();
 </script>
 
-<Card class="flex flex-col w-[100%] h-[100%] justify-center items-center gap-2">
+<Card class="flex flex-col w-full h-full justify-center items-center gap-2">
   {#if permissionState === "denied"}
     <h1>Please unblock geolocation permissions to use</h1>
   {:else if permissionState === "prompt"}

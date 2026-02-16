@@ -2,7 +2,7 @@
   
 </script>
 
-<div class="flex flex-col px-2 md:px-[8rem] xl:px-[14rem] items-center w-full">
+<div class="flex flex-col px-2 md:px-32 xl:px-56 items-center w-full">
   <div class="w-full flex flex-col  items-center max-w-7xl">
   <header id="support-header-section" class="self-center flex flex-col justify-center items-center p-6 md:p-16">
     <h1 class="font-bold text-3xl md:text-5xl p-8">Support</h1>
