@@ -33,7 +33,7 @@
         <div class="relative text-lg flex flex-col z-1000 space-y-2">
           {#if user}
             <a href="/auth/profile" class="w-full flex items-center menu-entry">
-              <img class="size-5 mr-2 rounded-full" src={ user.user_metadata.avatar_url ?? defaultAvatar } alt="user-profile-avatar">
+              <img class="size-5 mr-2 rounded-full" src={ user.user_metadata.avatar_url ?? defaultAvatar } alt="user-profile-avatar" referrerpolicy="no-referrer">
               { profile?.first_name ? profile.first_name : 'Profile' }
             </a>
             <button class="w-full menu-entry text-start" onclick={handleSignOut}>Logout</button>
